@@ -1,0 +1,530 @@
+{
+  "Header": {
+    "navHome": "Нүүр",
+    "navSearch": "Хайх",
+    "navMap": "Газрын зураг",
+    "aiPlanner": "AI Төлөвлөгч",
+    "favorites": "Хадгалсан газрууд",
+    "login": "Нэвтрэх",
+    "register": "Бүртгүүлэх"
+  },
+  "Footer": {
+    "travel": "Аялах",
+    "findResorts": "Амралтын газар хайх",
+    "map": "Газрын зураг",
+    "compare": "Харьцуулах",
+    "regions": "Бүсчлэл",
+    "tagline": "Монгол орны амралтын газруудыг олох, харьцуулах, аялалаа төлөвлөх нэгдсэн платформ.",
+    "copyright": "© {year} Amralt.mn. Бүх эрх хуулиар хамгаалагдсан.",
+    "madeIn": "Монголд хийгдсэн"
+  },
+  "MobileNav": {
+    "home": "Нүүр",
+    "search": "Хайх",
+    "map": "Газрын зураг",
+    "favorites": "Хадгалсан",
+    "profile": "Профайл"
+  },
+  "UserMenu": {
+    "menuAria": "Профайл цэс",
+    "profile": "Профайл",
+    "favorites": "Хадгалсан газрууд",
+    "compare": "Харьцуулах",
+    "adminPanel": "Админ самбар",
+    "logout": "Гарах"
+  },
+  "Home": {
+    "aiBadge": "AI-аар аяллаа төлөвлө",
+    "heroBefore": "Монголд хаашаа",
+    "heroHighlight": "амрах",
+    "heroAfter": "вэ?",
+    "subtitle": "Монгол орны хамгийн гоё амралтын газруудыг нэг дороос олоорой.",
+    "statResorts": "{count}+ амралтын газар",
+    "statProvinces": "{count} аймагт",
+    "statRating": "{rating} дундаж үнэлгээ",
+    "popularRegions": "Алдартай бүсчлэлүүд",
+    "popularRegionsSubtitle": "Хамгийн их эрэлттэй байгаа аялалын бүс нутгуудаас сонгоорой",
+    "popularResorts": "Алдартай амралтын газрууд",
+    "popularResortsSubtitle": "Хэрэглэгчдийн хамгийн өндөр үнэлгээ авсан газрууд",
+    "viewAll": "Бүгдийг харах"
+  },
+  "SearchBar": {
+    "location": "Байршил",
+    "landscape": "Аяллын төрөл",
+    "landscapeSteppe": "Тал хээр",
+    "landscapeKhangai": "Хангай",
+    "landscapeLake": "Нуур",
+    "landscapeWater": "Далай, ус",
+    "totalBudget": "Нийт төсөв",
+    "howManyDays": "Хэдэн хоног?",
+    "days": "{count} хоног",
+    "guests": "Хүний тоо",
+    "guestsCount": "{count} хүн",
+    "search": "Хайх"
+  },
+  "ResortCard": {
+    "distanceFromUb": "Улаанбаатараас {distance}",
+    "perNight": "/ шөнө"
+  },
+  "CategoryLabels": {
+    "amraltiin-gazar": "Амралтын газар",
+    "juulchnii-baaz": "Жуулчны бааз",
+    "glemping": "Глэмпинг байр"
+  },
+  "CompareToggle": {
+    "compare": "Харьцуулах",
+    "selected": "Сонгосон",
+    "maxItemsError": "Дээд тал нь {maxItems} газрыг харьцуулах боломжтой."
+  },
+  "DestinationCard": {
+    "resortCount": "{count} газар"
+  },
+  "SearchPage": {
+    "resultsCount": "<b>{count}</b> амралтын газар олдлоо"
+  },
+  "FilterSidebar": {
+    "title": "Шүүлтүүр",
+    "clear": "Цэвэрлэх",
+    "province": "Аймаг",
+    "allProvinces": "Бүх аймаг",
+    "rating": "Үнэлгээ",
+    "distanceFromUb": "Улаанбаатараас зай",
+    "distanceUnder": "< {km} км",
+    "accommodationType": "Байрны төрөл",
+    "typeGer": "Гэр",
+    "typeFamilyHouse": "Байшин",
+    "typeVipHouse": "VIP байшин",
+    "amenities": "Тав тух"
+  },
+  "SortSelect": {
+    "sortBy": "Эрэмбэлэх",
+    "popular": "Хамгийн алдартай",
+    "rating": "Өндөр үнэлгээтэй",
+    "priceAsc": "Хямд",
+    "priceDesc": "Үнэтэй",
+    "distance": "Хамгийн ойр"
+  },
+  "SearchResults": {
+    "list": "Жагсаалт",
+    "map": "Газрын зураг"
+  },
+  "PaginationBar": {
+    "previous": "Өмнөх",
+    "next": "Дараах"
+  },
+  "ResortDetail": {
+    "perNight": "/ шөнө",
+    "route": "Маршрут",
+    "about": "Тухай",
+    "amenities": "Тав тух",
+    "accommodations": "Байрны сонголт",
+    "location": "Байршил",
+    "contact": "Холбоо барих",
+    "phone": "Утас",
+    "email": "И-мэйл",
+    "distanceFromUb": "УБ-аас зай",
+    "km": "{km} км"
+  },
+  "ShareButton": {
+    "share": "Хуваалцах",
+    "linkCopied": "Холбоосыг хууллаа"
+  },
+  "CallButton": {
+    "call": "Залгах"
+  },
+  "AmenityList": {
+    "noAmenities": "Тав тухын мэдээлэл оруулаагүй байна."
+  },
+  "AmenityLabels": {
+    "wifi": "WiFi",
+    "parking": "Зогсоол",
+    "restaurant": "Ресторан",
+    "bbq": "BBQ",
+    "sauna": "Саун",
+    "pool": "Бассейн",
+    "playground": "Хүүхдийн талбай",
+    "horse-riding": "Морь унах",
+    "fishing": "Загасчлал",
+    "campfire": "Гал түлээ"
+  },
+  "AccommodationType": {
+    "GER": "Монгол гэр",
+    "FAMILY_HOUSE": "Гэр бүлийн байшин",
+    "VIP_HOUSE": "VIP байшин",
+    "TENT": "Майхан",
+    "OTHER": "Бусад"
+  },
+  "AccommodationCard": {
+    "maxGuests": "Хамгийн ихдээ {count} хүн",
+    "perNight": "/ шөнө"
+  },
+  "RoutePanel": {
+    "myLocation": "Миний байршил",
+    "viewRoute": "Маршрут харах",
+    "openInGoogleMapsHint": "Google Maps дээр замын чиглэлээ нээнэ үү.",
+    "openGoogleMaps": "Google Maps нээх",
+    "geolocationUnsupported": "Таны төхөөрөмж байршил тодорхойлох боломжгүй байна.",
+    "geolocationFailed": "Байршил тодорхойлж чадсангүй. Зөвшөөрөл олгосон эсэхээ шалгана уу."
+  },
+  "FavoriteButton": {
+    "mustLoginToSave": "Нэвтэрсний дараа хадгалах боломжтой.",
+    "saved": "Хадгалсан",
+    "save": "Хадгалах",
+    "removeFromSaved": "Хадгалснаас хасах"
+  },
+  "RatingStars": {
+    "reviewCount": "{count} сэтгэгдэл"
+  },
+  "ImageGallery": {
+    "viewAll": "Бүх зургийг харах ({count})",
+    "photosOf": "{name} зургууд"
+  },
+  "LoginForm": {
+    "email": "И-мэйл",
+    "password": "Нууц үг",
+    "forgotPassword": "Мартсан уу?",
+    "invalidCredentials": "И-мэйл эсвэл нууц үг буруу байна.",
+    "loggingIn": "Нэвтэрч байна...",
+    "submit": "Нэвтрэх"
+  },
+  "RegisterForm": {
+    "lastName": "Овог",
+    "firstName": "Нэр",
+    "phone": "Утас",
+    "email": "И-мэйл",
+    "country": "Улс",
+    "selectCountry": "Улс сонгох",
+    "password": "Нууц үг",
+    "address": "Оршин суугаа газар",
+    "travelInfoTitle": "Аялалд хэрэгтэй нэмэлт мэдээлэл",
+    "allergies": "Харшил",
+    "favoriteFoods": "Дуртай хоол",
+    "dietaryRestrictions": "Хоолны тусгай хэрэгцээ",
+    "travelInterests": "Аяллын сонирхол",
+    "genericError": "Бүртгэл үүсгэхэд алдаа гарлаа.",
+    "submitting": "Бүртгэж байна...",
+    "submit": "Бүртгүүлэх"
+  },
+  "ForgotPasswordForm": {
+    "email": "И-мэйл",
+    "sentMessage": "И-мэйл хаяг бүртгэлтэй бол нууц үг сэргээх холбоос илгээгдлээ.",
+    "devHint": "Имэйл илгээх сервер тохируулаагүй тул холбоосыг энд харуулж байна (хөгжүүлэлтийн горим):",
+    "sending": "Илгээж байна...",
+    "submit": "Сэргээх холбоос илгээх"
+  },
+  "ResetPasswordForm": {
+    "newPassword": "Шинэ нууц үг",
+    "genericError": "Алдаа гарлаа",
+    "saving": "Хадгалж байна...",
+    "submit": "Нууц үг шинэчлэх"
+  },
+  "GoogleSignInButton": {
+    "signInWithGoogle": "Google-ээр нэвтрэх"
+  },
+  "LoginPage": {
+    "title": "Тавтай морил",
+    "description": "Бүртгэлдээ нэвтэрнэ үү",
+    "or": "эсвэл",
+    "noAccount": "Бүртгэлгүй юу?",
+    "signUp": "Бүртгүүлэх"
+  },
+  "RegisterPage": {
+    "title": "Бүртгэл үүсгэх",
+    "description": "Amralt.mn-д тавтай морил",
+    "or": "эсвэл",
+    "haveAccount": "Бүртгэлтэй юу?",
+    "login": "Нэвтрэх"
+  },
+  "ForgotPasswordPage": {
+    "title": "Нууц үг мартсан уу?",
+    "description": "Бүртгэлтэй и-мэйл хаягаа оруулна уу"
+  },
+  "ResetPasswordPage": {
+    "invalidTitle": "Холбоос буруу байна",
+    "invalidMessage": "Нууц үг сэргээх холбоос буруу эсвэл хугацаа дууссан байна.",
+    "title": "Шинэ нууц үг үүсгэх"
+  },
+  "ProfilePage": {
+    "title": "Профайл",
+    "statSaved": "Хадгалсан",
+    "statMemberSince": "Гишүүн болсон",
+    "defaultName": "Хэрэглэгч",
+    "personalInfo": "Хувийн мэдээлэл"
+  },
+  "ProfileForm": {
+    "updated": "Профайл шинэчлэгдлээ",
+    "contactInfo": "Холбоо барих мэдээлэл",
+    "lastName": "Овог",
+    "firstName": "Нэр",
+    "phone": "Утас",
+    "country": "Улс",
+    "selectCountry": "Улс сонгох",
+    "address": "Оршин суугаа газар",
+    "foodTravelInterests": "Хоол, аяллын сонирхол",
+    "allergies": "Харшил",
+    "favoriteFoods": "Дуртай хоол",
+    "dietaryRestrictions": "Хоолны тусгай хэрэгцээ",
+    "travelInterests": "Аяллын сонирхол",
+    "saving": "Хадгалж байна...",
+    "save": "Хадгалах"
+  },
+  "ResortGrid": {
+    "noResortsTitle": "Амралтын газар олдсонгүй",
+    "noResortsDescription": "Хайлтын үгээ эсвэл шүүлтүүрээ өөрчилж дахин оролдоно уу."
+  },
+  "CompareTable": {
+    "feature": "Онцлог",
+    "price": "Үнэ",
+    "rating": "Үнэлгээ",
+    "distanceFromUb": "УБ-аас зай",
+    "location": "Байршил"
+  },
+  "FavoritesPage": {
+    "title": "Миний хадгалсан",
+    "subtitle": "Таны хадгалсан {count} амралтын газар"
+  },
+  "ComparePage": {
+    "title": "Амралтын газар харьцуулах",
+    "subtitle": "Сонгосон амралтын газруудыг харьцуулж үзээрэй",
+    "emptyTitle": "Харьцуулах газар сонгоогүй байна",
+    "emptyDescription": "Хайлтын жагсаалтаас 'Харьцуулах' товчоор дор хаяж 2 газар сонгоно уу."
+  },
+  "AiPlannerPage": {
+    "title": "AI Аяллын төлөвлөгч",
+    "heading": "Хиймэл оюун ухаанаар аяллаа төлөвлө",
+    "description": "Бүсээ, хоногийн тоо, хүний тоогоо оруулаад Amralt.mn-д бүртгэлтэй бодит амралтын газруудад тулгуурласан өдөр бүрийн аяллын төлөвлөгөөг шууд авна уу."
+  },
+  "TripPlannerForm": {
+    "budgetBudget": "Хямд",
+    "budgetMid": "Дундаж",
+    "budgetLuxury": "Тансаг",
+    "selectLocationError": "Байршил сонгоно уу",
+    "genericError": "Алдаа гарлаа. Дахин оролдоно уу.",
+    "networkError": "Сүлжээний алдаа гарлаа. Дахин оролдоно уу.",
+    "location": "Байршил",
+    "selectRegion": "Бүс сонгох",
+    "numberOfDays": "Хоногийн тоо",
+    "numberOfGuests": "Хүний тоо",
+    "budget": "Төсөв",
+    "interestsLabel": "Сонирхол, нэмэлт хүсэлт (заавал биш)",
+    "interestsPlaceholder": "Сонирхдог зүйлс, аяллын үеийн хүсэлтүүдээ бичнэ үү",
+    "planning": "Төлөвлөж байна...",
+    "generatePlan": "Төлөвлөгөө үүсгэх",
+    "emptyStateHint": "Зүүн талд мэдээллээ бөглөөд AI-аар аяллын төлөвлөгөөгөө үүсгээрэй.",
+    "processing": "AI төлөвлөгөөг боловсруулж байна..."
+  },
+  "AiPlannerApi": {
+    "invalidData": "Буруу өгөгдөл"
+  },
+  "Itinerary": {
+    "locationNotFound": "Байршил олдсонгүй.",
+    "noResorts": "\"{location}\" бүсэд одоогоор батлагдсан амралтын газар алга байна.",
+    "headerTitle": "{location} — {days} хоногийн аяллын төлөвлөгөө",
+    "headerMeta": "Хүний тоо: {guests} | Төсөв: {budget}",
+    "budgetUnknown": "тодорхойгүй",
+    "budget": {
+      "budget": "хямд, хэмнэлттэй",
+      "mid": "дундаж",
+      "luxury": "тансаг, дээд зэрэглэлийн"
+    },
+    "day1Title": "Өдөр 1: Замд гарах ба ирэх",
+    "day1Travel": "Улаанбаатараас {resort} хүрэх зам ойролцоогоор {km}, машинаар {duration} орчим үргэлжилнэ.",
+    "day1Arrival": "{resort}-д ирж, {accommodation} байрлана.",
+    "day1DefaultAccommodation": "тохирсон байранд",
+    "eveningActivity": "Орой: {activity}.",
+    "middleDayTitle": "Өдөр {day}: {location} орчмоор амрах",
+    "lastDayTitle": "Өдөр {days}: Буцах зам",
+    "lastDayMorning": "Өглөө {resort}-аас гарч, Улаанбаатар руу буцна.",
+    "lastDayReturn": "Буцах зам мөн {km}, {duration} орчим үргэлжилнэ.",
+    "budgetSummaryTitle": "Тойм зардал",
+    "budgetSummaryLine": "Байр: {accommodation} x {units} x {days} хоног = {total}",
+    "budgetSummaryNote": "Энэ бол ойролцоо тооцоо бөгөөд хоол, унааны зардал ороогүй болно.",
+    "alternativesTitle": "Өөр сонголтууд",
+    "alternativeLine": "- {name} ({rating}/5, {price}-с эхлэн / шөнө)",
+    "activity": {
+      "wifi": "чөлөөт цагаа дэнслэн, WiFi ашиглан амарна",
+      "restaurant": "рестораны онцлог хоолыг амтална",
+      "bbq": "BBQ зохион байгуулж, гэр бүлийн зугаа цэнгэл хийнэ",
+      "sauna": "саунд орж ядаргаагаа тайлна",
+      "pool": "бассейнд усанд орж амарна",
+      "playground": "хүүхдийн тоглоомын талбайд цагаа өнгөрүүлнэ",
+      "horse-riding": "морь унаж, нүүдэлчдийн ахуйтай танилцана",
+      "fishing": "загасчилж, голын эрэг дагуу зугаална",
+      "campfire": "гал түлж, орой оддын дор ярилцана",
+      "parking": "унаагаа зогсоож, орчинтой танилцана"
+    }
+  },
+  "AdminLayout": {
+    "brand": "Amralt Админ",
+    "navOverview": "Ерөнхий мэдээлэл",
+    "navResorts": "Амралтын газрууд",
+    "navUsers": "Хэрэглэгчид"
+  },
+  "AdminOverviewPage": {
+    "seriesUsers": "Хэрэглэгчид",
+    "seriesResorts": "Амралтын газрууд",
+    "seriesFeatured": "Онцлох",
+    "combinedGrowth": "Нийт өсөлт",
+    "chartAriaLabel": "Хэрэглэгч, амралтын газар болон онцлох амралтын газруудын өсөлтийн график",
+    "resortStatus": "Амралтын газрын төлөв"
+  },
+  "ResortStatus": {
+    "APPROVED": "Батлагдсан",
+    "PENDING": "Хүлээгдэж буй",
+    "REJECTED": "Татгалзсан"
+  },
+  "DashboardShell": {
+    "back": "Буцах"
+  },
+  "ResortRowActions": {
+    "confirmDelete": "Энэ амралтын газрыг устгахыг итгэж байгаа уу?",
+    "deleted": "Амралтын газар амжилттай устгагдлаа",
+    "addedToFeatured": "Онцлогт нэмэгдлээ",
+    "removedFromFeatured": "Онцлогоос хасагдлаа",
+    "makeFeatured": "Онцлогт оруулах",
+    "removeFromFeatured": "Онцлогоос хасах"
+  },
+  "AdminResortsPage": {
+    "metadataTitle": "Амралтын газрууд",
+    "resortCount": "Нийт амралтын газар: {count}",
+    "addResort": "Шинэ газар нэмэх",
+    "emptyTitle": "Одоогоор газар алга",
+    "emptyDescription": "Эхний амралтын газраа нэмж эхлээрэй.",
+    "viewCount": "Үзэлт: {count}"
+  },
+  "AdminResortEditorPage": {
+    "newMetadataTitle": "Шинэ газар нэмэх",
+    "editMetadataTitle": "Газар засах",
+    "accommodationsTitle": "Байрны сонголт"
+  },
+  "ResortForm": {
+    "created": "Амралтын газар нэмэгдлээ",
+    "saved": "Амралтын газар хадгалагдлаа",
+    "name": "Нэр",
+    "namePlaceholder": "Тэрэлж Ресорт",
+    "description": "Тайлбар",
+    "province": "Аймаг",
+    "provincePlaceholder": "Төв аймаг",
+    "district": "Сум, дүүрэг",
+    "districtPlaceholder": "Гачуурт сум",
+    "addressDetail": "Дэлгэрэнгүй хаяг",
+    "latitude": "Өргөрөг",
+    "longitude": "Уртраг",
+    "distanceFromUb": "УБ-аас зай (км)",
+    "phone": "Утас",
+    "email": "И-мэйл",
+    "website": "Вэбсайт",
+    "category": "Ангилал",
+    "select": "Сонгох",
+    "region": "Бүс",
+    "amenities": "Тав тух",
+    "imageUrls": "Зургийн URL",
+    "addImage": "Зураг нэмэх",
+    "saving": "Хадгалж байна...",
+    "createResort": "Амралтын газар нэмэх",
+    "save": "Хадгалах"
+  },
+  "AccommodationManager": {
+    "added": "Байрны сонголт нэмэгдлээ",
+    "confirmDelete": "Энэ байрны сонголтыг устгах уу?",
+    "deleted": "Байрны сонголт устгагдлаа",
+    "summary": "{capacity} хүн · {price} / шөнө",
+    "deleteAccommodation": "Байрны сонголт устгах",
+    "type": "Төрөл",
+    "name": "Нэр",
+    "capacity": "Багтаамж",
+    "price": "Үнэ (шөнө)",
+    "facilities": "Тохижилт (таслалаар тусгаарлана)",
+    "facilitiesPlaceholder": "Зуух, угаалгын өрөө",
+    "imageUrls": "Зургийн URL (таслалаар тусгаарлана)",
+    "save": "Хадгалах",
+    "cancel": "Цуцлах",
+    "addAccommodation": "Байрны сонголт нэмэх"
+  },
+  "AdminUsersPage": {
+    "metadataTitle": "Хэрэглэгчид",
+    "searchPlaceholder": "Нэр эсвэл и-мэйлээр хайх...",
+    "searchAriaLabel": "Хэрэглэгчийг нэр эсвэл и-мэйлээр хайх",
+    "totalUsers": "Нийт нэвтэрсэн хэрэглэгч: {count}",
+    "noUsersTitle": "Хэрэглэгч олдсонгүй",
+    "noUsersDescription": "Хайлтын нөхцөлөө өөрчилж дахин оролдоно уу.",
+    "unnamedUser": "Нэргүй хэрэглэгч",
+    "currentUser": "Та",
+    "favoritesCount": "Хадгалсан газар: {count}",
+    "registeredAt": "Бүртгүүлсэн огноо: {date}",
+    "activeNow": "Одоо идэвхтэй",
+    "lastLoginAt": "Сүүлд нэвтэрсэн: {time}",
+    "roles": {
+      "USER": "Хэрэглэгч",
+      "ADMIN": "Админ"
+    },
+    "lastLogin": {
+      "justNow": "дөнгөж сая",
+      "minutesAgo": "{count} минутын өмнө",
+      "hoursAgo": "{count} цагийн өмнө",
+      "daysAgo": "{count} өдрийн өмнө"
+    }
+  },
+  "UserRoleMenu": {
+    "makeUser": "Энгийн хэрэглэгч болгох",
+    "makeAdmin": "Админ болгох",
+    "roleUpdated": "Эрх амжилттай шинэчлэгдлээ",
+    "changeRole": "Хэрэглэгчийн эрхийг өөрчлөх"
+  },
+  "RootMetadata": {
+    "title": "Amralt.mn — Монголын амралтын газрууд",
+    "description": "Монгол орны хамгийн гоё амралтын газруудыг нэг дороос олж, харьцуулж, захиалаарай."
+  },
+  "SearchPageMetadata": {
+    "title": "Амралтын газар хайх",
+    "description": "Монгол орны амралтын газруудыг байршил, үнэ, тав тухаар шүүж хайлаарай."
+  },
+  "MapPageMetadata": {
+    "title": "Газрын зураг",
+    "description": "Монголын амралтын газруудыг интерактив газрын зураг дээрээс харах."
+  },
+  "MapPage": {
+    "resortsOnMap": "{count} амралтын газар газрын зураг дээр"
+  },
+  "RegisterApi": {
+    "invalidData": "Буруу өгөгдөл",
+    "emailTaken": "Энэ и-мэйл хаягаар бүртгэл үүссэн байна"
+  },
+  "CompareBar": {
+    "remove": "Хасах",
+    "clear": "Цэвэрлэх",
+    "compare": "Харьцуулах ({count})"
+  },
+  "ResortMap": {
+    "allProvinces": "Бүх аймаг",
+    "resortCount": "{count} газар"
+  },
+  "MapResortPopup": {
+    "viewDetails": "Дэлгэрэнгүй"
+  },
+  "MapStatusGuard": {
+    "loadFailedTitle": "Газрын зургийг ачаалж чадсангүй",
+    "loadFailedDescription": "Google Cloud төслийн тохиргоог (API идэвхжилт, billing) шалгаад дахин оролдоно уу."
+  },
+  "MapKeyMissing": {
+    "title": "Газрын зураг тохируулаагүй байна",
+    "descriptionBefore": "Газрын зургийг харуулахын тулд",
+    "descriptionAfter": "орчны хувьсагчийг тохируулна уу."
+  },
+  "ReviewForm": {
+    "loginPromptBefore": "Сэтгэгдэл бичихийн тулд",
+    "loginPromptLink": "нэвтэрнэ үү",
+    "thankYou": "Таны сэтгэгдэлд баярлалаа!",
+    "posted": "Сэтгэгдэл нийтлэгдлээ",
+    "starAriaLabel": "{star} од",
+    "commentPlaceholder": "Энэ газрын талаар сэтгэгдлээ бичнэ үү...",
+    "submitting": "Илгээж байна...",
+    "submit": "Сэтгэгдэл нийтлэх"
+  },
+  "ReviewStats": {
+    "reviewCount": "{count} сэтгэгдэл"
+  },
+  "ReviewCard": {
+    "defaultName": "Хэрэглэгч"
+  }
+}

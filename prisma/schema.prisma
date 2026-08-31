@@ -1,0 +1,320 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Auth (Auth.js / NextAuth)
+// ---------------------------------------------------------------------------
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  firstName     String?
+  lastName      String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String? // hashed, null for OAuth-only accounts
+  role          UserRole  @default(USER)
+  phone         String?
+  nationality   String?
+  address       String?
+  allergies     String?
+  favoriteFoods String?
+  dietaryRestrictions String?
+  travelInterests String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastLoginAt DateTime?
+
+  accounts  Account[]
+  sessions  Session[]
+  favorites Favorite[]
+  reviews   Review[]
+  bookings  Booking[]
+
+  @@index([role])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------------------------------------------------------------------------
+// Taxonomy
+// ---------------------------------------------------------------------------
+
+model Category {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+  icon        String? // lucide icon name
+
+  resorts Resort[]
+}
+
+// Curated destination / region used for "Popular destinations" browsing
+// (distinct from a resort's own province/district/address fields).
+model Location {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  province    String
+  description String?
+  image       String?
+  featured    Boolean @default(false)
+  latitude    Float?
+  longitude   Float?
+
+  resorts Resort[]
+
+  @@index([featured])
+}
+
+model Amenity {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+  icon String // lucide icon name
+
+  resorts ResortAmenity[]
+}
+
+// ---------------------------------------------------------------------------
+// Resorts
+// ---------------------------------------------------------------------------
+
+enum ResortStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Resort {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String  @db.Text
+
+  province String
+  district String
+  address  String
+
+  latitude  Float
+  longitude Float
+
+  phone   String?
+  email   String?
+  website String?
+
+  priceFrom  Int // MNT, per night, from cheapest accommodation
+  rating     Float @default(0)
+  reviewCount Int  @default(0)
+  viewCount   Int  @default(0)
+
+  distanceFromUbKm Float?
+
+  googlePlaceId String?
+
+  status   ResortStatus @default(PENDING)
+  featured Boolean      @default(false)
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  locationId String?
+  location   Location? @relation(fields: [locationId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images         ResortImage[]
+  amenities      ResortAmenity[]
+  accommodations Accommodation[]
+  reviews        Review[]
+  favorites      Favorite[]
+  bookings       Booking[]
+
+  @@index([province, district])
+  @@index([status])
+  @@index([featured])
+  @@index([rating])
+  @@index([priceFrom])
+  @@index([categoryId])
+  @@index([locationId])
+}
+
+model ResortImage {
+  id       String  @id @default(cuid())
+  resortId String
+  url      String
+  alt      String?
+  order    Int     @default(0)
+  isCover  Boolean @default(false)
+
+  resort Resort @relation(fields: [resortId], references: [id], onDelete: Cascade)
+
+  @@index([resortId])
+}
+
+// Explicit join table so amenity filters can be indexed both ways.
+model ResortAmenity {
+  resortId  String
+  amenityId String
+
+  resort  Resort  @relation(fields: [resortId], references: [id], onDelete: Cascade)
+  amenity Amenity @relation(fields: [amenityId], references: [id], onDelete: Cascade)
+
+  @@id([resortId, amenityId])
+  @@index([amenityId])
+}
+
+enum AccommodationType {
+  GER
+  FAMILY_HOUSE
+  VIP_HOUSE
+  TENT
+  OTHER
+}
+
+model Accommodation {
+  id          String            @id @default(cuid())
+  resortId    String
+  type        AccommodationType
+  name        String
+  description String?           @db.Text
+  capacity    Int
+  price       Int // MNT per night
+  images      String[]
+  facilities  String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  resort   Resort    @relation(fields: [resortId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@index([resortId])
+}
+
+// ---------------------------------------------------------------------------
+// Reviews & favorites
+// ---------------------------------------------------------------------------
+
+model Review {
+  id       String @id @default(cuid())
+  resortId String
+  userId   String
+
+  rating  Int // 1-5
+  title   String?
+  comment String   @db.Text
+  images  String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  resort Resort @relation(fields: [resortId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([resortId, userId])
+  @@index([resortId])
+  @@index([userId])
+}
+
+model Favorite {
+  id       String @id @default(cuid())
+  userId   String
+  resortId String
+
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resort Resort @relation(fields: [resortId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, resortId])
+  @@index([resortId])
+}
+
+// ---------------------------------------------------------------------------
+// Booking (architecture prepared for a future booking flow)
+// ---------------------------------------------------------------------------
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Booking {
+  id              String   @id @default(cuid())
+  userId          String
+  resortId        String
+  accommodationId String
+
+  checkIn  DateTime
+  checkOut DateTime
+  guests   Int
+
+  totalPrice Int // MNT
+  status     BookingStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resort        Resort        @relation(fields: [resortId], references: [id], onDelete: Cascade)
+  accommodation Accommodation @relation(fields: [accommodationId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([resortId])
+  @@index([status])
+}

@@ -1,0 +1,530 @@
+{
+  "Header": {
+    "navHome": "Home",
+    "navSearch": "Search",
+    "navMap": "Map",
+    "aiPlanner": "AI Planner",
+    "favorites": "Saved places",
+    "login": "Log in",
+    "register": "Sign up"
+  },
+  "Footer": {
+    "travel": "Explore",
+    "findResorts": "Find resorts",
+    "map": "Map",
+    "compare": "Compare",
+    "regions": "Regions",
+    "tagline": "The all-in-one platform to find, compare, and plan trips to Mongolia's best resorts.",
+    "copyright": "© {year} Amralt.mn. All rights reserved.",
+    "madeIn": "Made in Mongolia"
+  },
+  "MobileNav": {
+    "home": "Home",
+    "search": "Search",
+    "map": "Map",
+    "favorites": "Saved",
+    "profile": "Profile"
+  },
+  "UserMenu": {
+    "menuAria": "Profile menu",
+    "profile": "Profile",
+    "favorites": "Saved places",
+    "compare": "Compare",
+    "adminPanel": "Admin panel",
+    "logout": "Log out"
+  },
+  "Home": {
+    "aiBadge": "Plan your trip with AI",
+    "heroBefore": "Where in Mongolia",
+    "heroHighlight": "should you relax",
+    "heroAfter": "?",
+    "subtitle": "Discover Mongolia's most beautiful resorts, all in one place.",
+    "statResorts": "{count}+ resorts",
+    "statProvinces": "{count} provinces",
+    "statRating": "{rating} average rating",
+    "popularRegions": "Popular regions",
+    "popularRegionsSubtitle": "Choose from the most sought-after travel regions",
+    "popularResorts": "Popular resorts",
+    "popularResortsSubtitle": "The highest-rated places from our travelers",
+    "viewAll": "View all"
+  },
+  "SearchBar": {
+    "location": "Location",
+    "landscape": "Landscape",
+    "landscapeSteppe": "Steppe",
+    "landscapeKhangai": "Khangai (forested mountains)",
+    "landscapeLake": "Lake",
+    "landscapeWater": "Sea, water",
+    "totalBudget": "Total budget",
+    "howManyDays": "How many days?",
+    "days": "{count, plural, one {# day} other {# days}}",
+    "guests": "Guests",
+    "guestsCount": "{count, plural, one {# guest} other {# guests}}",
+    "search": "Search"
+  },
+  "ResortCard": {
+    "distanceFromUb": "{distance} from Ulaanbaatar",
+    "perNight": "/ night"
+  },
+  "CategoryLabels": {
+    "amraltiin-gazar": "Resort",
+    "juulchnii-baaz": "Tourist camp",
+    "glemping": "Glamping site"
+  },
+  "CompareToggle": {
+    "compare": "Compare",
+    "selected": "Selected",
+    "maxItemsError": "You can compare up to {maxItems} places."
+  },
+  "DestinationCard": {
+    "resortCount": "{count, plural, one {# resort} other {# resorts}}"
+  },
+  "SearchPage": {
+    "resultsCount": "<b>{count}</b> {count, plural, one {resort} other {resorts}} found"
+  },
+  "FilterSidebar": {
+    "title": "Filters",
+    "clear": "Clear",
+    "province": "Province",
+    "allProvinces": "All provinces",
+    "rating": "Rating",
+    "distanceFromUb": "Distance from Ulaanbaatar",
+    "distanceUnder": "< {km} km",
+    "accommodationType": "Accommodation type",
+    "typeGer": "Ger",
+    "typeFamilyHouse": "House",
+    "typeVipHouse": "VIP house",
+    "amenities": "Amenities"
+  },
+  "SortSelect": {
+    "sortBy": "Sort by",
+    "popular": "Most popular",
+    "rating": "Highest rated",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low",
+    "distance": "Nearest"
+  },
+  "SearchResults": {
+    "list": "List",
+    "map": "Map"
+  },
+  "PaginationBar": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "ResortDetail": {
+    "perNight": "/ night",
+    "route": "Route",
+    "about": "About",
+    "amenities": "Amenities",
+    "accommodations": "Accommodations",
+    "location": "Location",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "distanceFromUb": "Distance from UB",
+    "km": "{km} km"
+  },
+  "ShareButton": {
+    "share": "Share",
+    "linkCopied": "Link copied"
+  },
+  "CallButton": {
+    "call": "Call"
+  },
+  "AmenityList": {
+    "noAmenities": "No amenity information provided."
+  },
+  "AmenityLabels": {
+    "wifi": "WiFi",
+    "parking": "Parking",
+    "restaurant": "Restaurant",
+    "bbq": "BBQ",
+    "sauna": "Sauna",
+    "pool": "Pool",
+    "playground": "Playground",
+    "horse-riding": "Horse riding",
+    "fishing": "Fishing",
+    "campfire": "Campfire"
+  },
+  "AccommodationType": {
+    "GER": "Mongolian ger",
+    "FAMILY_HOUSE": "Family house",
+    "VIP_HOUSE": "VIP house",
+    "TENT": "Tent",
+    "OTHER": "Other"
+  },
+  "AccommodationCard": {
+    "maxGuests": "{count, plural, one {Up to # guest} other {Up to # guests}}",
+    "perNight": "/ night"
+  },
+  "RoutePanel": {
+    "myLocation": "My location",
+    "viewRoute": "View route",
+    "openInGoogleMapsHint": "Open the directions in Google Maps.",
+    "openGoogleMaps": "Open Google Maps",
+    "geolocationUnsupported": "Your device doesn't support locating your position.",
+    "geolocationFailed": "Couldn't determine your location. Check that you've granted permission."
+  },
+  "FavoriteButton": {
+    "mustLoginToSave": "Log in to save this place.",
+    "saved": "Saved",
+    "save": "Save",
+    "removeFromSaved": "Remove from saved"
+  },
+  "RatingStars": {
+    "reviewCount": "{count, plural, one {# review} other {# reviews}}"
+  },
+  "ImageGallery": {
+    "viewAll": "View all photos ({count})",
+    "photosOf": "{name} photos"
+  },
+  "LoginForm": {
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot?",
+    "invalidCredentials": "Incorrect email or password.",
+    "loggingIn": "Logging in...",
+    "submit": "Log in"
+  },
+  "RegisterForm": {
+    "lastName": "Last name",
+    "firstName": "First name",
+    "phone": "Phone",
+    "email": "Email",
+    "country": "Country",
+    "selectCountry": "Select a country",
+    "password": "Password",
+    "address": "Address",
+    "travelInfoTitle": "Additional travel information",
+    "allergies": "Allergies",
+    "favoriteFoods": "Favorite foods",
+    "dietaryRestrictions": "Dietary restrictions",
+    "travelInterests": "Travel interests",
+    "genericError": "Something went wrong while creating your account.",
+    "submitting": "Signing up...",
+    "submit": "Sign up"
+  },
+  "ForgotPasswordForm": {
+    "email": "Email",
+    "sentMessage": "If that email is registered, a password reset link has been sent.",
+    "devHint": "The email server isn't configured, so the link is shown here (development mode):",
+    "sending": "Sending...",
+    "submit": "Send reset link"
+  },
+  "ResetPasswordForm": {
+    "newPassword": "New password",
+    "genericError": "Something went wrong",
+    "saving": "Saving...",
+    "submit": "Update password"
+  },
+  "GoogleSignInButton": {
+    "signInWithGoogle": "Sign in with Google"
+  },
+  "LoginPage": {
+    "title": "Welcome back",
+    "description": "Log in to your account",
+    "or": "or",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up"
+  },
+  "RegisterPage": {
+    "title": "Create an account",
+    "description": "Welcome to Amralt.mn",
+    "or": "or",
+    "haveAccount": "Already have an account?",
+    "login": "Log in"
+  },
+  "ForgotPasswordPage": {
+    "title": "Forgot your password?",
+    "description": "Enter your registered email address"
+  },
+  "ResetPasswordPage": {
+    "invalidTitle": "Invalid link",
+    "invalidMessage": "The password reset link is invalid or has expired.",
+    "title": "Create a new password"
+  },
+  "ProfilePage": {
+    "title": "Profile",
+    "statSaved": "Saved",
+    "statMemberSince": "Member since",
+    "defaultName": "User",
+    "personalInfo": "Personal information"
+  },
+  "ProfileForm": {
+    "updated": "Profile updated",
+    "contactInfo": "Contact information",
+    "lastName": "Last name",
+    "firstName": "First name",
+    "phone": "Phone",
+    "country": "Country",
+    "selectCountry": "Select a country",
+    "address": "Address",
+    "foodTravelInterests": "Food & travel interests",
+    "allergies": "Allergies",
+    "favoriteFoods": "Favorite foods",
+    "dietaryRestrictions": "Dietary restrictions",
+    "travelInterests": "Travel interests",
+    "saving": "Saving...",
+    "save": "Save"
+  },
+  "ResortGrid": {
+    "noResortsTitle": "No resorts found",
+    "noResortsDescription": "Try changing your search terms or filters and try again."
+  },
+  "CompareTable": {
+    "feature": "Feature",
+    "price": "Price",
+    "rating": "Rating",
+    "distanceFromUb": "Distance from UB",
+    "location": "Location"
+  },
+  "FavoritesPage": {
+    "title": "My saved places",
+    "subtitle": "{count, plural, one {You've saved # resort} other {You've saved # resorts}}"
+  },
+  "ComparePage": {
+    "title": "Compare resorts",
+    "subtitle": "Compare your selected resorts side by side",
+    "emptyTitle": "No resorts selected to compare",
+    "emptyDescription": "Select at least 2 places using the 'Compare' button from the search results."
+  },
+  "AiPlannerPage": {
+    "title": "AI Trip Planner",
+    "heading": "Plan your trip with AI",
+    "description": "Enter your region, number of days, and guest count to get a day-by-day itinerary built from real resorts listed on Amralt.mn."
+  },
+  "TripPlannerForm": {
+    "budgetBudget": "Budget",
+    "budgetMid": "Mid-range",
+    "budgetLuxury": "Luxury",
+    "selectLocationError": "Please select a location",
+    "genericError": "Something went wrong. Please try again.",
+    "networkError": "A network error occurred. Please try again.",
+    "location": "Location",
+    "selectRegion": "Select a region",
+    "numberOfDays": "Number of days",
+    "numberOfGuests": "Number of guests",
+    "budget": "Budget",
+    "interestsLabel": "Interests, extra requests (optional)",
+    "interestsPlaceholder": "Tell us what you're interested in or any requests for the trip",
+    "planning": "Planning...",
+    "generatePlan": "Generate plan",
+    "emptyStateHint": "Fill in your details on the left and let AI generate your trip plan.",
+    "processing": "AI is putting together your plan..."
+  },
+  "AiPlannerApi": {
+    "invalidData": "Invalid data"
+  },
+  "Itinerary": {
+    "locationNotFound": "Location not found.",
+    "noResorts": "There are currently no approved resorts in the \"{location}\" region.",
+    "headerTitle": "{location} — {days}-day trip plan",
+    "headerMeta": "Guests: {guests} | Budget: {budget}",
+    "budgetUnknown": "unspecified",
+    "budget": {
+      "budget": "budget, economical",
+      "mid": "mid-range",
+      "luxury": "luxury, high-end"
+    },
+    "day1Title": "Day 1: Travel & arrival",
+    "day1Travel": "The trip from Ulaanbaatar to {resort} is about {km}, roughly {duration} by car.",
+    "day1Arrival": "Arrive at {resort} and check into {accommodation}.",
+    "day1DefaultAccommodation": "a suitable room",
+    "eveningActivity": "Evening: {activity}.",
+    "middleDayTitle": "Day {day}: Relax around {location}",
+    "lastDayTitle": "Day {days}: Return trip",
+    "lastDayMorning": "Depart {resort} in the morning and head back to Ulaanbaatar.",
+    "lastDayReturn": "The return trip is also about {km}, roughly {duration}.",
+    "budgetSummaryTitle": "Cost overview",
+    "budgetSummaryLine": "Accommodation: {accommodation} x {units} x {days} nights = {total}",
+    "budgetSummaryNote": "This is an approximate estimate and doesn't include food or transport costs.",
+    "alternativesTitle": "Other options",
+    "alternativeLine": "- {name} ({rating}/5, from {price} / night)",
+    "activity": {
+      "wifi": "relax and use the free WiFi",
+      "restaurant": "enjoy the restaurant's specialty dishes",
+      "bbq": "have a BBQ and enjoy family time",
+      "sauna": "unwind in the sauna",
+      "pool": "take a swim in the pool",
+      "playground": "spend time at the kids' playground",
+      "horse-riding": "go horseback riding and experience nomadic life",
+      "fishing": "go fishing along the riverbank",
+      "campfire": "build a campfire and talk under the stars",
+      "parking": "park your vehicle and explore the surroundings"
+    }
+  },
+  "AdminLayout": {
+    "brand": "Amralt Admin",
+    "navOverview": "Overview",
+    "navResorts": "Resorts",
+    "navUsers": "Users"
+  },
+  "AdminOverviewPage": {
+    "seriesUsers": "Users",
+    "seriesResorts": "Resorts",
+    "seriesFeatured": "Featured",
+    "combinedGrowth": "Combined Growth",
+    "chartAriaLabel": "Growth chart showing users, resorts, and featured resorts over time",
+    "resortStatus": "Resort Status"
+  },
+  "ResortStatus": {
+    "APPROVED": "Approved",
+    "PENDING": "Pending",
+    "REJECTED": "Rejected"
+  },
+  "DashboardShell": {
+    "back": "Back"
+  },
+  "ResortRowActions": {
+    "confirmDelete": "Are you sure you want to delete this resort?",
+    "deleted": "Resort deleted successfully",
+    "addedToFeatured": "Added to featured",
+    "removedFromFeatured": "Removed from featured",
+    "makeFeatured": "Make featured",
+    "removeFromFeatured": "Remove from featured"
+  },
+  "AdminResortsPage": {
+    "metadataTitle": "Resorts",
+    "resortCount": "{count, plural, one {# resort} other {# resorts}}",
+    "addResort": "Add new resort",
+    "emptyTitle": "No resorts yet",
+    "emptyDescription": "Add your first resort to get started.",
+    "viewCount": "{count, plural, one {# view} other {# views}}"
+  },
+  "AdminResortEditorPage": {
+    "newMetadataTitle": "Add new resort",
+    "editMetadataTitle": "Edit resort",
+    "accommodationsTitle": "Accommodations"
+  },
+  "ResortForm": {
+    "created": "Resort created",
+    "saved": "Resort saved",
+    "name": "Name",
+    "namePlaceholder": "Terelj Resort",
+    "description": "Description",
+    "province": "Province",
+    "provincePlaceholder": "Tuv province",
+    "district": "District",
+    "districtPlaceholder": "Gachuurt district",
+    "addressDetail": "Detailed address",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "distanceFromUb": "Distance from UB (km)",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "category": "Category",
+    "select": "Select",
+    "region": "Region",
+    "amenities": "Amenities",
+    "imageUrls": "Image URLs",
+    "addImage": "Add image",
+    "saving": "Saving...",
+    "createResort": "Create resort",
+    "save": "Save"
+  },
+  "AccommodationManager": {
+    "added": "Accommodation added",
+    "confirmDelete": "Delete this accommodation?",
+    "deleted": "Accommodation deleted",
+    "summary": "{capacity, plural, one {# guest} other {# guests}} · {price} / night",
+    "deleteAccommodation": "Delete accommodation",
+    "type": "Type",
+    "name": "Name",
+    "capacity": "Capacity",
+    "price": "Price (night)",
+    "facilities": "Facilities (comma separated)",
+    "facilitiesPlaceholder": "Stove, bathroom",
+    "imageUrls": "Image URLs (comma separated)",
+    "save": "Save",
+    "cancel": "Cancel",
+    "addAccommodation": "Add accommodation"
+  },
+  "AdminUsersPage": {
+    "metadataTitle": "Users",
+    "searchPlaceholder": "Search by name or email...",
+    "searchAriaLabel": "Search users by name or email",
+    "totalUsers": "{count, plural, one {# signed-in user} other {# signed-in users}} total",
+    "noUsersTitle": "No users found",
+    "noUsersDescription": "Try changing your search and search again.",
+    "unnamedUser": "Unnamed user",
+    "currentUser": "You",
+    "favoritesCount": "{count, plural, one {# saved place} other {# saved places}}",
+    "registeredAt": "Registered on: {date}",
+    "activeNow": "Active now",
+    "lastLoginAt": "Last signed in: {time}",
+    "roles": {
+      "USER": "User",
+      "ADMIN": "Admin"
+    },
+    "lastLogin": {
+      "justNow": "just now",
+      "minutesAgo": "{count, plural, one {# minute ago} other {# minutes ago}}",
+      "hoursAgo": "{count, plural, one {# hour ago} other {# hours ago}}",
+      "daysAgo": "{count, plural, one {# day ago} other {# days ago}}"
+    }
+  },
+  "UserRoleMenu": {
+    "makeUser": "Make User",
+    "makeAdmin": "Make Admin",
+    "roleUpdated": "Role updated successfully",
+    "changeRole": "Change user role"
+  },
+  "RootMetadata": {
+    "title": "Amralt.mn — Mongolia's resorts",
+    "description": "Discover, compare, and book Mongolia's most beautiful resorts, all in one place."
+  },
+  "SearchPageMetadata": {
+    "title": "Find resorts",
+    "description": "Filter and search Mongolia's resorts by location, price, and amenities."
+  },
+  "MapPageMetadata": {
+    "title": "Map",
+    "description": "Browse Mongolia's resorts on an interactive map."
+  },
+  "MapPage": {
+    "resortsOnMap": "{count, plural, one {# resort on the map} other {# resorts on the map}}"
+  },
+  "RegisterApi": {
+    "invalidData": "Invalid data",
+    "emailTaken": "An account with this email already exists"
+  },
+  "CompareBar": {
+    "remove": "Remove",
+    "clear": "Clear",
+    "compare": "Compare ({count})"
+  },
+  "ResortMap": {
+    "allProvinces": "All provinces",
+    "resortCount": "{count, plural, one {# resort} other {# resorts}}"
+  },
+  "MapResortPopup": {
+    "viewDetails": "View details"
+  },
+  "MapStatusGuard": {
+    "loadFailedTitle": "Couldn't load the map",
+    "loadFailedDescription": "Check your Google Cloud project settings (API enabled, billing) and try again."
+  },
+  "MapKeyMissing": {
+    "title": "Map isn't configured",
+    "descriptionBefore": "To display the map, set the",
+    "descriptionAfter": "environment variable."
+  },
+  "ReviewForm": {
+    "loginPromptBefore": "To write a review,",
+    "loginPromptLink": "log in",
+    "thankYou": "Thanks for your review!",
+    "posted": "Review posted",
+    "starAriaLabel": "{star} stars",
+    "commentPlaceholder": "Write your review about this place...",
+    "submitting": "Submitting...",
+    "submit": "Post review"
+  },
+  "ReviewStats": {
+    "reviewCount": "{count, plural, one {# review} other {# reviews}}"
+  },
+  "ReviewCard": {
+    "defaultName": "User"
+  }
+}
