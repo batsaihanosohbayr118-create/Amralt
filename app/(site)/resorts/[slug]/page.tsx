@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { MapPin, Route as RouteIcon } from "lucide-react";
 
 import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/db/prisma";
 import { getResortBySlug } from "@/lib/data/resorts";
 import { formatMNT } from "@/lib/format";
+import { localizedName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/request";
 import { RatingStars } from "@/components/resort/rating-stars";
 import { FavoriteButton } from "@/components/resort/favorite-button";
 import { ShareButton } from "@/components/resort/share-button";
@@ -26,18 +28,19 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const resort = await getResortBySlug(slug);
+  const [resort, locale] = await Promise.all([getResortBySlug(slug), getLocale()]);
   if (!resort) return {};
 
+  const resortName = localizedName(locale as Locale, resort.name, resort.nameEn);
   const description = resort.description.slice(0, 155);
   const cover = resort.images[0]?.url;
 
   return {
-    title: resort.name,
+    title: resortName,
     description,
     alternates: { canonical: `/resorts/${resort.slug}` },
     openGraph: {
-      title: `${resort.name} | Amralt.mn`,
+      title: `${resortName} | Amralt.mn`,
       description,
       type: "website",
       images: cover ? [{ url: cover, width: 1200, height: 800 }] : undefined,
@@ -52,9 +55,12 @@ export default async function ResortDetailPage({
 }) {
   const { slug } = await params;
   const t = await getTranslations("ResortDetail");
+  const locale = (await getLocale()) as Locale;
   const [resort, session] = await Promise.all([getResortBySlug(slug), auth()]);
 
   if (!resort || resort.status !== "APPROVED") notFound();
+
+  const resortName = localizedName(locale, resort.name, resort.nameEn);
 
   await prisma.resort.update({
     where: { id: resort.id },
@@ -72,7 +78,7 @@ export default async function ResortDetailPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
-    name: resort.name,
+    name: resortName,
     description: resort.description,
     image: resort.images.map((img) => img.url),
     address: {
@@ -88,7 +94,7 @@ export default async function ResortDetailPage({
       longitude: resort.longitude,
     },
     telephone: resort.phone ?? undefined,
-    priceRange: formatMNT(resort.priceFrom),
+    priceRange: formatMNT(resort.priceFrom, locale),
     aggregateRating:
       resort.reviewCount > 0
         ? {
@@ -108,13 +114,13 @@ export default async function ResortDetailPage({
 
       <ImageGallery
         images={resort.images.map((img) => ({ url: img.url, alt: img.alt }))}
-        resortName={resort.name}
+        resortName={resortName}
       />
 
       <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-heading text-2xl font-bold text-foreground sm:text-3xl">
-            {resort.name}
+            {resortName}
           </h1>
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5">
             <RatingStars rating={resort.rating} />
@@ -125,7 +131,7 @@ export default async function ResortDetailPage({
           </div>
           <p className="mt-3">
             <span className="font-heading text-2xl font-bold text-foreground">
-              {formatMNT(resort.priceFrom)}
+              {formatMNT(resort.priceFrom, locale)}
             </span>
             <span className="text-muted-foreground"> {t("perNight")}</span>
           </p>
@@ -147,7 +153,7 @@ export default async function ResortDetailPage({
             <RouteIcon /> {t("route")}
           </Button>
           <CallButton phone={resort.phone} />
-          <ShareButton title={resort.name} />
+          <ShareButton title={resortName} />
         </div>
       </div>
 
@@ -192,7 +198,7 @@ export default async function ResortDetailPage({
                   {
                     id: resort.id,
                     slug: resort.slug,
-                    name: resort.name,
+                    name: resortName,
                     latitude: resort.latitude,
                     longitude: resort.longitude,
                     priceFrom: resort.priceFrom,
@@ -213,7 +219,7 @@ export default async function ResortDetailPage({
             <div className="mt-4">
               <RoutePanel
                 destination={{ lat: resort.latitude, lng: resort.longitude }}
-                destinationLabel={resort.name}
+                destinationLabel={resortName}
               />
             </div>
           </section>

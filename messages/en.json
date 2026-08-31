@@ -355,7 +355,7 @@
     }
   },
   "AdminLayout": {
-    "brand": "Amralt Admin",
+    "brand": "Admin",
     "navOverview": "Overview",
     "navResorts": "Resorts",
     "navUsers": "Users"
@@ -402,6 +402,8 @@
     "saved": "Resort saved",
     "name": "Name",
     "namePlaceholder": "Terelj Resort",
+    "nameEn": "Name (English)",
+    "nameEnPlaceholder": "Terelj Resort",
     "description": "Description",
     "province": "Province",
     "provincePlaceholder": "Tuv province",

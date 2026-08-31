@@ -355,7 +355,7 @@
     }
   },
   "AdminLayout": {
-    "brand": "Amralt Админ",
+    "brand": "Админ",
     "navOverview": "Ерөнхий мэдээлэл",
     "navResorts": "Амралтын газрууд",
     "navUsers": "Хэрэглэгчид"
@@ -402,6 +402,8 @@
     "saved": "Амралтын газар хадгалагдлаа",
     "name": "Нэр",
     "namePlaceholder": "Тэрэлж Ресорт",
+    "nameEn": "Нэр (англи)",
+    "nameEnPlaceholder": "Terelj Resort",
     "description": "Тайлбар",
     "province": "Аймаг",
     "provincePlaceholder": "Төв аймаг",

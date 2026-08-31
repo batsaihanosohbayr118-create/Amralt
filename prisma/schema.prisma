@@ -105,6 +105,7 @@ model Category {
 model Location {
   id          String  @id @default(cuid())
   name        String
+  nameEn      String?
   slug        String  @unique
   province    String
   description String?
@@ -140,6 +141,7 @@ enum ResortStatus {
 model Resort {
   id          String  @id @default(cuid())
   name        String
+  nameEn      String?
   slug        String  @unique
   description String  @db.Text
 

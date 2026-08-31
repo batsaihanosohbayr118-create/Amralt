@@ -63,6 +63,7 @@ export function ResortForm({
     resolver: zodResolver(resortFormSchema),
     defaultValues: {
       name: "",
+      nameEn: "",
       description: "",
       province: "",
       district: "",
@@ -153,6 +154,20 @@ export function ResortForm({
                 <FormLabel>{t("name")}</FormLabel>
                 <FormControl>
                   <Input placeholder={t("namePlaceholder")} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="nameEn"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel>{t("nameEn")}</FormLabel>
+                <FormControl>
+                  <Input placeholder={t("nameEnPlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

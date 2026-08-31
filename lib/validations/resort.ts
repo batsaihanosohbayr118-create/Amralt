@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const resortFormSchema = z.object({
   name: z.string().min(2, "Нэрээ оруулна уу"),
+  nameEn: z.string().optional().or(z.literal("")),
   description: z.string().min(20, "Хамгийн багадаа 20 тэмдэгт бичнэ үү"),
   province: z.string().min(2, "Аймгаа оруулна уу"),
   district: z.string().min(2, "Сумаа оруулна уу"),

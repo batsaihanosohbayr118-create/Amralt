@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { auth } from "@/lib/auth/auth";
+import { localizedName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/request";
 import { getFavoriteResortIds } from "@/lib/actions/favorites";
 import {
   getAmenities,
@@ -28,10 +30,11 @@ export default async function SearchPage({
   searchParams: Promise<RawSearchParams>;
 }) {
   const t = await getTranslations("SearchPage");
+  const locale = (await getLocale()) as Locale;
   const rawParams = await searchParams;
   const filters = parseResortFilters(rawParams);
 
-  const [session, provinces, amenities, locations, { items, total, page, pageCount }] =
+  const [session, provinces, amenities, rawLocations, { items, total, page, pageCount }] =
     await Promise.all([
       auth(),
       getDistinctProvinces(),
@@ -39,6 +42,11 @@ export default async function SearchPage({
       getPopularLocations(),
       getResorts(filters),
     ]);
+
+  const locations = rawLocations.map((l) => ({
+    ...l,
+    name: localizedName(locale, l.name, l.nameEn),
+  }));
 
   const favoritedIds = session?.user
     ? await getFavoriteResortIds(session.user.id)

@@ -44,6 +44,7 @@ export async function createResort(input: ResortFormInput) {
   const resort = await prisma.resort.create({
     data: {
       name: data.name,
+      nameEn: data.nameEn || null,
       slug,
       description: data.description,
       province: data.province,
@@ -100,6 +101,7 @@ export async function updateResort(resortId: string, input: ResortFormInput) {
     where: { id: resortId },
     data: {
       name: data.name,
+      nameEn: data.nameEn || null,
       slug,
       description: data.description,
       province: data.province,

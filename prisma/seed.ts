@@ -78,6 +78,7 @@ const CATEGORIES = [
 const LOCATIONS = [
   {
     name: "Горхи-Тэрэлж",
+    nameEn: "Gorkhi-Terelj",
     slug: "gorkhi-terelj",
     province: "Төв аймаг",
     description: "Улаанбаатараас ойрхон, уул толгод, гол горхитой үзэсгэлэнт байгаль.",
@@ -87,6 +88,7 @@ const LOCATIONS = [
   },
   {
     name: "Хөвсгөл",
+    nameEn: "Khuvsgul",
     slug: "khuvsgul",
     province: "Хөвсгөл аймаг",
     description: "Монголын \"хөх сувд\" хэмээх Хөвсгөл нуур орчмын амралтын газрууд.",
@@ -96,6 +98,7 @@ const LOCATIONS = [
   },
   {
     name: "Богд Хан уул",
+    nameEn: "Bogd Khan Mountain",
     slug: "bogd-khan-uul",
     province: "Улаанбаатар",
     description: "Нийслэлийн өмнөд хэсэгт орших дархан цаазат уул, ойролцоо амралтын газрууд.",
@@ -105,6 +108,7 @@ const LOCATIONS = [
   },
   {
     name: "Зуунмод",
+    nameEn: "Zuunmod",
     slug: "zuunmod",
     province: "Төв аймаг",
     description: "Улаанбаатараас 45 км-т орших Төв аймгийн төв, гэр бүлийн амралтын газрууд.",
@@ -114,6 +118,7 @@ const LOCATIONS = [
   },
   {
     name: "Булган",
+    nameEn: "Bulgan",
     slug: "bulgan",
     province: "Булган аймаг",
     description: "Ой мод, гол мөрөнд баялаг Булган аймгийн байгаль.",
@@ -123,6 +128,7 @@ const LOCATIONS = [
   },
   {
     name: "Архангай",
+    nameEn: "Arkhangai",
     slug: "arkhangai",
     province: "Архангай аймаг",
     description: "Тэрхийн цагаан нуур, халуун рашаанаараа алдартай Архангай аймаг.",
@@ -132,6 +138,7 @@ const LOCATIONS = [
   },
   {
     name: "Өвөрхангай",
+    nameEn: "Uvurkhangai",
     slug: "uvurkhangai",
     province: "Өвөрхангай аймаг",
     description: "Орхоны хөндий, Хархорин орчмын түүхэн дурсгалт газрууд.",
@@ -143,6 +150,7 @@ const LOCATIONS = [
 
 type ResortSeed = {
   name: string;
+  nameEn: string;
   slug: string;
   locationSlug: string;
   categorySlug: string;
@@ -169,6 +177,7 @@ type ResortSeed = {
 const RESORTS: ResortSeed[] = [
   {
     name: "Тэрэлж Ресорт",
+    nameEn: "Terelj Resort",
     slug: "terelj-resort",
     locationSlug: "gorkhi-terelj",
     categorySlug: "amraltiin-gazar",
@@ -191,6 +200,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Горхи Эко Кэмп",
+    nameEn: "Gorkhi Eco Camp",
     slug: "gorkhi-eco-camp",
     locationSlug: "gorkhi-terelj",
     categorySlug: "juulchnii-baaz",
@@ -210,6 +220,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Хөвсгөл Нуур Лодж",
+    nameEn: "Khuvsgul Lake Lodge",
     slug: "khuvsgul-lake-lodge",
     locationSlug: "khuvsgul",
     categorySlug: "amraltiin-gazar",
@@ -230,6 +241,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Хатгал Нуур Кэмп",
+    nameEn: "Khatgal Lake Camp",
     slug: "khatgal-nuur-camp",
     locationSlug: "khuvsgul",
     categorySlug: "juulchnii-baaz",
@@ -249,6 +261,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Богд Хан Нэйчур Ресорт",
+    nameEn: "Bogd Khan Nature Resort",
     slug: "bogd-khan-nature-resort",
     locationSlug: "bogd-khan-uul",
     categorySlug: "amraltiin-gazar",
@@ -268,6 +281,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Зайсан Хилл Ритрит",
+    nameEn: "Zaisan Hill Retreat",
     slug: "zaisan-hill-retreat",
     locationSlug: "bogd-khan-uul",
     categorySlug: "amraltiin-gazar",
@@ -286,6 +300,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Зуунмод Гэр Бүлийн Кэмп",
+    nameEn: "Zuunmod Family Camp",
     slug: "zuunmod-family-camp",
     locationSlug: "zuunmod",
     categorySlug: "amraltiin-gazar",
@@ -305,6 +320,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Булган Гол Лодж",
+    nameEn: "Bulgan River Lodge",
     slug: "bulgan-river-lodge",
     locationSlug: "bulgan",
     categorySlug: "amraltiin-gazar",
@@ -324,6 +340,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Цагаан Нуур Ресорт",
+    nameEn: "Tsagaan Nuur Resort",
     slug: "tsagaan-nuur-resort",
     locationSlug: "arkhangai",
     categorySlug: "amraltiin-gazar",
@@ -344,6 +361,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Архангай Рашаан Ресорт",
+    nameEn: "Arkhangai Hot Springs Resort",
     slug: "arkhangai-hot-spring-resort",
     locationSlug: "arkhangai",
     categorySlug: "amraltiin-gazar",
@@ -363,6 +381,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Орхоны Хөндий Кэмп",
+    nameEn: "Orkhon Valley Camp",
     slug: "orkhon-valley-camp",
     locationSlug: "uvurkhangai",
     categorySlug: "juulchnii-baaz",
@@ -381,6 +400,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Хархорум Херитаж Ресорт",
+    nameEn: "Kharkhorum Heritage Resort",
     slug: "kharkhorum-heritage-resort",
     locationSlug: "uvurkhangai",
     categorySlug: "amraltiin-gazar",
@@ -400,6 +420,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Nomad Sky Glamping",
+    nameEn: "Nomad Sky Glamping",
     slug: "nomad-sky-glamping",
     locationSlug: "gorkhi-terelj",
     categorySlug: "glemping",
@@ -419,6 +440,7 @@ const RESORTS: ResortSeed[] = [
   },
   {
     name: "Steppe Budget Camp",
+    nameEn: "Steppe Budget Camp",
     slug: "steppe-budget-camp",
     locationSlug: "zuunmod",
     categorySlug: "juulchnii-baaz",
@@ -504,6 +526,7 @@ async function main() {
       where: { slug: l.slug },
       update: {
         name: l.name,
+        nameEn: l.nameEn,
         province: l.province,
         description: l.description,
         latitude: l.lat,
@@ -513,6 +536,7 @@ async function main() {
       },
       create: {
         name: l.name,
+        nameEn: l.nameEn,
         slug: l.slug,
         province: l.province,
         description: l.description,
@@ -546,6 +570,7 @@ async function main() {
       where: { slug: r.slug },
       update: {
         name: r.name,
+        nameEn: r.nameEn,
         description: r.description,
         province: r.province,
         district: r.district,
@@ -562,6 +587,7 @@ async function main() {
       },
       create: {
         name: r.name,
+        nameEn: r.nameEn,
         slug: r.slug,
         description: r.description,
         province: r.province,

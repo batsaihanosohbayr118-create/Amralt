@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowRight, Building2, MapPin, Sparkles, Star } from "lucide-react";
 
 import { auth } from "@/lib/auth/auth";
@@ -14,15 +14,23 @@ import { SearchBar } from "@/components/search/search-bar";
 import { ResortGrid } from "@/components/resort/resort-grid";
 import { DestinationCard } from "@/components/destination-card";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { localizedName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/request";
 
 export default async function HomePage() {
   const t = await getTranslations("Home");
+  const locale = (await getLocale()) as Locale;
   const [session, locations, featuredResorts, stats] = await Promise.all([
     auth(),
     getPopularLocations(),
     getFeaturedResorts(8),
     getHomeStats(),
   ]);
+
+  const searchBarLocations = locations.map((l) => ({
+    slug: l.slug,
+    name: localizedName(locale, l.name, l.nameEn),
+  }));
 
   const favoritedIds = session?.user
     ? await getFavoriteResortIds(session.user.id)
@@ -61,7 +69,7 @@ export default async function HomePage() {
           </p>
 
           <div className="animate-in fade-in slide-in-from-bottom-6 mt-9 w-full max-w-4xl delay-500 duration-700 fill-mode-both">
-            <SearchBar locations={locations} />
+            <SearchBar locations={searchBarLocations} />
           </div>
 
           <div className="animate-in fade-in mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-white/90 delay-700 duration-700 fill-mode-both">

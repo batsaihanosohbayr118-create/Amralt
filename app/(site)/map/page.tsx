@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { getResortsForMap } from "@/lib/data/resorts";
 import { parseResortFilters, type RawSearchParams } from "@/lib/search-params";
 import { ResortMap } from "@/components/map/resort-map";
+import { localizedName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/request";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("MapPageMetadata");
@@ -16,6 +18,7 @@ export default async function MapPage({
   searchParams: Promise<RawSearchParams>;
 }) {
   const t = await getTranslations("MapPage");
+  const locale = (await getLocale()) as Locale;
   const rawParams = await searchParams;
   const filters = parseResortFilters(rawParams);
   const resorts = await getResortsForMap(filters);
@@ -23,14 +26,16 @@ export default async function MapPage({
   const mapResorts = resorts.map((r) => ({
     id: r.id,
     slug: r.slug,
-    name: r.name,
+    name: localizedName(locale, r.name, r.nameEn),
     latitude: r.latitude,
     longitude: r.longitude,
     priceFrom: r.priceFrom,
     rating: r.rating,
     province: r.province,
     coverUrl: r.images[0]?.url,
-    locationName: r.location?.name,
+    locationName: r.location
+      ? localizedName(locale, r.location.name, r.location.nameEn)
+      : undefined,
   }));
 
   return (

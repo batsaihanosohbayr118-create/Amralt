@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Check, Users } from "lucide-react";
 
 import { formatMNT } from "@/lib/format";
+import type { Locale } from "@/i18n/request";
 import type { AccommodationType } from "@/lib/generated/prisma/enums";
 
 type Props = {
@@ -20,6 +21,7 @@ type Props = {
 export function AccommodationCard({ accommodation }: Props) {
   const t = useTranslations("AccommodationType");
   const tCard = useTranslations("AccommodationCard");
+  const locale = useLocale() as Locale;
   const cover = accommodation.images[0];
 
   return (
@@ -68,7 +70,7 @@ export function AccommodationCard({ accommodation }: Props) {
         <div className="mt-auto pt-2">
           <div>
             <span className="font-heading text-lg font-bold text-primary">
-              {formatMNT(accommodation.price)}
+              {formatMNT(accommodation.price, locale)}
             </span>
             <span className="text-sm text-muted-foreground"> {tCard("perNight")}</span>
           </div>

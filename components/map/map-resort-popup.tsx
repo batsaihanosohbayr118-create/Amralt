@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 
 import { RatingStars } from "@/components/resort/rating-stars";
 import { formatMNT } from "@/lib/format";
 import type { MapResort } from "@/components/map/resort-map";
+import type { Locale } from "@/i18n/request";
 
 type Props = {
   resort: MapResort;
@@ -13,6 +14,7 @@ type Props = {
 
 export function MapResortPopup({ resort, onNavigate }: Props) {
   const t = useTranslations("MapResortPopup");
+  const locale = useLocale() as Locale;
   return (
     <button
       type="button"
@@ -36,7 +38,7 @@ export function MapResortPopup({ resort, onNavigate }: Props) {
         </p>
         <RatingStars rating={resort.rating} size="sm" />
         <p className="font-heading text-sm font-bold text-foreground">
-          {formatMNT(resort.priceFrom)}
+          {formatMNT(resort.priceFrom, locale)}
         </p>
         <span className="mt-1 flex items-center gap-1 text-xs font-semibold text-primary">
           {t("viewDetails")} <ArrowRight className="size-3.5" />

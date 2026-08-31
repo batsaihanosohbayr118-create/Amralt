@@ -1,11 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+
+import { localizedName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/request";
 
 type Props = {
   location: {
     slug: string;
     name: string;
+    nameEn?: string | null;
     image: string | null;
     _count: { resorts: number };
   };
@@ -13,6 +17,8 @@ type Props = {
 
 export function DestinationCard({ location }: Props) {
   const t = useTranslations("DestinationCard");
+  const locale = useLocale() as Locale;
+  const name = localizedName(locale, location.name, location.nameEn);
   return (
     <Link
       href={`/search?location=${location.slug}`}
@@ -22,7 +28,7 @@ export function DestinationCard({ location }: Props) {
         {location.image && (
           <Image
             src={location.image}
-            alt={location.name}
+            alt={name}
             fill
             sizes="160px"
             className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -31,7 +37,7 @@ export function DestinationCard({ location }: Props) {
       </div>
       <div className="text-center">
         <p className="font-heading text-sm font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">
-          {location.name}
+          {name}
         </p>
         <p className="text-xs text-muted-foreground">
           {t("resortCount", { count: location._count.resorts })}

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Sparkles } from "lucide-react";
 
 import { getPopularLocations } from "@/lib/data/resorts";
 import { TripPlannerForm } from "@/components/ai/trip-planner-form";
+import { localizedName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/request";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("AiPlannerPage");
@@ -13,6 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AiPlannerPage() {
   const locations = await getPopularLocations();
   const t = await getTranslations("AiPlannerPage");
+  const locale = (await getLocale()) as Locale;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
@@ -31,7 +34,10 @@ export default async function AiPlannerPage() {
 
       <div className="mt-8">
         <TripPlannerForm
-          locations={locations.map((l) => ({ slug: l.slug, name: l.name }))}
+          locations={locations.map((l) => ({
+            slug: l.slug,
+            name: localizedName(locale, l.name, l.nameEn),
+          }))}
         />
       </div>
     </div>

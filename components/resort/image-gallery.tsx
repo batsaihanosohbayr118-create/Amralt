@@ -30,7 +30,7 @@ export function ImageGallery({ images, resortName }: Props) {
     );
   }
 
-  const visible = images.slice(0, 5);
+  const visible = images.slice(0, 8);
 
   function openAt(i: number) {
     setIndex(i);

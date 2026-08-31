@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { prisma } from "@/lib/db/prisma";
 import { formatDuration, formatKm, formatMNT } from "@/lib/format";
+import { localizedName } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/request";
 import type { TripPlannerInput } from "@/lib/validations/trip-planner";
 
@@ -101,9 +102,10 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
   }
 
   const resorts = await fetchResorts(location.id);
+  const locationName = localizedName(locale, location.name, location.nameEn);
   if (resorts.length === 0) {
     return {
-      error: t("noResorts", { location: location.name }) as string,
+      error: t("noResorts", { location: locationName }) as string,
     };
   }
 
@@ -112,6 +114,7 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
   );
 
   const primary = ranked[0];
+  const primaryName = localizedName(locale, primary.name, primary.nameEn);
   const picked = pickAccommodation(primary, input.guests);
   const activities = buildActivityList(primary, input.interests ?? "");
 
@@ -121,7 +124,7 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
   const lines: string[] = [];
 
   lines.push(
-    t("headerTitle", { location: location.name, days: input.days }),
+    t("headerTitle", { location: locationName, days: input.days }),
     t("headerMeta", {
       guests: input.guests,
       budget: input.budget ? t(`budget.${input.budget}`) : t("budgetUnknown"),
@@ -133,15 +136,15 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
   if (distanceKm != null && travelMinutes != null) {
     day1.push(
       t("day1Travel", {
-        resort: primary.name,
-        km: formatKm(distanceKm),
-        duration: formatDuration(travelMinutes),
+        resort: primaryName,
+        km: formatKm(distanceKm, locale),
+        duration: formatDuration(travelMinutes, locale),
       })
     );
   }
   day1.push(
     t("day1Arrival", {
-      resort: primary.name,
+      resort: primaryName,
       accommodation: picked?.accommodation.name ?? t("day1DefaultAccommodation"),
     })
   );
@@ -157,7 +160,7 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
       activities[(d - 1) % activities.length],
     ].filter((v, i, arr) => arr.indexOf(v) === i);
 
-    const dayLines = [t("middleDayTitle", { day: d, location: location.name })];
+    const dayLines = [t("middleDayTitle", { day: d, location: locationName })];
     for (const act of acts) {
       dayLines.push(`- ${t(`activity.${act}`)}.`);
     }
@@ -171,11 +174,14 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
   if (input.days > 1) {
     const lastDay = [
       t("lastDayTitle", { days: input.days }),
-      t("lastDayMorning", { resort: primary.name }),
+      t("lastDayMorning", { resort: primaryName }),
     ];
     if (distanceKm != null && travelMinutes != null) {
       lastDay.push(
-        t("lastDayReturn", { km: formatKm(distanceKm), duration: formatDuration(travelMinutes) })
+        t("lastDayReturn", {
+          km: formatKm(distanceKm, locale),
+          duration: formatDuration(travelMinutes, locale),
+        })
       );
     }
     lines.push(lastDay.join("\n"));
@@ -191,7 +197,7 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
           accommodation: picked.accommodation.name,
           units: picked.units,
           days: input.days,
-          total: formatMNT(total),
+          total: formatMNT(total, locale),
         }),
         t("budgetSummaryNote"),
       ].join("\n")
@@ -206,9 +212,9 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
         t("alternativesTitle"),
         ...alternatives.map((r) =>
           t("alternativeLine", {
-            name: r.name,
+            name: localizedName(locale, r.name, r.nameEn),
             rating: r.rating.toFixed(1),
-            price: formatMNT(r.priceFrom),
+            price: formatMNT(r.priceFrom, locale),
           })
         ),
       ].join("\n")
@@ -217,6 +223,6 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
 
   return {
     text: lines.join("\n\n"),
-    locationName: location.name,
+    locationName,
   };
 }

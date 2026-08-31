@@ -47,6 +47,7 @@ export default async function EditResortPage({
         amenities={amenities}
         defaultValues={{
           name: resort.name,
+          nameEn: resort.nameEn ?? "",
           description: resort.description,
           province: resort.province,
           district: resort.district,

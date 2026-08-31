@@ -1,18 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Check, X } from "lucide-react";
 
 import { RatingStars } from "@/components/resort/rating-stars";
 import { AmenityIcon } from "@/components/amenity-icon";
 import { formatKm, formatMNT } from "@/lib/format";
+import { localizedName } from "@/lib/i18n-content";
 import type { getResortsByIds } from "@/lib/data/resorts";
+import type { Locale } from "@/i18n/request";
 
 type Resort = Awaited<ReturnType<typeof getResortsByIds>>[number];
 
 export function CompareTable({ resorts }: { resorts: Resort[] }) {
   const t = useTranslations("CompareTable");
   const amenityT = useTranslations("AmenityLabels");
+  const locale = useLocale() as Locale;
   const amenitySet = new Map<string, { name: string; icon: string }>();
   for (const resort of resorts) {
     for (const { amenity } of resort.amenities) {
@@ -36,7 +39,7 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                     {resort.images[0] && (
                       <Image
                         src={resort.images[0].url}
-                        alt={resort.name}
+                        alt={localizedName(locale, resort.name, resort.nameEn)}
                         fill
                         sizes="200px"
                         className="object-cover"
@@ -44,7 +47,7 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                     )}
                   </div>
                   <p className="mt-2 font-heading text-sm font-semibold text-foreground hover:text-primary">
-                    {resort.name}
+                    {localizedName(locale, resort.name, resort.nameEn)}
                   </p>
                 </Link>
               </th>
@@ -59,7 +62,7 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                   <span className="mb-1 block text-xs font-medium text-muted-foreground sm:hidden">
                     {t("price")}
                   </span>
-                {formatMNT(resort.priceFrom)}
+                {formatMNT(resort.priceFrom, locale)}
               </td>
             ))}
           </tr>
@@ -86,7 +89,7 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                   {t("distanceFromUb")}
                 </span>
                 {resort.distanceFromUbKm != null
-                  ? formatKm(resort.distanceFromUbKm)
+                  ? formatKm(resort.distanceFromUbKm, locale)
                   : "—"}
               </td>
             ))}
@@ -100,7 +103,9 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                 <span className="mb-1 block text-xs font-medium text-muted-foreground sm:hidden">
                   {t("location")}
                 </span>
-                {resort.location?.name ?? resort.province}
+                {resort.location
+                  ? localizedName(locale, resort.location.name, resort.location.nameEn)
+                  : resort.province}
               </td>
             ))}
           </tr>
