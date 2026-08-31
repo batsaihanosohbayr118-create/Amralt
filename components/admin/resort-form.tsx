@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2, Upload } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +33,7 @@ import {
   type ResortFormValues,
 } from "@/lib/validations/resort";
 import { createResort, updateResort } from "@/lib/actions/resorts";
+import { uploadImage } from "@/lib/actions/upload";
 
 type Option = { id: string; name: string };
 
@@ -82,12 +83,39 @@ export function ResortForm({
   const [imageUrls, setImageUrls] = useState<string[]>(
     defaultValues?.imageUrls?.length ? defaultValues.imageUrls : [""]
   );
+  const [isUploading, startUpload] = useTransition();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   function updateImageUrl(index: number, value: string) {
     setImageUrls((prev) => prev.map((u, i) => (i === index ? value : u)));
   }
   function removeImageUrl(index: number) {
     setImageUrls((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (files.length === 0) return;
+
+    startUpload(async () => {
+      for (const file of files) {
+        const fd = new FormData();
+        fd.append("file", file);
+        const result = await uploadImage(fd);
+        if (!result.ok) {
+          toast.error(result.error);
+          continue;
+        }
+        setImageUrls((prev) => {
+          const empty = prev.findIndex((u) => u.trim().length === 0);
+          if (empty !== -1) {
+            return prev.map((u, i) => (i === empty ? result.url : u));
+          }
+          return [...prev, result.url];
+        });
+      }
+    });
   }
 
   function onSubmit(values: ResortFormInput) {
@@ -381,14 +409,34 @@ export function ResortForm({
                 </Button>
               </div>
             ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setImageUrls((prev) => [...prev, ""])}
-            >
-              <Plus /> {t("addImage")}
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setImageUrls((prev) => [...prev, ""])}
+              >
+                <Plus /> {t("addImage")}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={isUploading}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {isUploading ? <Loader2 className="animate-spin" /> : <Upload />}
+                {t("uploadImage")}
+              </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={handleFileSelect}
+              />
+            </div>
           </div>
         </div>
 

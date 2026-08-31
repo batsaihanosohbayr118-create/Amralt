@@ -420,6 +420,7 @@
     "amenities": "Amenities",
     "imageUrls": "Image URLs",
     "addImage": "Add image",
+    "uploadImage": "Upload from device",
     "saving": "Saving...",
     "createResort": "Create resort",
     "save": "Save"
@@ -439,7 +440,8 @@
     "imageUrls": "Image URLs (comma separated)",
     "save": "Save",
     "cancel": "Cancel",
-    "addAccommodation": "Add accommodation"
+    "addAccommodation": "Add accommodation",
+    "uploadImage": "Upload from device"
   },
   "AdminUsersPage": {
     "metadataTitle": "Users",

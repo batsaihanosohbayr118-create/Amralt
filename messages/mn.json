@@ -420,6 +420,7 @@
     "amenities": "Тав тух",
     "imageUrls": "Зургийн URL",
     "addImage": "Зураг нэмэх",
+    "uploadImage": "Төхөөрөмжөөс оруулах",
     "saving": "Хадгалж байна...",
     "createResort": "Амралтын газар нэмэх",
     "save": "Хадгалах"
@@ -439,7 +440,8 @@
     "imageUrls": "Зургийн URL (таслалаар тусгаарлана)",
     "save": "Хадгалах",
     "cancel": "Цуцлах",
-    "addAccommodation": "Байрны сонголт нэмэх"
+    "addAccommodation": "Байрны сонголт нэмэх",
+    "uploadImage": "Төхөөрөмжөөс оруулах"
   },
   "AdminUsersPage": {
     "metadataTitle": "Хэрэглэгчид",

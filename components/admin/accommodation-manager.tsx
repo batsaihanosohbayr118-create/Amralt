@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2, Upload } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,7 @@ import {
   createAccommodation,
   deleteAccommodation,
 } from "@/lib/actions/accommodations";
+import { uploadImage } from "@/lib/actions/upload";
 
 const ACCOMMODATION_TYPES: AccommodationType[] = [
   "GER",
@@ -59,6 +60,27 @@ export function AccommodationManager({
   const [price, setPrice] = useState(100000);
   const [facilities, setFacilities] = useState("");
   const [imageUrls, setImageUrls] = useState("");
+  const [isUploading, startUpload] = useTransition();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (files.length === 0) return;
+
+    startUpload(async () => {
+      for (const file of files) {
+        const fd = new FormData();
+        fd.append("file", file);
+        const result = await uploadImage(fd);
+        if (!result.ok) {
+          toast.error(result.error);
+          continue;
+        }
+        setImageUrls((prev) => (prev.trim() ? `${prev}, ${result.url}` : result.url));
+      }
+    });
+  }
 
   function resetForm() {
     setType("GER");
@@ -190,11 +212,31 @@ export function AccommodationManager({
             </div>
             <div className="space-y-1.5 sm:col-span-2">
               <Label>{t("imageUrls")}</Label>
-              <Input
-                value={imageUrls}
-                onChange={(e) => setImageUrls(e.target.value)}
-                placeholder="https://..., https://..."
-              />
+              <div className="flex gap-2">
+                <Input
+                  value={imageUrls}
+                  onChange={(e) => setImageUrls(e.target.value)}
+                  placeholder="https://..., https://..."
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  disabled={isUploading}
+                  onClick={() => fileInputRef.current?.click()}
+                  aria-label={t("uploadImage")}
+                >
+                  {isUploading ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}
+                </Button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={handleFileSelect}
+                />
+              </div>
             </div>
           </div>
           <div className="flex gap-2">

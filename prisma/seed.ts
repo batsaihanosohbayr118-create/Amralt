@@ -6,8 +6,54 @@ import bcrypt from "bcryptjs";
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
+// Curated, verified-reachable Unsplash CDN photo ids (nature/mountains/lakes/camping).
+// picsum.photos was unreliable in production, so seed images are pinned to these instead.
+const PHOTO_POOL = [
+  "photo-1506905925346-21bda4d32df4",
+  "photo-1469474968028-56623f02e42e",
+  "photo-1441974231531-c6227db76b6e",
+  "photo-1470071459604-3b5ec3a7fe05",
+  "photo-1501785888041-af3ef285b470",
+  "photo-1519681393784-d120267933ba",
+  "photo-1502082553048-f009c37129b9",
+  "photo-1440342359743-84fcb8c21f21",
+  "photo-1472214103451-9374bd1c798e",
+  "photo-1447752875215-b2761acb3c5d",
+  "photo-1500534623283-312aade485b7",
+  "photo-1476514525535-07fb3b4ae5f1",
+  "photo-1454496522488-7a8e488e8606",
+  "photo-1519046904884-53103b34b206",
+  "photo-1483728642387-6c3bdd6c93e5",
+  "photo-1490750967868-88aa4486c946",
+  "photo-1508739773434-c26b3d09e071",
+  "photo-1533587851505-d119e13fa0d7",
+  "photo-1504280390367-361c6d9f38f4",
+  "photo-1518495973542-4542c06a5843",
+  "photo-1441716844725-09cedc13a4e7",
+  "photo-1445307806294-bff7f67ff225",
+  "photo-1523712999610-f77fbcfc3843",
+  "photo-1553095066-5014bc7b7f2d",
+  "photo-1571687949921-1306bfb24b72",
+  "photo-1517824806704-9040b037703b",
+];
+
+function hashSeed(seed: string) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) {
+    h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  }
+  return h;
+}
+
+function photoUrl(id: string, w: number, h: number) {
+  return `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop`;
+}
+
 function img(seed: string, n: number) {
-  return Array.from({ length: n }, (_, i) => `https://picsum.photos/seed/${seed}-${i + 1}/1600/1000`);
+  const start = hashSeed(seed) % PHOTO_POOL.length;
+  return Array.from({ length: n }, (_, i) =>
+    photoUrl(PHOTO_POOL[(start + i) % PHOTO_POOL.length], 1600, 1000)
+  );
 }
 
 const AMENITIES = [
@@ -463,7 +509,7 @@ async function main() {
         latitude: l.lat,
         longitude: l.lng,
         featured: l.featured,
-        image: `https://picsum.photos/seed/${l.slug}-cover/1200/900`,
+        image: photoUrl(PHOTO_POOL[hashSeed(`${l.slug}-cover`) % PHOTO_POOL.length], 1200, 900),
       },
       create: {
         name: l.name,
@@ -473,7 +519,7 @@ async function main() {
         latitude: l.lat,
         longitude: l.lng,
         featured: l.featured,
-        image: `https://picsum.photos/seed/${l.slug}-cover/1200/900`,
+        image: photoUrl(PHOTO_POOL[hashSeed(`${l.slug}-cover`) % PHOTO_POOL.length], 1200, 900),
       },
     });
     locationBySlug.set(l.slug, created);
