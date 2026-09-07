@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { X } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/select";
 import { AmenityIcon } from "@/components/amenity-icon";
 import { useFilterParams } from "@/lib/hooks/use-filter-params";
+import { localizedProvince } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/request";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -26,6 +28,7 @@ type Props = {
 export function FilterSidebar({ provinces, amenities, className }: Props) {
   const t = useTranslations("FilterSidebar");
   const amenityT = useTranslations("AmenityLabels");
+  const locale = useLocale() as Locale;
   const { searchParams, setParam, toggleListParam, clearAll } = useFilterParams();
 
   const ACCOMMODATION_TYPES = [
@@ -88,7 +91,7 @@ export function FilterSidebar({ provinces, amenities, className }: Props) {
           <SelectContent>
             {provinces.map((p) => (
               <SelectItem key={p} value={p}>
-                {p}
+                {localizedProvince(locale, p)}
               </SelectItem>
             ))}
           </SelectContent>

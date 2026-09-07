@@ -2,17 +2,31 @@
 
 import { useState } from "react";
 import { useLocale } from "next-intl";
+import { Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { CountryFlag } from "@/components/ui/country-flag";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+function flagUrl(code: string) {
+  return `https://flagcdn.com/${code}.svg`;
+}
 
 const LOCALES = [
-  { code: "mn", label: "MN" },
-  { code: "en", label: "EN" },
+  { code: "mn", label: "MN", name: "Монгол", flag: flagUrl("mn") },
+  { code: "en", label: "EN", name: "English", flag: flagUrl("gb") },
+  { code: "zh", label: "中", name: "中文", flag: flagUrl("cn") },
 ] as const;
 
 export function LanguageSwitcher({ transparent }: { transparent?: boolean }) {
   const locale = useLocale();
   const [isPending, setIsPending] = useState(false);
+  const current = LOCALES.find((l) => l.code === locale) ?? LOCALES[0];
 
   async function switchLocale(next: string) {
     if (next === locale || isPending) return;
@@ -29,35 +43,29 @@ export function LanguageSwitcher({ transparent }: { transparent?: boolean }) {
   }
 
   return (
-    <div
-      className={cn(
-        "flex items-center gap-0.5 rounded-full border p-0.5 text-xs font-semibold",
-        transparent
-          ? "border-white/25 bg-white/10"
-          : "border-border bg-secondary/50"
-      )}
-    >
-      {LOCALES.map((l) => (
-        <button
-          key={l.code}
-          type="button"
-          onClick={() => switchLocale(l.code)}
-          disabled={isPending}
-          aria-pressed={locale === l.code}
-          className={cn(
-            "rounded-full px-2 py-1 transition-colors disabled:opacity-60",
-            locale === l.code
-              ? transparent
-                ? "bg-white text-primary"
-                : "bg-primary text-primary-foreground"
-              : transparent
-                ? "text-white/80 hover:text-white"
-                : "text-muted-foreground hover:text-foreground"
-          )}
-        >
-          {l.label}
-        </button>
-      ))}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        disabled={isPending}
+        aria-label="Language"
+        className={cn(
+          "flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-semibold transition-colors disabled:opacity-60",
+          transparent
+            ? "border-white/25 bg-white/10 text-white/90 hover:text-white"
+            : "border-border bg-secondary/50 text-foreground hover:bg-secondary"
+        )}
+      >
+        <CountryFlag src={current.flag} />
+        {current.label}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-40">
+        {LOCALES.map((l) => (
+          <DropdownMenuItem key={l.code} onClick={() => switchLocale(l.code)}>
+            <CountryFlag src={l.flag} />
+            <span className="flex-1">{l.name}</span>
+            {locale === l.code && <Check className="size-4" />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

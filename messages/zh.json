@@ -1,0 +1,548 @@
+{
+  "Header": {
+    "navHome": "首页",
+    "navSearch": "搜索",
+    "navMap": "地图",
+    "aiPlanner": "AI 行程规划",
+    "favorites": "收藏地点",
+    "login": "登录",
+    "register": "注册"
+  },
+  "Footer": {
+    "travel": "探索",
+    "findResorts": "查找度假村",
+    "map": "地图",
+    "compare": "对比",
+    "regions": "地区",
+    "regionGorkhiTerelj": "戈尔希-特勒尔吉",
+    "regionKhuvsgul": "库苏古尔",
+    "regionArkhangai": "杭爱",
+    "tagline": "一站式平台，助您发现、比较蒙古国最佳度假村并规划行程。",
+    "copyright": "© {year} Amralt.mn 版权所有。",
+    "madeIn": "蒙古制造"
+  },
+  "MobileNav": {
+    "home": "首页",
+    "search": "搜索",
+    "map": "地图",
+    "favorites": "收藏",
+    "profile": "个人资料"
+  },
+  "UserMenu": {
+    "menuAria": "个人资料菜单",
+    "profile": "个人资料",
+    "favorites": "收藏地点",
+    "compare": "对比",
+    "adminPanel": "管理面板",
+    "logout": "退出登录"
+  },
+  "Home": {
+    "aiBadge": "用 AI 规划您的旅程",
+    "heroBefore": "蒙古国哪里",
+    "heroHighlight": "值得您放松身心",
+    "heroAfter": "？",
+    "subtitle": "一站式发现蒙古国最美的度假村。",
+    "statResorts": "{count}+ 家度假村",
+    "statProvinces": "{count} 个省份",
+    "statRating": "平均评分 {rating}",
+    "popularRegions": "热门地区",
+    "popularRegionsSubtitle": "从最受欢迎的旅行地区中选择",
+    "popularResorts": "热门度假村",
+    "popularResortsSubtitle": "来自旅客评分最高的地点",
+    "viewAll": "查看全部"
+  },
+  "SearchBar": {
+    "location": "位置",
+    "landscape": "景观类型",
+    "landscapeSteppe": "草原",
+    "landscapeKhangai": "杭爱山（森林山地）",
+    "landscapeLake": "湖泊",
+    "landscapeWater": "海洋、水域",
+    "totalBudget": "总预算",
+    "howManyDays": "几天？",
+    "days": "{count} 天",
+    "guests": "人数",
+    "guestsCount": "{count} 人",
+    "search": "搜索"
+  },
+  "ResortCard": {
+    "distanceFromUb": "距乌兰巴托 {distance}",
+    "perNight": "/ 晚"
+  },
+  "CategoryLabels": {
+    "amraltiin-gazar": "度假村",
+    "juulchnii-baaz": "旅游营地",
+    "glemping": "豪华露营地"
+  },
+  "CompareToggle": {
+    "compare": "对比",
+    "selected": "已选择",
+    "maxItemsError": "最多可对比 {maxItems} 个地点。"
+  },
+  "DestinationCard": {
+    "resortCount": "{count} 家度假村"
+  },
+  "SearchPage": {
+    "resultsCount": "找到 <b>{count}</b> 家度假村"
+  },
+  "FilterSidebar": {
+    "title": "筛选",
+    "clear": "清除",
+    "province": "省份",
+    "allProvinces": "所有省份",
+    "rating": "评分",
+    "distanceFromUb": "距乌兰巴托距离",
+    "distanceUnder": "< {km} 公里",
+    "accommodationType": "住宿类型",
+    "typeGer": "蒙古包",
+    "typeFamilyHouse": "别墅",
+    "typeVipHouse": "VIP 别墅",
+    "amenities": "设施"
+  },
+  "SortSelect": {
+    "sortBy": "排序方式",
+    "popular": "最受欢迎",
+    "rating": "评分最高",
+    "priceAsc": "价格：从低到高",
+    "priceDesc": "价格：从高到低",
+    "distance": "最近"
+  },
+  "SearchResults": {
+    "list": "列表",
+    "map": "地图"
+  },
+  "PaginationBar": {
+    "previous": "上一页",
+    "next": "下一页"
+  },
+  "ResortDetail": {
+    "perNight": "/ 晚",
+    "route": "路线",
+    "about": "简介",
+    "amenities": "设施",
+    "accommodations": "住宿选择",
+    "location": "位置",
+    "contact": "联系方式",
+    "phone": "电话",
+    "email": "邮箱",
+    "distanceFromUb": "距乌兰巴托距离",
+    "km": "{km} 公里"
+  },
+  "ShareButton": {
+    "share": "分享",
+    "linkCopied": "链接已复制"
+  },
+  "CallButton": {
+    "call": "拨打电话"
+  },
+  "AmenityList": {
+    "noAmenities": "暂无设施信息。"
+  },
+  "AmenityLabels": {
+    "wifi": "WiFi",
+    "parking": "停车场",
+    "restaurant": "餐厅",
+    "bbq": "烧烤",
+    "sauna": "桑拿",
+    "pool": "游泳池",
+    "playground": "儿童游乐场",
+    "horse-riding": "骑马",
+    "fishing": "钓鱼",
+    "campfire": "篝火"
+  },
+  "AccommodationType": {
+    "GER": "蒙古包",
+    "FAMILY_HOUSE": "家庭别墅",
+    "VIP_HOUSE": "VIP 别墅",
+    "TENT": "帐篷",
+    "OTHER": "其他"
+  },
+  "AccommodationCard": {
+    "maxGuests": "最多 {count} 人",
+    "perNight": "/ 晚"
+  },
+  "RoutePanel": {
+    "ulaanbaatar": "乌兰巴托",
+    "myLocation": "我的位置",
+    "viewRoute": "查看路线",
+    "openInGoogleMapsHint": "在 Google 地图中打开路线。",
+    "openGoogleMaps": "打开 Google 地图",
+    "geolocationUnsupported": "您的设备不支持定位。",
+    "geolocationFailed": "无法确定您的位置。请检查是否已授予权限。"
+  },
+  "FavoriteButton": {
+    "mustLoginToSave": "请登录后收藏该地点。",
+    "saved": "已收藏",
+    "save": "收藏",
+    "removeFromSaved": "取消收藏"
+  },
+  "RatingStars": {
+    "reviewCount": "{count} 条评价"
+  },
+  "ImageGallery": {
+    "viewAll": "查看全部照片（{count}）",
+    "photosOf": "{name} 的照片"
+  },
+  "LoginForm": {
+    "email": "邮箱",
+    "password": "密码",
+    "forgotPassword": "忘记密码？",
+    "invalidCredentials": "邮箱或密码不正确。",
+    "loggingIn": "正在登录…",
+    "submit": "登录"
+  },
+  "RegisterForm": {
+    "lastName": "姓",
+    "firstName": "名",
+    "phone": "电话",
+    "email": "邮箱",
+    "country": "国家",
+    "selectCountry": "选择国家",
+    "password": "密码",
+    "address": "地址",
+    "travelInfoTitle": "旅行补充信息",
+    "allergies": "过敏信息",
+    "favoriteFoods": "喜欢的食物",
+    "dietaryRestrictions": "饮食限制",
+    "travelInterests": "旅行兴趣",
+    "genericError": "创建账户时出错。",
+    "submitting": "正在注册…",
+    "submit": "注册"
+  },
+  "ForgotPasswordForm": {
+    "email": "邮箱",
+    "sentMessage": "如果该邮箱已注册，密码重置链接已发送。",
+    "devHint": "邮件服务器尚未配置，因此链接直接显示在此处（开发模式）：",
+    "sending": "正在发送…",
+    "submit": "发送重置链接"
+  },
+  "ResetPasswordForm": {
+    "newPassword": "新密码",
+    "genericError": "出现错误",
+    "saving": "正在保存…",
+    "submit": "更新密码"
+  },
+  "GoogleSignInButton": {
+    "signInWithGoogle": "使用 Google 登录"
+  },
+  "LoginPage": {
+    "title": "欢迎回来",
+    "description": "登录您的账户",
+    "or": "或",
+    "noAccount": "还没有账户？",
+    "signUp": "注册"
+  },
+  "RegisterPage": {
+    "title": "创建账户",
+    "description": "欢迎来到 Amralt.mn",
+    "or": "或",
+    "haveAccount": "已经有账户？",
+    "login": "登录"
+  },
+  "ForgotPasswordPage": {
+    "title": "忘记密码了吗？",
+    "description": "请输入您注册时使用的邮箱地址"
+  },
+  "ResetPasswordPage": {
+    "invalidTitle": "链接无效",
+    "invalidMessage": "密码重置链接无效或已过期。",
+    "title": "设置新密码"
+  },
+  "ProfilePage": {
+    "title": "个人资料",
+    "statSaved": "已收藏",
+    "statMemberSince": "加入时间",
+    "defaultName": "用户",
+    "personalInfo": "个人信息"
+  },
+  "ProfileForm": {
+    "updated": "个人资料已更新",
+    "contactInfo": "联系信息",
+    "lastName": "姓",
+    "firstName": "名",
+    "phone": "电话",
+    "country": "国家",
+    "selectCountry": "选择国家",
+    "address": "地址",
+    "foodTravelInterests": "饮食与旅行兴趣",
+    "allergies": "过敏信息",
+    "favoriteFoods": "喜欢的食物",
+    "dietaryRestrictions": "饮食限制",
+    "travelInterests": "旅行兴趣",
+    "saving": "正在保存…",
+    "save": "保存"
+  },
+  "ResortGrid": {
+    "noResortsTitle": "未找到度假村",
+    "noResortsDescription": "请尝试更改搜索词或筛选条件后重试。"
+  },
+  "CompareTable": {
+    "feature": "特色",
+    "price": "价格",
+    "rating": "评分",
+    "distanceFromUb": "距乌兰巴托距离",
+    "location": "位置"
+  },
+  "FavoritesPage": {
+    "title": "我收藏的地点",
+    "subtitle": "您已收藏 {count} 家度假村"
+  },
+  "ComparePage": {
+    "title": "度假村对比",
+    "subtitle": "并排比较您选择的度假村",
+    "emptyTitle": "尚未选择要对比的度假村",
+    "emptyDescription": "请在搜索结果中使用“对比”按钮至少选择 2 个地点。"
+  },
+  "AiPlannerPage": {
+    "title": "AI 行程规划",
+    "heading": "用 AI 规划您的旅程",
+    "description": "输入地区、天数和人数，即可获得基于 Amralt.mn 真实度假村数据生成的每日行程安排。"
+  },
+  "TripPlannerForm": {
+    "budgetBudget": "经济",
+    "budgetMid": "中等",
+    "budgetLuxury": "豪华",
+    "selectLocationError": "请选择一个地区",
+    "genericError": "出现问题，请重试。",
+    "networkError": "发生网络错误，请重试。",
+    "location": "位置",
+    "selectRegion": "选择地区",
+    "numberOfDays": "天数",
+    "numberOfGuests": "人数",
+    "budget": "预算",
+    "interestsLabel": "兴趣、额外要求（选填）",
+    "interestsPlaceholder": "请告诉我们您的兴趣或此次旅行的任何要求",
+    "planning": "正在规划…",
+    "generatePlan": "生成行程",
+    "emptyStateHint": "在左侧填写信息，让 AI 为您生成旅行计划。",
+    "processing": "AI 正在为您整理行程…"
+  },
+  "AiPlannerApi": {
+    "invalidData": "数据无效"
+  },
+  "Itinerary": {
+    "locationNotFound": "未找到该地区。",
+    "noResorts": "“{location}”地区目前暂无已批准的度假村。",
+    "headerTitle": "{location} — {days} 天行程计划",
+    "headerMeta": "人数：{guests}｜预算：{budget}",
+    "budgetUnknown": "未指定",
+    "budget": {
+      "budget": "经济实惠",
+      "mid": "中等",
+      "luxury": "豪华、高端"
+    },
+    "day1Title": "第 1 天：出发与抵达",
+    "day1Travel": "从乌兰巴托到 {resort} 的路程约为 {km}，驾车大约需要 {duration}。",
+    "day1Arrival": "抵达 {resort}，入住 {accommodation}。",
+    "day1DefaultAccommodation": "一间合适的房间",
+    "eveningActivity": "晚上：{activity}。",
+    "middleDayTitle": "第 {day} 天：在 {location} 周边休闲",
+    "lastDayTitle": "第 {days} 天：返程",
+    "lastDayMorning": "早上从 {resort} 出发，返回乌兰巴托。",
+    "lastDayReturn": "返程同样约为 {km}，大约需要 {duration}。",
+    "budgetSummaryTitle": "费用概览",
+    "budgetSummaryLine": "住宿：{accommodation} x {units} x {days} 晚 = {total}",
+    "budgetSummaryNote": "此为大致估算，不包含餐饮及交通费用。",
+    "alternativesTitle": "其他选择",
+    "alternativeLine": "- {name}（{rating}/5 分，每晚起价 {price}）",
+    "activity": {
+      "wifi": "放松身心，使用免费 WiFi",
+      "restaurant": "品尝餐厅特色美食",
+      "bbq": "享受烧烤和家庭时光",
+      "sauna": "在桑拿房放松身心",
+      "pool": "在游泳池畅游",
+      "playground": "在儿童游乐场玩耍",
+      "horse-riding": "骑马体验游牧生活",
+      "fishing": "在河边钓鱼",
+      "campfire": "生篝火，在星空下畅谈",
+      "parking": "停好车，探索周边环境"
+    }
+  },
+  "AdminLayout": {
+    "brand": "管理",
+    "navOverview": "概览",
+    "navResorts": "度假村",
+    "navUsers": "用户"
+  },
+  "AdminOverviewPage": {
+    "seriesUsers": "用户",
+    "seriesResorts": "度假村",
+    "seriesFeatured": "精选",
+    "combinedGrowth": "综合增长",
+    "chartAriaLabel": "显示用户、度假村和精选度假村随时间增长的图表",
+    "resortStatus": "度假村状态"
+  },
+  "ResortStatus": {
+    "APPROVED": "已批准",
+    "PENDING": "待审核",
+    "REJECTED": "已拒绝"
+  },
+  "DashboardShell": {
+    "back": "返回"
+  },
+  "ResortRowActions": {
+    "confirmDelete": "确定要删除此度假村吗？",
+    "deleted": "度假村已成功删除",
+    "addedToFeatured": "已加入精选",
+    "removedFromFeatured": "已从精选中移除",
+    "makeFeatured": "设为精选",
+    "removeFromFeatured": "取消精选"
+  },
+  "AdminResortsPage": {
+    "metadataTitle": "度假村",
+    "resortCount": "{count} 家度假村",
+    "addResort": "添加新度假村",
+    "emptyTitle": "暂无度假村",
+    "emptyDescription": "添加您的第一家度假村以开始使用。",
+    "viewCount": "{count} 次浏览"
+  },
+  "AdminResortEditorPage": {
+    "newMetadataTitle": "添加新度假村",
+    "editMetadataTitle": "编辑度假村",
+    "accommodationsTitle": "住宿选择"
+  },
+  "ResortForm": {
+    "created": "度假村已创建",
+    "saved": "度假村已保存",
+    "name": "名称",
+    "namePlaceholder": "特日勒吉度假村",
+    "nameEn": "名称（英文）",
+    "nameEnPlaceholder": "Terelj Resort",
+    "nameZh": "名称（中文）",
+    "nameZhPlaceholder": "特勒尔吉度假村",
+    "description": "简介",
+    "descriptionEn": "简介（英文）",
+    "descriptionZh": "简介（中文）",
+    "province": "省份",
+    "provincePlaceholder": "中央省",
+    "district": "县",
+    "districtPlaceholder": "嘎珠尔特县",
+    "addressDetail": "详细地址",
+    "addressEn": "地址（英文）",
+    "addressZh": "地址（中文）",
+    "latitude": "纬度",
+    "longitude": "经度",
+    "distanceFromUb": "距乌兰巴托距离（公里）",
+    "phone": "电话",
+    "email": "邮箱",
+    "website": "网站",
+    "category": "分类",
+    "select": "选择",
+    "region": "地区",
+    "amenities": "设施",
+    "imageUrls": "图片链接",
+    "addImage": "添加图片",
+    "uploadImage": "从设备上传",
+    "saving": "正在保存…",
+    "createResort": "创建度假村",
+    "save": "保存"
+  },
+  "AccommodationManager": {
+    "added": "住宿已添加",
+    "confirmDelete": "确定要删除此住宿吗？",
+    "deleted": "住宿已删除",
+    "summary": "{capacity} 人 · {price} / 晚",
+    "deleteAccommodation": "删除住宿",
+    "type": "类型",
+    "name": "名称",
+    "nameEn": "名称（英文）",
+    "nameZh": "名称（中文）",
+    "capacity": "容纳人数",
+    "price": "价格（每晚）",
+    "facilities": "设施（用逗号分隔）",
+    "facilitiesEn": "设施（英文，用逗号分隔）",
+    "facilitiesZh": "设施（中文，用逗号分隔）",
+    "facilitiesPlaceholder": "炉灶、卫生间",
+    "imageUrls": "图片链接（用逗号分隔）",
+    "save": "保存",
+    "cancel": "取消",
+    "addAccommodation": "添加住宿",
+    "uploadImage": "从设备上传"
+  },
+  "AdminUsersPage": {
+    "metadataTitle": "用户",
+    "searchPlaceholder": "按姓名或邮箱搜索…",
+    "searchAriaLabel": "按姓名或邮箱搜索用户",
+    "totalUsers": "共 {count} 名已登录用户",
+    "noUsersTitle": "未找到用户",
+    "noUsersDescription": "请尝试更改搜索条件后重试。",
+    "unnamedUser": "未命名用户",
+    "currentUser": "你",
+    "favoritesCount": "{count} 处收藏",
+    "registeredAt": "注册于：{date}",
+    "activeNow": "当前在线",
+    "lastLoginAt": "最近登录：{time}",
+    "roles": {
+      "USER": "用户",
+      "ADMIN": "管理员"
+    },
+    "lastLogin": {
+      "justNow": "刚刚",
+      "minutesAgo": "{count} 分钟前",
+      "hoursAgo": "{count} 小时前",
+      "daysAgo": "{count} 天前"
+    }
+  },
+  "UserRoleMenu": {
+    "makeUser": "设为普通用户",
+    "makeAdmin": "设为管理员",
+    "roleUpdated": "权限已成功更新",
+    "changeRole": "更改用户权限"
+  },
+  "RootMetadata": {
+    "title": "Amralt.mn — 蒙古国度假村",
+    "description": "一站式发现、比较并预订蒙古国最美的度假村。"
+  },
+  "SearchPageMetadata": {
+    "title": "查找度假村",
+    "description": "按位置、价格和设施筛选搜索蒙古国的度假村。"
+  },
+  "MapPageMetadata": {
+    "title": "地图",
+    "description": "在互动地图上浏览蒙古国的度假村。"
+  },
+  "MapPage": {
+    "resortsOnMap": "地图上共有 {count} 家度假村"
+  },
+  "RegisterApi": {
+    "invalidData": "数据无效",
+    "emailTaken": "该邮箱已被注册"
+  },
+  "CompareBar": {
+    "remove": "移除",
+    "clear": "清除",
+    "compare": "对比（{count}）"
+  },
+  "ResortMap": {
+    "allProvinces": "所有省份",
+    "resortCount": "{count} 家度假村"
+  },
+  "MapResortPopup": {
+    "viewDetails": "查看详情"
+  },
+  "MapStatusGuard": {
+    "loadFailedTitle": "地图加载失败",
+    "loadFailedDescription": "请检查您的 Google Cloud 项目设置（API 是否启用、账单信息），然后重试。"
+  },
+  "MapKeyMissing": {
+    "title": "地图尚未配置",
+    "descriptionBefore": "要显示地图，请设置",
+    "descriptionAfter": "环境变量。"
+  },
+  "ReviewForm": {
+    "loginPromptBefore": "要发表评价，请",
+    "loginPromptLink": "登录",
+    "thankYou": "感谢您的评价！",
+    "posted": "评价已发布",
+    "starAriaLabel": "{star} 星",
+    "commentPlaceholder": "写下您对这个地方的评价…",
+    "submitting": "正在提交…",
+    "submit": "发布评价"
+  },
+  "ReviewStats": {
+    "reviewCount": "{count} 条评价"
+  },
+  "ReviewCard": {
+    "defaultName": "用户"
+  }
+}

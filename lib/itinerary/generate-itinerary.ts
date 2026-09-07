@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { prisma } from "@/lib/db/prisma";
 import { formatDuration, formatKm, formatMNT } from "@/lib/format";
-import { localizedName } from "@/lib/i18n-content";
+import { localizedName, localizedDescription } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/request";
 import type { TripPlannerInput } from "@/lib/validations/trip-planner";
 
@@ -102,7 +102,7 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
   }
 
   const resorts = await fetchResorts(location.id);
-  const locationName = localizedName(locale, location.name, location.nameEn);
+  const locationName = localizedName(locale, location.name, location.nameEn, location.nameZh);
   if (resorts.length === 0) {
     return {
       error: t("noResorts", { location: locationName }) as string,
@@ -114,7 +114,7 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
   );
 
   const primary = ranked[0];
-  const primaryName = localizedName(locale, primary.name, primary.nameEn);
+  const primaryName = localizedName(locale, primary.name, primary.nameEn, primary.nameZh);
   const picked = pickAccommodation(primary, input.guests);
   const activities = buildActivityList(primary, input.interests ?? "");
 
@@ -164,8 +164,11 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
     for (const act of acts) {
       dayLines.push(`- ${t(`activity.${act}`)}.`);
     }
-    if (location.description) {
-      dayLines.push(`- ${location.description}`);
+    const locationDescription = location.description
+      ? localizedDescription(locale, location.description, location.descriptionEn, location.descriptionZh)
+      : null;
+    if (locationDescription) {
+      dayLines.push(`- ${locationDescription}`);
     }
     lines.push(dayLines.join("\n"));
   }
@@ -212,7 +215,7 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
         t("alternativesTitle"),
         ...alternatives.map((r) =>
           t("alternativeLine", {
-            name: localizedName(locale, r.name, r.nameEn),
+            name: localizedName(locale, r.name, r.nameEn, r.nameZh),
             rating: r.rating.toFixed(1),
             price: formatMNT(r.priceFrom, locale),
           })

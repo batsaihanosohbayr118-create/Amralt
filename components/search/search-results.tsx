@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { List, MapIcon } from "lucide-react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ResortGrid } from "@/components/resort/resort-grid";
 import { ResortMap, type MapResort } from "@/components/map/resort-map";
+import { localizedName } from "@/lib/i18n-content";
 import type { ResortCardData } from "@/lib/data/resorts";
+import type { Locale } from "@/i18n/request";
 
 type Props = {
   resorts: ResortCardData[];
@@ -17,19 +19,22 @@ type Props = {
 
 export function SearchResults({ resorts, favoritedIds, isAuthenticated }: Props) {
   const t = useTranslations("SearchResults");
+  const locale = useLocale() as Locale;
   const [view, setView] = useState<"list" | "map">("list");
 
   const mapResorts: MapResort[] = resorts.map((r) => ({
     id: r.id,
     slug: r.slug,
-    name: r.name,
+    name: localizedName(locale, r.name, r.nameEn, r.nameZh),
     latitude: r.latitude,
     longitude: r.longitude,
     priceFrom: r.priceFrom,
     rating: r.rating,
     province: r.province,
     coverUrl: r.images[0]?.url,
-    locationName: r.location?.name,
+    locationName: r.location
+      ? localizedName(locale, r.location.name, r.location.nameEn, r.location.nameZh)
+      : undefined,
   }));
 
   return (

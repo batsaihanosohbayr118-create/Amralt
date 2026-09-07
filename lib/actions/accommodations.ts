@@ -27,9 +27,15 @@ export async function createAccommodation(
     return { ok: false as const, error: parsed.error.issues[0]?.message ?? "Буруу өгөгдөл" };
   }
 
-  const { imageUrls, ...accommodationData } = parsed.data;
+  const { imageUrls, nameEn, nameZh, ...accommodationData } = parsed.data;
   await prisma.accommodation.create({
-    data: { resortId, ...accommodationData, images: imageUrls },
+    data: {
+      resortId,
+      ...accommodationData,
+      nameEn: nameEn || null,
+      nameZh: nameZh || null,
+      images: imageUrls,
+    },
   });
   await recalcResortPriceFrom(resortId);
 

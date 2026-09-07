@@ -6,7 +6,7 @@ import { Check, X } from "lucide-react";
 import { RatingStars } from "@/components/resort/rating-stars";
 import { AmenityIcon } from "@/components/amenity-icon";
 import { formatKm, formatMNT } from "@/lib/format";
-import { localizedName } from "@/lib/i18n-content";
+import { localizedName, localizedProvince } from "@/lib/i18n-content";
 import type { getResortsByIds } from "@/lib/data/resorts";
 import type { Locale } from "@/i18n/request";
 
@@ -39,7 +39,7 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                     {resort.images[0] && (
                       <Image
                         src={resort.images[0].url}
-                        alt={localizedName(locale, resort.name, resort.nameEn)}
+                        alt={localizedName(locale, resort.name, resort.nameEn, resort.nameZh)}
                         fill
                         sizes="200px"
                         className="object-cover"
@@ -47,7 +47,7 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                     )}
                   </div>
                   <p className="mt-2 font-heading text-sm font-semibold text-foreground hover:text-primary">
-                    {localizedName(locale, resort.name, resort.nameEn)}
+                    {localizedName(locale, resort.name, resort.nameEn, resort.nameZh)}
                   </p>
                 </Link>
               </th>
@@ -104,8 +104,8 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                   {t("location")}
                 </span>
                 {resort.location
-                  ? localizedName(locale, resort.location.name, resort.location.nameEn)
-                  : resort.province}
+                  ? localizedName(locale, resort.location.name, resort.location.nameEn, resort.location.nameZh)
+                  : localizedProvince(locale, resort.province)}
               </td>
             ))}
           </tr>

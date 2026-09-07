@@ -4,6 +4,7 @@ import { Star, TreePine, Users } from "lucide-react";
 
 import { prisma } from "@/lib/db/prisma";
 import type { ResortStatus } from "@/lib/generated/prisma/enums";
+import type { Locale } from "@/i18n/request";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("AdminLayout");
@@ -51,11 +52,25 @@ const MONTHS_SHORT = {
     "Nov",
     "Dec",
   ],
+  zh: [
+    "1月",
+    "2月",
+    "3月",
+    "4月",
+    "5月",
+    "6月",
+    "7月",
+    "8月",
+    "9月",
+    "10月",
+    "11月",
+    "12月",
+  ],
 } as const;
 
 // Deterministic formatter (no Intl/toLocaleDateString) so SSR and client
 // output byte-identical text and avoid a hydration mismatch.
-function formatDayKey(key: string, locale: "mn" | "en") {
+function formatDayKey(key: string, locale: Locale) {
   const [, month, day] = key.split("-").map(Number);
   return `${MONTHS_SHORT[locale][month - 1]} ${day}`;
 }
@@ -76,7 +91,7 @@ function buildCumulativeSeries(dates: Date[], days: string[]) {
 export default async function AdminOverviewPage() {
   const t = await getTranslations("AdminOverviewPage");
   const tStatus = await getTranslations("ResortStatus");
-  const locale = (await getLocale()) as "mn" | "en";
+  const locale = (await getLocale()) as Locale;
 
   const SERIES = [
     { key: "users", label: t("seriesUsers"), color: "#2a78d6" },

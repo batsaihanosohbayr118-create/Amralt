@@ -64,10 +64,15 @@ export function ResortForm({
     defaultValues: {
       name: "",
       nameEn: "",
+      nameZh: "",
       description: "",
+      descriptionEn: "",
+      descriptionZh: "",
       province: "",
       district: "",
       address: "",
+      addressEn: "",
+      addressZh: "",
       latitude: 47.9184,
       longitude: 106.9177,
       phone: "",
@@ -176,10 +181,52 @@ export function ResortForm({
 
           <FormField
             control={form.control}
+            name="nameZh"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel>{t("nameZh")}</FormLabel>
+                <FormControl>
+                  <Input placeholder={t("nameZhPlaceholder")} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="description"
             render={({ field }) => (
               <FormItem className="sm:col-span-2">
                 <FormLabel>{t("description")}</FormLabel>
+                <FormControl>
+                  <Textarea rows={5} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="descriptionEn"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel>{t("descriptionEn")}</FormLabel>
+                <FormControl>
+                  <Textarea rows={5} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="descriptionZh"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel>{t("descriptionZh")}</FormLabel>
                 <FormControl>
                   <Textarea rows={5} {...field} />
                 </FormControl>
@@ -220,6 +267,32 @@ export function ResortForm({
             render={({ field }) => (
               <FormItem className="sm:col-span-2">
                 <FormLabel>{t("addressDetail")}</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="addressEn"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel>{t("addressEn")}</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="addressZh"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel>{t("addressZh")}</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>

@@ -36,7 +36,7 @@ export default async function AiPlannerPage() {
         <TripPlannerForm
           locations={locations.map((l) => ({
             slug: l.slug,
-            name: localizedName(locale, l.name, l.nameEn),
+            name: localizedName(locale, l.name, l.nameEn, l.nameZh),
           }))}
         />
       </div>

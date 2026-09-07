@@ -45,7 +45,7 @@ export default async function SearchPage({
 
   const locations = rawLocations.map((l) => ({
     ...l,
-    name: localizedName(locale, l.name, l.nameEn),
+    name: localizedName(locale, l.name, l.nameEn, l.nameZh),
   }));
 
   const favoritedIds = session?.user

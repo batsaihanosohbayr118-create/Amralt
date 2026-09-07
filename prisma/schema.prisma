@@ -17,22 +17,22 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  firstName     String?
-  lastName      String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String? // hashed, null for OAuth-only accounts
-  role          UserRole  @default(USER)
-  phone         String?
-  nationality   String?
-  address       String?
-  allergies     String?
-  favoriteFoods String?
+  id                  String    @id @default(cuid())
+  name                String?
+  firstName           String?
+  lastName            String?
+  email               String?   @unique
+  emailVerified       DateTime?
+  image               String?
+  password            String? // hashed, null for OAuth-only accounts
+  role                UserRole  @default(USER)
+  phone               String?
+  nationality         String?
+  address             String?
+  allergies           String?
+  favoriteFoods       String?
   dietaryRestrictions String?
-  travelInterests String?
+  travelInterests     String?
 
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -103,16 +103,19 @@ model Category {
 // Curated destination / region used for "Popular destinations" browsing
 // (distinct from a resort's own province/district/address fields).
 model Location {
-  id          String  @id @default(cuid())
-  name        String
-  nameEn      String?
-  slug        String  @unique
-  province    String
-  description String?
-  image       String?
-  featured    Boolean @default(false)
-  latitude    Float?
-  longitude   Float?
+  id            String  @id @default(cuid())
+  name          String
+  nameEn        String?
+  nameZh        String?
+  slug          String  @unique
+  province      String
+  description   String?
+  descriptionEn String?
+  descriptionZh String?
+  image         String?
+  featured      Boolean @default(false)
+  latitude      Float?
+  longitude     Float?
 
   resorts Resort[]
 
@@ -139,15 +142,20 @@ enum ResortStatus {
 }
 
 model Resort {
-  id          String  @id @default(cuid())
-  name        String
-  nameEn      String?
-  slug        String  @unique
-  description String  @db.Text
+  id            String  @id @default(cuid())
+  name          String
+  nameEn        String?
+  nameZh        String?
+  slug          String  @unique
+  description   String  @db.Text
+  descriptionEn String? @db.Text
+  descriptionZh String? @db.Text
 
-  province String
-  district String
-  address  String
+  province  String
+  district  String
+  address   String
+  addressEn String?
+  addressZh String?
 
   latitude  Float
   longitude Float
@@ -156,10 +164,10 @@ model Resort {
   email   String?
   website String?
 
-  priceFrom  Int // MNT, per night, from cheapest accommodation
-  rating     Float @default(0)
-  reviewCount Int  @default(0)
-  viewCount   Int  @default(0)
+  priceFrom   Int // MNT, per night, from cheapest accommodation
+  rating      Float @default(0)
+  reviewCount Int   @default(0)
+  viewCount   Int   @default(0)
 
   distanceFromUbKm Float?
 
@@ -227,15 +235,19 @@ enum AccommodationType {
 }
 
 model Accommodation {
-  id          String            @id @default(cuid())
-  resortId    String
-  type        AccommodationType
-  name        String
-  description String?           @db.Text
-  capacity    Int
-  price       Int // MNT per night
-  images      String[]
-  facilities  String[]
+  id           String            @id @default(cuid())
+  resortId     String
+  type         AccommodationType
+  name         String
+  nameEn       String?
+  nameZh       String?
+  description  String?           @db.Text
+  capacity     Int
+  price        Int // MNT per night
+  images       String[]
+  facilities   String[]
+  facilitiesEn String[]          @default([])
+  facilitiesZh String[]          @default([])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -297,7 +309,7 @@ enum BookingStatus {
 }
 
 model Booking {
-  id              String   @id @default(cuid())
+  id              String @id @default(cuid())
   userId          String
   resortId        String
   accommodationId String

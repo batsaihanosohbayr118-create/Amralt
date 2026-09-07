@@ -26,7 +26,7 @@ export default async function MapPage({
   const mapResorts = resorts.map((r) => ({
     id: r.id,
     slug: r.slug,
-    name: localizedName(locale, r.name, r.nameEn),
+    name: localizedName(locale, r.name, r.nameEn, r.nameZh),
     latitude: r.latitude,
     longitude: r.longitude,
     priceFrom: r.priceFrom,
@@ -34,7 +34,7 @@ export default async function MapPage({
     province: r.province,
     coverUrl: r.images[0]?.url,
     locationName: r.location
-      ? localizedName(locale, r.location.name, r.location.nameEn)
+      ? localizedName(locale, r.location.name, r.location.nameEn, r.location.nameZh)
       : undefined,
   }));
 

@@ -19,9 +19,9 @@ function useColumns() {
       title: t("regions"),
       icon: MapPinned,
       links: [
-        { href: "/search?location=gorkhi-terelj", label: "Горхи-Тэрэлж" },
-        { href: "/search?location=khuvsgul", label: "Хөвсгөл" },
-        { href: "/search?location=arkhangai", label: "Архангай" },
+        { href: "/search?location=gorkhi-terelj", label: t("regionGorkhiTerelj") },
+        { href: "/search?location=khuvsgul", label: t("regionKhuvsgul") },
+        { href: "/search?location=arkhangai", label: t("regionArkhangai") },
       ],
     },
   ];

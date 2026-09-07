@@ -6,7 +6,7 @@ import { LocateFixed, MapPin, Navigation, Route as RouteIcon } from "lucide-reac
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { UB_CENTER, UB_LABEL, type LatLng } from "@/lib/maps/config";
+import { UB_CENTER, type LatLng } from "@/lib/maps/config";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -30,7 +30,7 @@ function RoutePanelInner({
 }) {
   const t = useTranslations("RoutePanel");
   const [origin, setOrigin] = useState<LatLng>(UB_CENTER);
-  const [originLabel, setOriginLabel] = useState(UB_LABEL);
+  const [originLabel, setOriginLabel] = useState(t("ulaanbaatar"));
   const [locating, setLocating] = useState(false);
   const [expanded, setExpanded] = useState(false);
 

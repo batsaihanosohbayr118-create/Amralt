@@ -56,9 +56,13 @@ export function AccommodationManager({
 
   const [type, setType] = useState<AccommodationType>("GER");
   const [name, setName] = useState("");
+  const [nameEn, setNameEn] = useState("");
+  const [nameZh, setNameZh] = useState("");
   const [capacity, setCapacity] = useState(2);
   const [price, setPrice] = useState(100000);
   const [facilities, setFacilities] = useState("");
+  const [facilitiesEn, setFacilitiesEn] = useState("");
+  const [facilitiesZh, setFacilitiesZh] = useState("");
   const [imageUrls, setImageUrls] = useState("");
   const [isUploading, startUpload] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -85,9 +89,13 @@ export function AccommodationManager({
   function resetForm() {
     setType("GER");
     setName("");
+    setNameEn("");
+    setNameZh("");
     setCapacity(2);
     setPrice(100000);
     setFacilities("");
+    setFacilitiesEn("");
+    setFacilitiesZh("");
     setImageUrls("");
     setShowForm(false);
   }
@@ -97,9 +105,19 @@ export function AccommodationManager({
       const result = await createAccommodation(resortId, {
         type,
         name,
+        nameEn,
+        nameZh,
         capacity,
         price,
         facilities: facilities
+          .split(",")
+          .map((f) => f.trim())
+          .filter(Boolean),
+        facilitiesEn: facilitiesEn
+          .split(",")
+          .map((f) => f.trim())
+          .filter(Boolean),
+        facilitiesZh: facilitiesZh
           .split(",")
           .map((f) => f.trim())
           .filter(Boolean),
@@ -187,6 +205,14 @@ export function AccommodationManager({
               <Input value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div className="space-y-1.5">
+              <Label>{t("nameEn")}</Label>
+              <Input value={nameEn} onChange={(e) => setNameEn(e.target.value)} />
+            </div>
+            <div className="space-y-1.5">
+              <Label>{t("nameZh")}</Label>
+              <Input value={nameZh} onChange={(e) => setNameZh(e.target.value)} />
+            </div>
+            <div className="space-y-1.5">
               <Label>{t("capacity")}</Label>
               <Input
                 type="number"
@@ -207,6 +233,22 @@ export function AccommodationManager({
               <Input
                 value={facilities}
                 onChange={(e) => setFacilities(e.target.value)}
+                placeholder={t("facilitiesPlaceholder")}
+              />
+            </div>
+            <div className="space-y-1.5 sm:col-span-2">
+              <Label>{t("facilitiesEn")}</Label>
+              <Input
+                value={facilitiesEn}
+                onChange={(e) => setFacilitiesEn(e.target.value)}
+                placeholder={t("facilitiesPlaceholder")}
+              />
+            </div>
+            <div className="space-y-1.5 sm:col-span-2">
+              <Label>{t("facilitiesZh")}</Label>
+              <Input
+                value={facilitiesZh}
+                onChange={(e) => setFacilitiesZh(e.target.value)}
                 placeholder={t("facilitiesPlaceholder")}
               />
             </div>

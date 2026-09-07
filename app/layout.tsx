@@ -27,6 +27,11 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s | Amralt.mn",
     },
     description: t("description"),
+    themeColor: "#007145",
+    appleWebApp: {
+      title: "Amralt.mn",
+      statusBarStyle: "black-translucent",
+    },
   };
 }
 

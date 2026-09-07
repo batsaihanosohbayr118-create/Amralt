@@ -7,7 +7,13 @@ import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/db/prisma";
 import { getResortBySlug } from "@/lib/data/resorts";
 import { formatMNT } from "@/lib/format";
-import { localizedName } from "@/lib/i18n-content";
+import {
+  localizedName,
+  localizedDescription,
+  localizedAddress,
+  localizedProvince,
+  localizedDistrict,
+} from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/request";
 import { RatingStars } from "@/components/resort/rating-stars";
 import { FavoriteButton } from "@/components/resort/favorite-button";
@@ -31,8 +37,13 @@ export async function generateMetadata({
   const [resort, locale] = await Promise.all([getResortBySlug(slug), getLocale()]);
   if (!resort) return {};
 
-  const resortName = localizedName(locale as Locale, resort.name, resort.nameEn);
-  const description = resort.description.slice(0, 155);
+  const resortName = localizedName(locale as Locale, resort.name, resort.nameEn, resort.nameZh);
+  const description = localizedDescription(
+    locale as Locale,
+    resort.description,
+    resort.descriptionEn,
+    resort.descriptionZh
+  ).slice(0, 155);
   const cover = resort.images[0]?.url;
 
   return {
@@ -60,7 +71,16 @@ export default async function ResortDetailPage({
 
   if (!resort || resort.status !== "APPROVED") notFound();
 
-  const resortName = localizedName(locale, resort.name, resort.nameEn);
+  const resortName = localizedName(locale, resort.name, resort.nameEn, resort.nameZh);
+  const resortDescription = localizedDescription(
+    locale,
+    resort.description,
+    resort.descriptionEn,
+    resort.descriptionZh
+  );
+  const resortAddress = localizedAddress(locale, resort.address, resort.addressEn, resort.addressZh);
+  const resortProvince = localizedProvince(locale, resort.province);
+  const resortDistrict = localizedDistrict(locale, resort.district);
 
   await prisma.resort.update({
     where: { id: resort.id },
@@ -79,13 +99,13 @@ export default async function ResortDetailPage({
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
     name: resortName,
-    description: resort.description,
+    description: resortDescription,
     image: resort.images.map((img) => img.url),
     address: {
       "@type": "PostalAddress",
-      streetAddress: resort.address,
-      addressLocality: resort.district,
-      addressRegion: resort.province,
+      streetAddress: resortAddress,
+      addressLocality: resortDistrict,
+      addressRegion: resortProvince,
       addressCountry: "MN",
     },
     geo: {
@@ -126,7 +146,7 @@ export default async function ResortDetailPage({
             <RatingStars rating={resort.rating} />
             <span className="flex items-center gap-1 text-sm text-muted-foreground">
               <MapPin className="size-4" />
-              {resort.address}, {resort.province}
+              {resortAddress}, {resortProvince}
             </span>
           </div>
           <p className="mt-3">
@@ -164,7 +184,7 @@ export default async function ResortDetailPage({
               {t("about")}
             </h2>
             <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
-              {resort.description}
+              {resortDescription}
             </p>
           </section>
 
@@ -203,7 +223,7 @@ export default async function ResortDetailPage({
                     longitude: resort.longitude,
                     priceFrom: resort.priceFrom,
                     rating: resort.rating,
-                    province: resort.province,
+                    province: resortProvince,
                     coverUrl: resort.images[0]?.url,
                   },
                 ]}
@@ -247,7 +267,7 @@ export default async function ResortDetailPage({
               <div className="flex justify-between gap-3">
                 <dt className="text-muted-foreground">{t("location")}</dt>
                 <dd className="text-right font-medium text-foreground">
-                  {resort.district}, {resort.province}
+                  {resortDistrict}, {resortProvince}
                 </dd>
               </div>
               {resort.distanceFromUbKm != null && (

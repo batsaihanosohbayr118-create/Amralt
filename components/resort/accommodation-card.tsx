@@ -3,6 +3,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Check, Users } from "lucide-react";
 
 import { formatMNT } from "@/lib/format";
+import { localizedName, localizedList } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/request";
 import type { AccommodationType } from "@/lib/generated/prisma/enums";
 
@@ -11,10 +12,14 @@ type Props = {
     id: string;
     type: AccommodationType;
     name: string;
+    nameEn?: string | null;
+    nameZh?: string | null;
     capacity: number;
     price: number;
     images: string[];
     facilities: string[];
+    facilitiesEn?: string[] | null;
+    facilitiesZh?: string[] | null;
   };
 };
 
@@ -23,6 +28,13 @@ export function AccommodationCard({ accommodation }: Props) {
   const tCard = useTranslations("AccommodationCard");
   const locale = useLocale() as Locale;
   const cover = accommodation.images[0];
+  const name = localizedName(locale, accommodation.name, accommodation.nameEn, accommodation.nameZh);
+  const facilities = localizedList(
+    locale,
+    accommodation.facilities,
+    accommodation.facilitiesEn,
+    accommodation.facilitiesZh
+  );
 
   return (
     <div className="flex flex-col overflow-hidden rounded-2xl border border-border/60 sm:flex-row">
@@ -30,7 +42,7 @@ export function AccommodationCard({ accommodation }: Props) {
         {cover && (
           <Image
             src={cover}
-            alt={accommodation.name}
+            alt={name}
             fill
             sizes="256px"
             className="object-cover"
@@ -44,7 +56,7 @@ export function AccommodationCard({ accommodation }: Props) {
             {t(accommodation.type)}
           </span>
           <h4 className="font-heading text-base font-semibold text-foreground">
-            {accommodation.name}
+            {name}
           </h4>
         </div>
 
@@ -53,9 +65,9 @@ export function AccommodationCard({ accommodation }: Props) {
           {tCard("maxGuests", { count: accommodation.capacity })}
         </div>
 
-        {accommodation.facilities.length > 0 && (
+        {facilities.length > 0 && (
           <ul className="flex flex-wrap gap-x-4 gap-y-1.5">
-            {accommodation.facilities.map((f) => (
+            {facilities.map((f) => (
               <li
                 key={f}
                 className="flex items-center gap-1.5 text-sm text-muted-foreground"

@@ -29,7 +29,7 @@ export default async function HomePage() {
 
   const searchBarLocations = locations.map((l) => ({
     slug: l.slug,
-    name: localizedName(locale, l.name, l.nameEn),
+    name: localizedName(locale, l.name, l.nameEn, l.nameZh),
   }));
 
   const favoritedIds = session?.user

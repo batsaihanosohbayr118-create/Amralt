@@ -10,6 +10,7 @@ type Props = {
     slug: string;
     name: string;
     nameEn?: string | null;
+    nameZh?: string | null;
     image: string | null;
     _count: { resorts: number };
   };
@@ -18,7 +19,7 @@ type Props = {
 export function DestinationCard({ location }: Props) {
   const t = useTranslations("DestinationCard");
   const locale = useLocale() as Locale;
-  const name = localizedName(locale, location.name, location.nameEn);
+  const name = localizedName(locale, location.name, location.nameEn, location.nameZh);
   return (
     <Link
       href={`/search?location=${location.slug}`}

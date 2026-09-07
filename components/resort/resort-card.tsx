@@ -7,7 +7,7 @@ import { RatingStars } from "@/components/resort/rating-stars";
 import { FavoriteButton } from "@/components/resort/favorite-button";
 import { CompareToggle } from "@/components/resort/compare-toggle";
 import { formatKm, formatMNT } from "@/lib/format";
-import { localizedName } from "@/lib/i18n-content";
+import { localizedName, localizedProvince } from "@/lib/i18n-content";
 import type { ResortCardData } from "@/lib/data/resorts";
 import type { Locale } from "@/i18n/request";
 
@@ -30,10 +30,10 @@ export function ResortCard({
   const tCategory = useTranslations("CategoryLabels");
   const locale = useLocale() as Locale;
   const cover = resort.images[0]?.url;
-  const resortName = localizedName(locale, resort.name, resort.nameEn);
+  const resortName = localizedName(locale, resort.name, resort.nameEn, resort.nameZh);
   const locationName = resort.location
-    ? localizedName(locale, resort.location.name, resort.location.nameEn)
-    : resort.province;
+    ? localizedName(locale, resort.location.name, resort.location.nameEn, resort.location.nameZh)
+    : localizedProvince(locale, resort.province);
 
   const categoryLabel = resort.category
     ? tCategory.has(resort.category.slug)

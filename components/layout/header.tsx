@@ -110,7 +110,7 @@ export function Header() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <LanguageSwitcher transparent={transparent} />
 
           <Link
@@ -145,7 +145,7 @@ export function Header() {
                 {t("login")}
               </Button>
               <Button
-                className="bg-emerald-700 px-2 text-xs text-white shadow-sm hover:bg-emerald-800 sm:px-4 sm:text-sm"
+                className="hidden bg-emerald-700 px-4 text-sm text-white shadow-sm hover:bg-emerald-800 sm:inline-flex"
                 nativeButton={false}
                 render={<Link href="/register" />}
               >
