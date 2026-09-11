@@ -54,27 +54,22 @@ export function Header() {
           transparent ? "text-white" : "text-foreground"
         )}
       >
-        <Link href="/" className="flex shrink-0 items-center gap-2">
+        <Link href="/" className="flex shrink-0 items-center">
           <Image
             src="/logo-icon.png"
             alt=""
-            width={250}
-            height={270}
+            width={512}
+            height={512}
             priority
             className="h-9 w-auto"
           />
           <span
             className={cn(
-              "font-heading text-xl font-bold tracking-tight transition-colors duration-300",
+              "font-heading text-xl font-bold tracking-tight transition-colors duration-300 -ml-1.5",
               transparent ? "text-white" : "text-foreground"
             )}
           >
-            Amralt
-            <span
-              className={transparent ? "text-emerald-300" : "text-emerald-700"}
-            >
-              .mn
-            </span>
+            ayora
           </span>
         </Link>
 

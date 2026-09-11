@@ -51,7 +51,7 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `/resorts/${resort.slug}` },
     openGraph: {
-      title: `${resortName} | Amralt.mn`,
+      title: `${resortName} | Vayora`,
       description,
       type: "website",
       images: cover ? [{ url: cover, width: 1200, height: 800 }] : undefined,
@@ -114,7 +114,7 @@ export default async function ResortDetailPage({
       longitude: resort.longitude,
     },
     telephone: resort.phone ?? undefined,
-    priceRange: formatMNT(resort.priceFrom, locale),
+    priceRange: resort.priceFrom > 0 ? formatMNT(resort.priceFrom, locale) : undefined,
     aggregateRating:
       resort.reviewCount > 0
         ? {
@@ -150,10 +150,18 @@ export default async function ResortDetailPage({
             </span>
           </div>
           <p className="mt-3">
-            <span className="font-heading text-2xl font-bold text-foreground">
-              {formatMNT(resort.priceFrom, locale)}
-            </span>
-            <span className="text-muted-foreground"> {t("perNight")}</span>
+            {resort.priceFrom > 0 ? (
+              <>
+                <span className="font-heading text-2xl font-bold text-foreground">
+                  {formatMNT(resort.priceFrom, locale)}
+                </span>
+                <span className="text-muted-foreground"> {t("perNight")}</span>
+              </>
+            ) : (
+              <span className="font-heading text-2xl font-bold text-foreground">
+                {t("priceOnRequest")}
+              </span>
+            )}
           </p>
         </div>
 

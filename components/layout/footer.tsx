@@ -77,16 +77,16 @@ function FooterBody() {
     <div className="mx-auto max-w-7xl px-4 pb-14 pt-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4">
         <div className="col-span-2">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center">
             <Image
               src="/logo-icon.png"
               alt=""
-              width={250}
-              height={270}
+              width={512}
+              height={512}
               className="h-9 w-auto"
             />
-            <span className="font-heading text-xl font-bold tracking-tight text-white">
-              Amralt<span className="text-white/60">.mn</span>
+            <span className="font-heading text-xl font-bold tracking-tight text-white -ml-1.5">
+              ayora
             </span>
           </Link>
           <p className="mt-4 max-w-xs text-sm text-primary-foreground/70">

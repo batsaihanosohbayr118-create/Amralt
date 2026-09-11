@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { PrismaClient, AccommodationType, UserRole } from "../lib/generated/prisma/client";
+import { PrismaClient, UserRole } from "../lib/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
 
@@ -49,13 +49,6 @@ function photoUrl(id: string, w: number, h: number) {
   return `https://images.unsplash.com/${id}?w=${w}&h=${h}&fit=crop`;
 }
 
-function img(seed: string, n: number) {
-  const start = hashSeed(seed) % PHOTO_POOL.length;
-  return Array.from({ length: n }, (_, i) =>
-    photoUrl(PHOTO_POOL[(start + i) % PHOTO_POOL.length], 1600, 1000)
-  );
-}
-
 const AMENITIES = [
   { name: "WiFi", slug: "wifi", icon: "Wifi" },
   { name: "Зогсоол", slug: "parking", icon: "Car" },
@@ -68,51 +61,6 @@ const AMENITIES = [
   { name: "Загасчлал", slug: "fishing", icon: "Fish" },
   { name: "Гал түлээ", slug: "campfire", icon: "Flame" },
 ] as const;
-
-// Accommodation names and facilities repeat across resorts, so translations are
-// keyed by the Mongolian string once here rather than duplicated per entry.
-const ACCOMMODATION_NAME_TRANSLATIONS: Record<string, { en: string; zh: string }> = {
-  "Монгол гэр": { en: "Mongolian Ger", zh: "蒙古包" },
-  "Гэр бүлийн байшин": { en: "Family House", zh: "家庭别墅" },
-  "VIP байшин": { en: "VIP House", zh: "VIP别墅" },
-  "Стандарт гэр": { en: "Standard Ger", zh: "标准蒙古包" },
-  "Майхан": { en: "Tent", zh: "帐篷" },
-  "Нуурын эрэг гэр": { en: "Lakeside Ger", zh: "湖畔蒙古包" },
-  "VIP нуурын байшин": { en: "VIP Lake House", zh: "VIP湖畔别墅" },
-  "Гэр": { en: "Ger", zh: "蒙古包" },
-  "Байшин": { en: "House", zh: "别墅" },
-  "Нуурын гэр": { en: "Lake Ger", zh: "湖景蒙古包" },
-  "Түүхэн загварын гэр": { en: "Traditional-Style Ger", zh: "传统风格蒙古包" },
-  "Sky Dome VIP": { en: "Sky Dome VIP", zh: "天空穹顶VIP房" },
-  "Энгийн гэр": { en: "Simple Ger", zh: "简易蒙古包" },
-};
-
-const FACILITY_TRANSLATIONS: Record<string, { en: string; zh: string }> = {
-  "Зуух": { en: "Stove", zh: "火炉" },
-  "Ор, дэрний хэрэгсэл": { en: "Bedding", zh: "床上用品" },
-  "Угаалгын өрөө": { en: "Bathroom", zh: "卫生间" },
-  "Гал тогоо": { en: "Kitchen", zh: "厨房" },
-  "Саун": { en: "Sauna", zh: "桑拿" },
-  "Тагт": { en: "Terrace", zh: "露台" },
-  "Халуун ус": { en: "Hot water", zh: "热水" },
-  "Унтлагын уут түрээслэх": { en: "Sleeping bag rental", zh: "睡袋租赁" },
-  "Нуурын үзэмж": { en: "Lake view", zh: "湖景" },
-  "Тоглоомын талбай": { en: "Playground", zh: "游乐场" },
-  "Рашаан ус": { en: "Hot spring water", zh: "温泉水" },
-  "Шилэн таазтай": { en: "Glass ceiling", zh: "玻璃穹顶" },
-  "Тансаг тавилга": { en: "Luxury furnishings", zh: "奢华家具" },
-};
-
-function translateAccommodationName(name: string) {
-  return ACCOMMODATION_NAME_TRANSLATIONS[name] ?? { en: name, zh: name };
-}
-
-function translateFacilities(facilities: string[]) {
-  return {
-    en: facilities.map((f) => FACILITY_TRANSLATIONS[f]?.en ?? f),
-    zh: facilities.map((f) => FACILITY_TRANSLATIONS[f]?.zh ?? f),
-  };
-}
 
 const CATEGORIES = [
   { name: "Амралтын газар", slug: "amraltiin-gazar", icon: "TreePine" },
@@ -214,401 +162,345 @@ const LOCATIONS = [
   },
 ] as const;
 
-type ResortSeed = {
+// Real resort listings supplied directly by the site owner (name/location/province/
+// phone/rating as given; unknown fields are intentionally left unset rather than
+// invented — see the priceFrom === 0 / rating === 0 handling throughout the app).
+type RealResortSeed = {
   name: string;
-  nameEn: string;
-  nameZh: string;
+  nameEn?: string;
   slug: string;
-  locationSlug: string;
+  locationSlug?: string;
   categorySlug: string;
   province: string;
   district: string;
   address: string;
-  addressEn: string;
-  addressZh: string;
   lat: number;
   lng: number;
-  distanceFromUbKm: number;
-  phone: string;
+  phone: string | null;
+  rating: number | null;
+  price: number | null;
   description: string;
-  descriptionEn: string;
-  descriptionZh: string;
-  amenities: string[];
-  featured?: boolean;
-  status?: "APPROVED" | "PENDING";
-  accommodations: {
-    type: keyof typeof AccommodationType;
-    name: string;
-    capacity: number;
-    price: number;
-    facilities: string[];
-  }[];
+  amenitySlugs?: string[];
 };
 
-const RESORTS: ResortSeed[] = [
-  {
-    name: "Тэрэлж Ресорт",
-    nameEn: "Terelj Resort",
-    nameZh: "特勒尔吉度假村",
-    slug: "terelj-resort",
-    locationSlug: "gorkhi-terelj",
-    categorySlug: "amraltiin-gazar",
-    province: "Төв аймаг",
-    district: "Гачуурт сум",
-    address: "Горхи-Тэрэлжийн байгалийн цогцолборт газар",
-    addressEn: "Gorkhi-Terelj National Park",
-    addressZh: "戈尔希-特勒尔吉国家公园",
-    lat: 47.985,
-    lng: 107.47,
-    distanceFromUbKm: 65,
-    phone: "+976 9911 2233",
-    description:
-      "Горхи-Тэрэлжийн байгалийн цогцолборт газарт орших уламжлалт гэр болон тав тухтай зусланг хослуулсан амралтын газар. Хад чулуу, гол, ойн үзэсгэлэнт байгаль дунд амрах боломжтой.",
-    descriptionEn:
-      "A resort in Gorkhi-Terelj National Park combining traditional gers with comfortable cottages. Relax amid stunning rock formations, rivers, and forest scenery.",
-    descriptionZh:
-      "位于戈尔希-特勒尔吉国家公园内的度假村，将传统蒙古包与舒适别墅相结合。可在壮观的岩石、河流与森林美景中尽享休憩。",
-    amenities: ["wifi", "restaurant", "bbq", "campfire", "horse-riding", "parking"],
-    featured: true,
-    accommodations: [
-      { type: "GER", name: "Монгол гэр", capacity: 4, price: 120000, facilities: ["Зуух", "Ор, дэрний хэрэгсэл"] },
-      { type: "FAMILY_HOUSE", name: "Гэр бүлийн байшин", capacity: 6, price: 220000, facilities: ["Угаалгын өрөө", "Гал тогоо"] },
-      { type: "VIP_HOUSE", name: "VIP байшин", capacity: 4, price: 380000, facilities: ["Саун", "Тагт", "Халуун ус"] },
-    ],
-  },
-  {
-    name: "Горхи Эко Кэмп",
-    nameEn: "Gorkhi Eco Camp",
-    nameZh: "戈尔希生态营地",
-    slug: "gorkhi-eco-camp",
-    locationSlug: "gorkhi-terelj",
-    categorySlug: "juulchnii-baaz",
-    province: "Төв аймаг",
-    district: "Эрдэнэ сум",
-    address: "Горхийн хөндий",
-    addressEn: "Gorkhi Valley",
-    addressZh: "戈尔希河谷",
-    lat: 47.95,
-    lng: 107.4,
-    distanceFromUbKm: 72,
-    phone: "+976 9922 3344",
-    description: "Байгальд ээлтэй, энгийн зохион байгуулалттай жуулчны бааз. Морь унах, загасчлах боломжтой.",
-    descriptionEn: "An eco-friendly, simply organized tourist camp offering horseback riding and fishing.",
-    descriptionZh: "环保、布局简单的旅游营地，可骑马和垂钓。",
-    amenities: ["campfire", "horse-riding", "fishing", "parking"],
-    accommodations: [
-      { type: "GER", name: "Стандарт гэр", capacity: 3, price: 85000, facilities: ["Зуух"] },
-      { type: "TENT", name: "Майхан", capacity: 2, price: 45000, facilities: ["Унтлагын уут түрээслэх"] },
-    ],
-  },
-  {
-    name: "Хөвсгөл Нуур Лодж",
-    nameEn: "Khuvsgul Lake Lodge",
-    nameZh: "库苏古尔湖度假屋",
-    slug: "khuvsgul-lake-lodge",
-    locationSlug: "khuvsgul",
-    categorySlug: "amraltiin-gazar",
-    province: "Хөвсгөл аймаг",
-    district: "Алаг-Эрдэнэ сум",
-    address: "Хатгал тосгоны ойролцоо, нуурын эрэг",
-    addressEn: "Near Khatgal village, lake shore",
-    addressZh: "毗邻哈特嘎勒村，湖畔",
-    lat: 51.03,
-    lng: 100.15,
-    distanceFromUbKm: 655,
-    phone: "+976 9933 4455",
-    description: "Хөвсгөл нуурын эрэг дээр байрлах тансаг зэрэглэлийн амралтын газар. Нуурын үзэмж бүхий VIP байшингууд.",
-    descriptionEn: "A luxury resort on the shore of Lake Khuvsgul, with VIP cottages offering lake views.",
-    descriptionZh: "坐落于库苏古尔湖畔的豪华度假村，设有可欣赏湖景的贵宾别墅。",
-    amenities: ["restaurant", "wifi", "sauna", "fishing", "parking", "campfire"],
-    featured: true,
-    accommodations: [
-      { type: "GER", name: "Нуурын эрэг гэр", capacity: 4, price: 140000, facilities: ["Нуурын үзэмж", "Зуух"] },
-      { type: "VIP_HOUSE", name: "VIP нуурын байшин", capacity: 4, price: 420000, facilities: ["Саун", "Тагт", "Халуун ус"] },
-    ],
-  },
-  {
-    name: "Хатгал Нуур Кэмп",
-    nameEn: "Khatgal Lake Camp",
-    nameZh: "哈特嘎勒湖营地",
-    slug: "khatgal-nuur-camp",
-    locationSlug: "khuvsgul",
-    categorySlug: "juulchnii-baaz",
-    province: "Хөвсгөл аймаг",
-    district: "Алаг-Эрдэнэ сум",
-    address: "Хатгал тосгон",
-    addressEn: "Khatgal village",
-    addressZh: "哈特嘎勒村",
-    lat: 50.98,
-    lng: 100.16,
-    distanceFromUbKm: 660,
-    phone: "+976 9944 5566",
-    description: "Гэр бүлийн амралтад тохиромжтой, нуурын хажууд орших энгийн боловч тав тухтай бааз.",
-    descriptionEn: "A simple yet comfortable camp by the lake, well suited for family vacations.",
-    descriptionZh: "位于湖边的简朴舒适营地，非常适合家庭度假。",
-    amenities: ["fishing", "campfire", "horse-riding", "parking"],
-    accommodations: [
-      { type: "GER", name: "Гэр", capacity: 4, price: 95000, facilities: ["Зуух"] },
-      { type: "FAMILY_HOUSE", name: "Гэр бүлийн байшин", capacity: 6, price: 180000, facilities: ["Гал тогоо"] },
-    ],
-  },
-  {
-    name: "Богд Хан Нэйчур Ресорт",
-    nameEn: "Bogd Khan Nature Resort",
-    nameZh: "博格达汗自然度假村",
-    slug: "bogd-khan-nature-resort",
-    locationSlug: "bogd-khan-uul",
-    categorySlug: "amraltiin-gazar",
-    province: "Улаанбаатар",
-    district: "Хан-Уул дүүрэг",
-    address: "Богд Хан уулын ар бэл",
-    addressEn: "Northern foothills of Bogd Khan Mountain",
-    addressZh: "博格达汗山北麓",
-    lat: 47.81,
-    lng: 106.97,
-    distanceFromUbKm: 28,
-    phone: "+976 9955 6677",
-    description: "Хотоос хамгийн ойр, нэг өдрийн амралтад тохиромжтой гэр бүлийн амралтын газар.",
-    descriptionEn: "The closest resort to the city, perfect for a family day trip.",
-    descriptionZh: "距市区最近的度假村，非常适合家庭一日游。",
-    amenities: ["playground", "pool", "restaurant", "wifi", "parking"],
-    accommodations: [
-      { type: "GER", name: "Гэр", capacity: 4, price: 100000, facilities: ["Зуух"] },
-      { type: "FAMILY_HOUSE", name: "Гэр бүлийн байшин", capacity: 5, price: 190000, facilities: ["Тагт"] },
-    ],
-  },
-  {
-    name: "Зайсан Хилл Ритрит",
-    nameEn: "Zaisan Hill Retreat",
-    nameZh: "扎伊桑山庄",
-    slug: "zaisan-hill-retreat",
-    locationSlug: "bogd-khan-uul",
-    categorySlug: "amraltiin-gazar",
-    province: "Улаанбаатар",
-    district: "Хан-Уул дүүрэг",
-    address: "Зайсан толгойн урд бэл",
-    addressEn: "Southern foothills of Zaisan Hill",
-    addressZh: "扎伊桑山南麓",
-    lat: 47.865,
-    lng: 106.93,
-    distanceFromUbKm: 15,
-    phone: "+976 9966 7788",
-    description: "Хотын төвөөс машинаар 20 минутын зайд орших тансаг VIP амралтын газар.",
-    descriptionEn: "A luxury VIP resort just a 20-minute drive from the city center.",
-    descriptionZh: "距市中心仅20分钟车程的豪华贵宾度假村。",
-    amenities: ["sauna", "pool", "restaurant", "wifi", "parking"],
-    accommodations: [
-      { type: "VIP_HOUSE", name: "VIP байшин", capacity: 4, price: 350000, facilities: ["Саун", "Бассейн"] },
-    ],
-  },
-  {
-    name: "Зуунмод Гэр Бүлийн Кэмп",
-    nameEn: "Zuunmod Family Camp",
-    nameZh: "宗毛德家庭营地",
-    slug: "zuunmod-family-camp",
-    locationSlug: "zuunmod",
-    categorySlug: "amraltiin-gazar",
-    province: "Төв аймаг",
-    district: "Зуунмод сум",
-    address: "Зуунмод хотын захад",
-    addressEn: "On the outskirts of Zuunmod",
-    addressZh: "宗毛德市郊",
-    lat: 47.71,
-    lng: 106.94,
-    distanceFromUbKm: 45,
-    phone: "+976 9977 8899",
-    description: "Хямд, хүртээмжтэй үнэтэй, хүүхэдтэй гэр бүлд тохиромжтой амралтын газар.",
-    descriptionEn: "An affordable resort well suited for families with children.",
-    descriptionZh: "价格实惠，非常适合有孩子的家庭。",
-    amenities: ["playground", "bbq", "campfire", "parking"],
-    accommodations: [
-      { type: "GER", name: "Гэр", capacity: 4, price: 70000, facilities: ["Зуух"] },
-      { type: "FAMILY_HOUSE", name: "Байшин", capacity: 6, price: 130000, facilities: ["Тоглоомын талбай"] },
-    ],
-  },
-  {
-    name: "Булган Гол Лодж",
-    nameEn: "Bulgan River Lodge",
-    nameZh: "布尔干河畔度假屋",
-    slug: "bulgan-river-lodge",
-    locationSlug: "bulgan",
-    categorySlug: "amraltiin-gazar",
-    province: "Булган аймаг",
-    district: "Булган сум",
-    address: "Сэлэнгэ мөрний хөвөө",
-    addressEn: "Banks of the Selenge River",
-    addressZh: "色楞格河畔",
-    lat: 48.8,
-    lng: 103.53,
-    distanceFromUbKm: 305,
-    phone: "+976 9988 9900",
-    description: "Гол мөрний эрэг дээр орших, загасчлал болон морь унахад тохиромжтой амралтын газар.",
-    descriptionEn: "A riverside resort ideal for fishing and horseback riding.",
-    descriptionZh: "位于河岸边的度假村，非常适合垂钓和骑马。",
-    amenities: ["fishing", "campfire", "horse-riding", "parking", "restaurant"],
-    accommodations: [
-      { type: "GER", name: "Гэр", capacity: 4, price: 90000, facilities: ["Зуух"] },
-      { type: "FAMILY_HOUSE", name: "Байшин", capacity: 6, price: 170000, facilities: ["Гал тогоо"] },
-    ],
-  },
-  {
-    name: "Цагаан Нуур Ресорт",
-    nameEn: "Tsagaan Nuur Resort",
-    nameZh: "查干湖度假村",
-    slug: "tsagaan-nuur-resort",
-    locationSlug: "arkhangai",
-    categorySlug: "amraltiin-gazar",
-    province: "Архангай аймаг",
-    district: "Тариат сум",
-    address: "Тэрхийн цагаан нуурын эрэг",
-    addressEn: "Shore of White Lake (Terkhiin Tsagaan Lake)",
-    addressZh: "特日欣查干湖（白湖）湖畔",
-    lat: 48.17,
-    lng: 99.75,
-    distanceFromUbKm: 480,
-    phone: "+976 9900 1122",
-    description: "Тэрхийн цагаан нуур, Хорго уулын үзэсгэлэнт байгаль дунд орших амралтын газар.",
-    descriptionEn: "A resort amid the scenic nature of White Lake (Terkhiin Tsagaan Lake) and Khorgo Mountain.",
-    descriptionZh: "坐落于特日欣查干湖（白湖）与和日高山秀丽自然风光之中的度假村。",
-    amenities: ["restaurant", "wifi", "fishing", "campfire", "horse-riding", "parking"],
-    featured: true,
-    accommodations: [
-      { type: "GER", name: "Нуурын гэр", capacity: 4, price: 110000, facilities: ["Нуурын үзэмж"] },
-      { type: "VIP_HOUSE", name: "VIP байшин", capacity: 4, price: 320000, facilities: ["Тагт", "Халуун ус"] },
-    ],
-  },
-  {
-    name: "Архангай Рашаан Ресорт",
-    nameEn: "Arkhangai Hot Springs Resort",
-    nameZh: "杭爱温泉度假村",
-    slug: "arkhangai-hot-spring-resort",
-    locationSlug: "arkhangai",
-    categorySlug: "amraltiin-gazar",
-    province: "Архангай аймаг",
-    district: "Цэнхэр сум",
-    address: "Цэнхэрийн халуун рашаан",
-    addressEn: "Tsenkher Hot Spring",
-    addressZh: "岑赫尔温泉",
-    lat: 47.35,
-    lng: 101.15,
-    distanceFromUbKm: 445,
-    phone: "+976 9911 2200",
-    description: "Байгалийн халуун рашаан бүхий эрүүл мэндийн амралтын газар.",
-    descriptionEn: "A wellness resort with natural hot springs.",
-    descriptionZh: "拥有天然温泉的健康疗养度假村。",
-    amenities: ["sauna", "pool", "restaurant", "wifi", "parking"],
-    accommodations: [
-      { type: "FAMILY_HOUSE", name: "Байшин", capacity: 5, price: 200000, facilities: ["Рашаан ус"] },
-      { type: "VIP_HOUSE", name: "VIP байшин", capacity: 4, price: 360000, facilities: ["Саун", "Рашаан ус"] },
-    ],
-  },
-  {
-    name: "Орхоны Хөндий Кэмп",
-    nameEn: "Orkhon Valley Camp",
-    nameZh: "鄂尔浑河谷营地",
-    slug: "orkhon-valley-camp",
-    locationSlug: "uvurkhangai",
-    categorySlug: "juulchnii-baaz",
-    province: "Өвөрхангай аймаг",
-    district: "Хархорин сум",
-    address: "Орхоны хөндий",
-    addressEn: "Orkhon Valley",
-    addressZh: "鄂尔浑河谷",
-    lat: 47.2,
-    lng: 102.83,
-    distanceFromUbKm: 365,
-    phone: "+976 9922 3311",
-    description: "Түүхэн дурсгалт Хархорин хотын ойролцоо, нүүдэлчдийн соёлыг мэдрэх боломжтой бааз.",
-    descriptionEn: "A camp near the historic city of Kharkhorin, offering a chance to experience nomadic culture.",
-    descriptionZh: "毗邻历史名城哈拉和林的营地，可在此体验游牧文化。",
-    amenities: ["horse-riding", "campfire", "restaurant", "parking"],
-    accommodations: [
-      { type: "GER", name: "Түүхэн загварын гэр", capacity: 4, price: 95000, facilities: ["Зуух"] },
-    ],
-  },
-  {
-    name: "Хархорум Херитаж Ресорт",
-    nameEn: "Kharkhorum Heritage Resort",
-    nameZh: "哈拉和林遗产度假村",
-    slug: "kharkhorum-heritage-resort",
-    locationSlug: "uvurkhangai",
-    categorySlug: "amraltiin-gazar",
-    province: "Өвөрхангай аймаг",
-    district: "Хархорин сум",
-    address: "Эрдэнэ Зуу хийдийн ойролцоо",
-    addressEn: "Near Erdene Zuu Monastery",
-    addressZh: "毗邻额尔德尼召寺",
-    lat: 47.195,
-    lng: 102.82,
-    distanceFromUbKm: 370,
-    phone: "+976 9933 4400",
-    description: "Эрдэнэ Зуу хийдийн ойролцоо орших, түүх соёлын аяллын цэг дэх тав тухтай амралтын газар.",
-    descriptionEn: "A comfortable resort near Erdene Zuu Monastery, a key stop on any historical and cultural tour.",
-    descriptionZh: "毗邻额尔德尼召寺的舒适度假村，是历史文化之旅的重要一站。",
-    amenities: ["wifi", "restaurant", "parking", "bbq"],
-    accommodations: [
-      { type: "GER", name: "Гэр", capacity: 4, price: 100000, facilities: ["Зуух"] },
-      { type: "VIP_HOUSE", name: "VIP байшин", capacity: 4, price: 290000, facilities: ["Тагт"] },
-    ],
-  },
-  {
-    name: "Nomad Sky Glamping",
-    nameEn: "Nomad Sky Glamping",
-    nameZh: "游牧天空豪华露营",
-    slug: "nomad-sky-glamping",
-    locationSlug: "gorkhi-terelj",
-    categorySlug: "glemping",
-    province: "Төв аймаг",
-    district: "Гачуурт сум",
-    address: "Тэрэлжийн үндэсний цэцэрлэгт хүрээлэн",
-    addressEn: "Terelj National Park",
-    addressZh: "特勒尔吉国家公园",
-    lat: 48.0,
-    lng: 107.45,
-    distanceFromUbKm: 68,
-    phone: "+976 9944 3300",
-    description: "Тансаг зэрэглэлийн глэмпинг — таны дулаан, тав тухыг хангасан орчин үеийн бүрэн тоноглогдсон майхан байшингууд.",
-    descriptionEn: "Luxury glamping — fully equipped modern tent cabins designed for your warmth and comfort.",
-    descriptionZh: "奢华露营地——配备齐全的现代化帐篷小屋，为您带来温暖与舒适。",
-    amenities: ["wifi", "pool", "sauna", "restaurant", "parking"],
-    featured: true,
-    accommodations: [
-      { type: "VIP_HOUSE", name: "Sky Dome VIP", capacity: 2, price: 550000, facilities: ["Шилэн таазтай", "Тансаг тавилга", "Саун"] },
-    ],
-  },
-  {
-    name: "Steppe Budget Camp",
-    nameEn: "Steppe Budget Camp",
-    nameZh: "草原经济营地",
-    slug: "steppe-budget-camp",
-    locationSlug: "zuunmod",
-    categorySlug: "juulchnii-baaz",
-    province: "Төв аймаг",
-    district: "Зуунмод сум",
-    address: "Зуунмодын хөндий",
-    addressEn: "Zuunmod Valley",
-    addressZh: "宗毛德河谷",
-    lat: 47.68,
-    lng: 106.97,
-    distanceFromUbKm: 50,
-    phone: "+976 9955 4400",
-    description: "Хямд өртөгтэй, энгийн зохион байгуулалттай, оюутан залуучуудад тохиромжтой амралтын газар.",
-    descriptionEn: "An affordable, simply organized resort well suited for students and young travelers.",
-    descriptionZh: "价格实惠、布局简单，非常适合学生和年轻旅行者的度假村。",
-    amenities: ["campfire", "parking"],
-    accommodations: [
-      { type: "GER", name: "Энгийн гэр", capacity: 4, price: 45000, facilities: ["Зуух"] },
-    ],
-  },
-];
+// Approximate coordinates per real-world area (exact per-resort coordinates were not
+// supplied). A small deterministic jitter is added per resort so markers don't stack.
+const AREA_CENTER: Record<string, { lat: number; lng: number }> = {
+  "gorkhi-terelj": { lat: 47.98, lng: 107.48 },
+  gachuurt: { lat: 47.95, lng: 107.23 },
+  "tsonjin-boldog": { lat: 47.933, lng: 107.795 },
+  ulaanbaatar: { lat: 47.9184, lng: 106.9177 },
+  arkhust: { lat: 47.717, lng: 107.417 },
+};
 
-const REVIEW_COMMENTS = [
-  "Маш их таалагдсан, дахин ирнэ! Байгаль үзэсгэлэнтэй, үйлчилгээ сайн байлаа.",
-  "Гэр цэвэрхэн, тухтай байсан. Хоолны газар сайн байна.",
-  "Үнийн хувьд арай өндөр ч гэсэн үйлчилгээ, орчин зохих ёсоор байлаа.",
-  "Хүүхэдтэй гэр бүлд маш тохиромжтой газар. Тоглоомын талбай том.",
-  "Ажилчид найрсаг, орчин зохион байгуулалт сайтай. Дахин очих болно.",
-  "Байршил тун гоё, зам сайн, амарч сэргэх боломж ихтэй.",
+function jitter(seed: string, center: { lat: number; lng: number }) {
+  const h = hashSeed(seed);
+  const dLat = (((h % 1000) / 1000) - 0.5) * 0.06;
+  const dLng = ((((h >> 10) % 1000) / 1000) - 0.5) * 0.06;
+  return { lat: center.lat + dLat, lng: center.lng + dLng };
+}
+
+const REAL_RESORTS: RealResortSeed[] = [
+  {
+    name: "Terelj Luxury Hotel",
+    slug: "terelj-luxury-hotel",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("terelj-luxury-hotel", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 9999 2233",
+    rating: 4.4,
+    price: null,
+    description: "Горхи-Тэрэлж орчимд байрлах зочид буудал, амралтын газар.",
+  },
+  {
+    name: "Juulchin Terelj Resort",
+    slug: "juulchin-terelj-resort",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("juulchin-terelj-resort", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 9433 1212",
+    rating: 4.4,
+    price: null,
+    description: "Горхи-Тэрэлжид байрлах Жуулчин группын амралтын газар.",
+  },
+  {
+    name: "Terelj Star Resort",
+    slug: "terelj-star-resort",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("terelj-star-resort", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 9588 3330",
+    rating: 4.4,
+    price: 450000,
+    description: "Горхи-Тэрэлж дэх амралтын газар.",
+  },
+  {
+    name: "Red Rock Resort, Mongolia",
+    slug: "red-rock-resort",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    lat: 47.85099949593331, // verified via Google Maps
+    lng: 107.40412083439112,
+    phone: "+976 7700 0111",
+    rating: 4.2,
+    price: null,
+    description: "Горхи-Тэрэлж орчимд байрлах амралтын газар.",
+  },
+  {
+    name: "Blue Spot Resort",
+    slug: "blue-spot-resort",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("blue-spot-resort", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 8627 4747",
+    rating: 4.6,
+    price: null,
+    description: "Горхи-Тэрэлж дэх амралтын газар.",
+  },
+  {
+    name: "Imperial Mount Resort",
+    slug: "imperial-mount-resort",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("imperial-mount-resort", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 7588 7733",
+    rating: 4.1,
+    price: null,
+    description: "Горхи-Тэрэлж орчимд байрлах уулын амралтын газар.",
+  },
+  {
+    name: "Ekh Terelj Family Resort",
+    slug: "ekh-terelj-family-resort",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("ekh-terelj-family-resort", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 8801 0003",
+    rating: 4.6,
+    price: null,
+    description: "Гэр бүлд тохиромжтой, Горхи-Тэрэлж дэх амралтын газар.",
+  },
+  {
+    name: "Bayalag Resort",
+    slug: "bayalag-resort",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("bayalag-resort", AREA_CENTER["gorkhi-terelj"]),
+    phone: null,
+    rating: 4.5,
+    price: null,
+    description: "Горхи-Тэрэлж дэх амралтын газар.",
+  },
+  {
+    name: "Terelj Resort",
+    nameEn: "Terelj Resort",
+    slug: "terelj-resort-2",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("terelj-resort-2", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 7755 5115",
+    rating: 4.2,
+    price: 185000,
+    description: "Горхи-Тэрэлж орчимд байрлах амралтын газар.",
+  },
+  {
+    name: "Bugat Resort",
+    slug: "bugat-resort",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Төв аймаг",
+    district: "Тэрэлж",
+    address: "Тэрэлж орчим",
+    ...jitter("bugat-resort", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 7707 7555",
+    rating: 4.6,
+    price: null,
+    description: "Тэрэлж орчимд байрлах амралтын газар.",
+  },
+  {
+    name: "Оршил Resort",
+    nameEn: "Orshil Resort",
+    slug: "orshil-resort",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Гачуурт",
+    address: "Гачуурт орчим",
+    ...jitter("orshil-resort", AREA_CENTER.gachuurt),
+    phone: null,
+    rating: null,
+    price: 80000,
+    description: "Гачуурт тосгонд байрлах амралтын газар.",
+  },
+  {
+    name: "Шинэ Монгол",
+    nameEn: "New Mongolia",
+    slug: "shine-mongol",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Гачуурт",
+    address: "Гачуурт орчим",
+    ...jitter("shine-mongol", AREA_CENTER.gachuurt),
+    phone: "+976 9919 0613",
+    rating: null,
+    price: 80000,
+    description: "Гачуурт дэх амралтын газар.",
+  },
+  {
+    name: "Gobi Deluxe Hotel and Resort",
+    slug: "gobi-deluxe-hotel-resort",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Гачуурт",
+    address: "Гачуурт орчим",
+    ...jitter("gobi-deluxe-hotel-resort", AREA_CENTER.gachuurt),
+    phone: "+976 8809 0814",
+    rating: 3.9,
+    price: null,
+    description: "Гачуурт дэх зочид буудал, амралтын газар.",
+  },
+  {
+    name: "Монгол Шилтгээн",
+    nameEn: "Mongolian Castle",
+    slug: "mongol-shiltgeen",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Гачуурт",
+    address: "Гачуурт орчим",
+    ...jitter("mongol-shiltgeen", AREA_CENTER.gachuurt),
+    phone: null,
+    rating: null,
+    price: null,
+    description: "Гачуурт дэх амралтын газар.",
+  },
+  {
+    name: "Харгиа Амралт",
+    nameEn: "Khargia Resort",
+    slug: "khargia-amralt",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Гачуурт",
+    address: "Гачуурт орчим",
+    ...jitter("khargia-amralt", AREA_CENTER.gachuurt),
+    phone: null,
+    rating: null,
+    price: 70000,
+    description: "Гачуурт дэх амралтын газар.",
+  },
+  {
+    name: "Bayan Mongolian Resort",
+    slug: "bayan-mongolian-resort",
+    categorySlug: "amraltiin-gazar",
+    province: "Төв аймаг",
+    district: "Цонжин болдог",
+    address: "Цонжин болдог орчим",
+    ...jitter("bayan-mongolian-resort", AREA_CENTER["tsonjin-boldog"]),
+    phone: "+976 9590 9220",
+    rating: 4.3,
+    price: null,
+    description: "Цонжин болдог орчимд байрлах амралтын газар.",
+  },
+  {
+    name: "Jargalant Resort",
+    slug: "jargalant-resort",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Улаанбаатар",
+    address: "Улаанбаатар хотын орчим",
+    ...jitter("jargalant-resort", AREA_CENTER.ulaanbaatar),
+    phone: null,
+    rating: 4.4,
+    price: null,
+    description: "Улаанбаатар хотын орчимд байрлах амралтын газар.",
+  },
+  {
+    name: "Hunnu Camp",
+    slug: "hunnu-camp",
+    categorySlug: "juulchnii-baaz",
+    province: "Улаанбаатар",
+    district: "Архуст",
+    address: "Архуст сум орчим",
+    ...jitter("hunnu-camp", AREA_CENTER.arkhust),
+    phone: "+976 7000 6989",
+    rating: 4.2,
+    price: null,
+    description: "Архуст сум дахь жуулчны бааз.",
+  },
+  {
+    name: "Ар гурван сайхан",
+    nameEn: "Ar Gurvan Saikhan",
+    slug: "ar-gurvan-saikhan",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлж орчим",
+    ...jitter("ar-gurvan-saikhan", AREA_CENTER["gorkhi-terelj"]),
+    phone: null,
+    rating: null,
+    price: 40000,
+    description: "Горхи-Тэрэлж дэх амралтын газар.",
+  },
+  {
+    name: "Тэрэлж амралт",
+    nameEn: "Terelj Resort",
+    slug: "terelj-amralt",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Улаанбаатар",
+    district: "Тэрэлж",
+    address: "Тэрэлж орчим",
+    ...jitter("terelj-amralt", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 9310 0810",
+    rating: null,
+    price: 40000,
+    description:
+      "Морин аялал, теннис, бильярд, сагсан бөмбөг, волейболын талбайтай амралтын газар.",
+    amenitySlugs: ["horse-riding"],
+  },
+  {
+    // Verified via its official website (gloryresortmongolia.mn). Email, website,
+    // and photos were imported straight into the database via the admin
+    // "Import from URL" tool and aren't tracked in this seed file.
+    name: "Glory Resort Mongolia",
+    slug: "glory-resort-mongolia",
+    locationSlug: "gorkhi-terelj",
+    categorySlug: "amraltiin-gazar",
+    province: "Төв аймаг",
+    district: "Горхи-Тэрэлж",
+    address: "Горхи-Тэрэлжийн үндэсний цэцэрлэгт хүрээлэн",
+    ...jitter("glory-resort-mongolia", AREA_CENTER["gorkhi-terelj"]),
+    phone: "+976 7070 2222",
+    rating: null,
+    price: null,
+    description:
+      "Горхи-Тэрэлжийн үндэсний цэцэрлэгт хүрээлэнд, Улаанбаатараас 44 км-т байрлах тансаг зэрэглэлийн амралтын газар.",
+  },
 ];
 
 async function main() {
@@ -617,10 +509,10 @@ async function main() {
   const passwordHash = await bcrypt.hash("Password123!", 10);
 
   const admin = await prisma.user.upsert({
-    where: { email: "admin@amralt.mn" },
+    where: { email: "admin@vayora.mn" },
     update: {},
     create: {
-      email: "admin@amralt.mn",
+      email: "admin@vayora.mn",
       name: "Админ",
       password: passwordHash,
       role: UserRole.ADMIN,
@@ -628,28 +520,15 @@ async function main() {
   });
 
   const demoUser = await prisma.user.upsert({
-    where: { email: "demo@amralt.mn" },
+    where: { email: "demo@vayora.mn" },
     update: {},
     create: {
-      email: "demo@amralt.mn",
+      email: "demo@vayora.mn",
       name: "Сарнай",
       password: passwordHash,
       role: UserRole.USER,
     },
   });
-
-  const reviewerNames = ["Болд", "Оюунаа", "Ганбаяр", "Түмэн", "Энхжин", "Мөнхбат"];
-  const reviewers = [];
-  for (const rname of reviewerNames) {
-    const email = `${rname.toLowerCase()}@example.mn`;
-    const u = await prisma.user.upsert({
-      where: { email },
-      update: {},
-      create: { email, name: rname, password: passwordHash, role: UserRole.USER },
-    });
-    reviewers.push(u);
-  }
-  const allReviewers = [demoUser, ...reviewers];
 
   console.log("Seeding categories...");
   const categoryBySlug = new Map<string, { id: string }>();
@@ -709,138 +588,60 @@ async function main() {
     amenityBySlug.set(a.slug, created);
   }
 
-  console.log("Seeding resorts...");
-  for (const r of RESORTS) {
-    const priceFrom = Math.min(...r.accommodations.map((a) => a.price));
-    const location = locationBySlug.get(r.locationSlug)!;
+  console.log("Seeding real resorts...");
+  for (const r of REAL_RESORTS) {
+    const location = r.locationSlug ? locationBySlug.get(r.locationSlug) : undefined;
     const category = categoryBySlug.get(r.categorySlug)!;
 
     const resort = await prisma.resort.upsert({
       where: { slug: r.slug },
       update: {
         name: r.name,
-        nameEn: r.nameEn,
-        nameZh: r.nameZh,
+        nameEn: r.nameEn ?? null,
         description: r.description,
-        descriptionEn: r.descriptionEn,
-        descriptionZh: r.descriptionZh,
         province: r.province,
         district: r.district,
         address: r.address,
-        addressEn: r.addressEn,
-        addressZh: r.addressZh,
         latitude: r.lat,
         longitude: r.lng,
         phone: r.phone,
-        priceFrom,
-        distanceFromUbKm: r.distanceFromUbKm,
-        status: r.status ?? "APPROVED",
-        featured: r.featured ?? false,
+        priceFrom: r.price ?? 0,
+        rating: r.rating ?? 0,
+        status: "APPROVED",
+        featured: false,
         categoryId: category.id,
-        locationId: location.id,
+        locationId: location?.id ?? null,
       },
       create: {
         name: r.name,
-        nameEn: r.nameEn,
-        nameZh: r.nameZh,
+        nameEn: r.nameEn ?? null,
         slug: r.slug,
         description: r.description,
-        descriptionEn: r.descriptionEn,
-        descriptionZh: r.descriptionZh,
         province: r.province,
         district: r.district,
         address: r.address,
-        addressEn: r.addressEn,
-        addressZh: r.addressZh,
         latitude: r.lat,
         longitude: r.lng,
         phone: r.phone,
-        priceFrom,
-        distanceFromUbKm: r.distanceFromUbKm,
-        status: r.status ?? "APPROVED",
-        featured: r.featured ?? false,
+        priceFrom: r.price ?? 0,
+        rating: r.rating ?? 0,
+        status: "APPROVED",
+        featured: false,
         categoryId: category.id,
-        locationId: location.id,
+        locationId: location?.id ?? null,
       },
     });
 
-    // Images
-    await prisma.resortImage.deleteMany({ where: { resortId: resort.id } });
-    const urls = img(r.slug, 6);
-    await prisma.resortImage.createMany({
-      data: urls.map((url, i) => ({
-        resortId: resort.id,
-        url,
-        alt: r.name,
-        order: i,
-        isCover: i === 0,
-      })),
-    });
-
-    // Amenities
-    await prisma.resortAmenity.deleteMany({ where: { resortId: resort.id } });
-    for (const slug of r.amenities) {
-      const amenity = amenityBySlug.get(slug);
-      if (!amenity) continue;
-      await prisma.resortAmenity.create({
-        data: { resortId: resort.id, amenityId: amenity.id },
-      });
+    if (r.amenitySlugs?.length) {
+      await prisma.resortAmenity.deleteMany({ where: { resortId: resort.id } });
+      for (const slug of r.amenitySlugs) {
+        const amenity = amenityBySlug.get(slug);
+        if (!amenity) continue;
+        await prisma.resortAmenity.create({
+          data: { resortId: resort.id, amenityId: amenity.id },
+        });
+      }
     }
-
-    // Accommodations
-    await prisma.accommodation.deleteMany({ where: { resortId: resort.id } });
-    for (const a of r.accommodations) {
-      const nameTranslation = translateAccommodationName(a.name);
-      const facilitiesTranslation = translateFacilities(a.facilities);
-      await prisma.accommodation.create({
-        data: {
-          resortId: resort.id,
-          type: a.type,
-          name: a.name,
-          nameEn: nameTranslation.en,
-          nameZh: nameTranslation.zh,
-          capacity: a.capacity,
-          price: a.price,
-          images: img(`${r.slug}-${a.name}`, 3),
-          facilities: a.facilities,
-          facilitiesEn: facilitiesTranslation.en,
-          facilitiesZh: facilitiesTranslation.zh,
-        },
-      });
-    }
-
-    // Reviews (deterministic pseudo-random subset of reviewers per resort)
-    await prisma.review.deleteMany({ where: { resortId: resort.id } });
-    const seedNum = r.slug.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
-    const numReviews = 2 + (seedNum % 4); // 2-5 reviews
-    const chosenReviewers = allReviewers
-      .slice()
-      .sort((a, b) => (a.id + r.slug > b.id + r.slug ? 1 : -1))
-      .slice(0, numReviews);
-
-    let ratingSum = 0;
-    for (let i = 0; i < chosenReviewers.length; i++) {
-      const rating = 3 + ((seedNum + i) % 3); // 3-5
-      ratingSum += rating;
-      await prisma.review.create({
-        data: {
-          resortId: resort.id,
-          userId: chosenReviewers[i].id,
-          rating,
-          comment: REVIEW_COMMENTS[(seedNum + i) % REVIEW_COMMENTS.length],
-        },
-      });
-    }
-
-    const avgRating = chosenReviewers.length ? ratingSum / chosenReviewers.length : 0;
-    await prisma.resort.update({
-      where: { id: resort.id },
-      data: {
-        rating: Math.round(avgRating * 10) / 10,
-        reviewCount: chosenReviewers.length,
-        viewCount: 50 + (seedNum % 900),
-      },
-    });
 
     console.log(`  - ${r.name}`);
   }
@@ -857,8 +658,8 @@ async function main() {
 
   console.log("Seed complete.");
   console.log("Login accounts (password: Password123!):");
-  console.log("  admin@amralt.mn (admin)");
-  console.log("  demo@amralt.mn (regular user)");
+  console.log("  admin@vayora.mn (admin)");
+  console.log("  demo@vayora.mn (regular user)");
 }
 
 main()

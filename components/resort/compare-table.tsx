@@ -62,7 +62,7 @@ export function CompareTable({ resorts }: { resorts: Resort[] }) {
                   <span className="mb-1 block text-xs font-medium text-muted-foreground sm:hidden">
                     {t("price")}
                   </span>
-                {formatMNT(resort.priceFrom, locale)}
+                {resort.priceFrom > 0 ? formatMNT(resort.priceFrom, locale) : t("priceOnRequest")}
               </td>
             ))}
           </tr>

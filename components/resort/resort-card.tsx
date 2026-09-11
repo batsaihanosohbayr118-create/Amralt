@@ -103,10 +103,18 @@ export function ResortCard({
         )}
 
         <div className="mt-1 flex items-baseline gap-1">
-          <span className="font-heading text-lg font-bold text-primary">
-            {formatMNT(resort.priceFrom, locale)}
-          </span>
-          <span className="text-sm text-muted-foreground">{t("perNight")}</span>
+          {resort.priceFrom > 0 ? (
+            <>
+              <span className="font-heading text-lg font-bold text-primary">
+                {formatMNT(resort.priceFrom, locale)}
+              </span>
+              <span className="text-sm text-muted-foreground">{t("perNight")}</span>
+            </>
+          ) : (
+            <span className="font-heading text-lg font-bold text-primary">
+              {t("priceOnRequest")}
+            </span>
+          )}
         </div>
       </div>
     </Link>

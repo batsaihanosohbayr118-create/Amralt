@@ -24,12 +24,12 @@ export async function generateMetadata(): Promise<Metadata> {
     ),
     title: {
       default: t("title"),
-      template: "%s | Amralt.mn",
+      template: "%s | Vayora",
     },
     description: t("description"),
     themeColor: "#007145",
     appleWebApp: {
-      title: "Amralt.mn",
+      title: "Vayora",
       statusBarStyle: "black-translucent",
     },
   };

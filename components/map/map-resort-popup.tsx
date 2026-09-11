@@ -38,7 +38,7 @@ export function MapResortPopup({ resort, onNavigate }: Props) {
         </p>
         <RatingStars rating={resort.rating} size="sm" />
         <p className="font-heading text-sm font-bold text-foreground">
-          {formatMNT(resort.priceFrom, locale)}
+          {resort.priceFrom > 0 ? formatMNT(resort.priceFrom, locale) : t("priceOnRequest")}
         </p>
         <span className="mt-1 flex items-center gap-1 text-xs font-semibold text-primary">
           {t("viewDetails")} <ArrowRight className="size-3.5" />

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Loader2, Plus, Trash2, Upload } from "lucide-react";
+import { Download, Loader2, Plus, Trash2, Upload } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +33,7 @@ import {
   type ResortFormValues,
 } from "@/lib/validations/resort";
 import { createResort, updateResort } from "@/lib/actions/resorts";
+import { importResortFromUrl } from "@/lib/actions/import-resort";
 import { uploadImage } from "@/lib/actions/upload";
 
 type Option = { id: string; name: string };
@@ -92,6 +93,33 @@ export function ResortForm({
   const [isUploading, startUpload] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [importUrl, setImportUrl] = useState("");
+  const [isImporting, startImport] = useTransition();
+
+  function handleImport() {
+    if (!importUrl.trim()) return;
+    startImport(async () => {
+      const result = await importResortFromUrl(importUrl.trim());
+      if (!result.ok) {
+        toast.error(result.error);
+        return;
+      }
+
+      const { data } = result;
+      if (data.name) form.setValue("name", data.name);
+      if (data.description) form.setValue("description", data.description);
+      if (data.phone) form.setValue("phone", data.phone);
+      if (data.email) form.setValue("email", data.email);
+      if (data.address) form.setValue("address", data.address);
+      if (data.latitude != null) form.setValue("latitude", data.latitude);
+      if (data.longitude != null) form.setValue("longitude", data.longitude);
+      form.setValue("website", importUrl.trim());
+      if (data.imageUrls?.length) setImageUrls(data.imageUrls);
+
+      toast.success(t("importSuccess"));
+    });
+  }
+
   function updateImageUrl(index: number, value: string) {
     setImageUrls((prev) => prev.map((u, i) => (i === index ? value : u)));
   }
@@ -150,6 +178,27 @@ export function ResortForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="space-y-1.5 rounded-2xl border border-dashed border-border p-4">
+          <FormLabel>{t("importFromUrl")}</FormLabel>
+          <div className="flex gap-2">
+            <Input
+              placeholder={t("importFromUrlPlaceholder")}
+              value={importUrl}
+              onChange={(e) => setImportUrl(e.target.value)}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isImporting || !importUrl.trim()}
+              onClick={handleImport}
+            >
+              {isImporting ? <Loader2 className="animate-spin" /> : <Download />}
+              {t("import")}
+            </Button>
+          </div>
+          <p className="text-xs text-muted-foreground">{t("importFromUrlHint")}</p>
+        </div>
+
         <div className="grid gap-4 sm:grid-cols-2">
           <FormField
             control={form.control}

@@ -18,7 +18,7 @@
     "regionKhuvsgul": "Хөвсгөл",
     "regionArkhangai": "Архангай",
     "tagline": "Монгол орны амралтын газруудыг олох, харьцуулах, аялалаа төлөвлөх нэгдсэн платформ.",
-    "copyright": "© {year} Amralt.mn. Бүх эрх хуулиар хамгаалагдсан.",
+    "copyright": "© {year} Vayora. Бүх эрх хуулиар хамгаалагдсан.",
     "madeIn": "Монголд хийгдсэн"
   },
   "MobileNav": {
@@ -67,7 +67,8 @@
   },
   "ResortCard": {
     "distanceFromUb": "Улаанбаатараас {distance}",
-    "perNight": "/ шөнө"
+    "perNight": "/ шөнө",
+    "priceOnRequest": "Үнэ лавлана уу"
   },
   "CategoryLabels": {
     "amraltiin-gazar": "Амралтын газар",
@@ -117,6 +118,7 @@
   },
   "ResortDetail": {
     "perNight": "/ шөнө",
+    "priceOnRequest": "Үнэ лавлана уу",
     "route": "Маршрут",
     "about": "Тухай",
     "amenities": "Тав тух",
@@ -234,7 +236,7 @@
   },
   "RegisterPage": {
     "title": "Бүртгэл үүсгэх",
-    "description": "Amralt.mn-д тавтай морил",
+    "description": "Vayora-д тавтай морил",
     "or": "эсвэл",
     "haveAccount": "Бүртгэлтэй юу?",
     "login": "Нэвтрэх"
@@ -279,6 +281,7 @@
   "CompareTable": {
     "feature": "Онцлог",
     "price": "Үнэ",
+    "priceOnRequest": "Лавлана уу",
     "rating": "Үнэлгээ",
     "distanceFromUb": "УБ-аас зай",
     "location": "Байршил"
@@ -296,7 +299,7 @@
   "AiPlannerPage": {
     "title": "AI Аяллын төлөвлөгч",
     "heading": "Хиймэл оюун ухаанаар аяллаа төлөвлө",
-    "description": "Бүсээ, хоногийн тоо, хүний тоогоо оруулаад Amralt.mn-д бүртгэлтэй бодит амралтын газруудад тулгуурласан өдөр бүрийн аяллын төлөвлөгөөг шууд авна уу."
+    "description": "Бүсээ, хоногийн тоо, хүний тоогоо оруулаад Vayora-д бүртгэлтэй бодит амралтын газруудад тулгуурласан өдөр бүрийн аяллын төлөвлөгөөг шууд авна уу."
   },
   "TripPlannerForm": {
     "budgetBudget": "Хямд",
@@ -402,6 +405,11 @@
     "accommodationsTitle": "Байрны сонголт"
   },
   "ResortForm": {
+    "importFromUrl": "Албан ёсны вэбсайтаас татах",
+    "importFromUrlPlaceholder": "https://example.mn",
+    "importFromUrlHint": "Амралтын газрын вэбсайтын холбоосыг оруулбал нэр, тайлбар, утас, и-мэйл, зураг зэргийг автоматаар татаж бөглөнө. Татсан мэдээллийг шалгаж, шаардлагатай бол засаарай.",
+    "import": "Татах",
+    "importSuccess": "Вэбсайтаас мэдээлэл татагдлаа. Шалгаад хадгална уу.",
     "created": "Амралтын газар нэмэгдлээ",
     "saved": "Амралтын газар хадгалагдлаа",
     "name": "Нэр",
@@ -490,7 +498,7 @@
     "changeRole": "Хэрэглэгчийн эрхийг өөрчлөх"
   },
   "RootMetadata": {
-    "title": "Amralt.mn — Монголын амралтын газрууд",
+    "title": "Vayora — Монголын амралтын газрууд",
     "description": "Монгол орны хамгийн гоё амралтын газруудыг нэг дороос олж, харьцуулж, захиалаарай."
   },
   "SearchPageMetadata": {
@@ -518,7 +526,8 @@
     "resortCount": "{count} газар"
   },
   "MapResortPopup": {
-    "viewDetails": "Дэлгэрэнгүй"
+    "viewDetails": "Дэлгэрэнгүй",
+    "priceOnRequest": "Лавлана уу"
   },
   "MapStatusGuard": {
     "loadFailedTitle": "Газрын зургийг ачаалж чадсангүй",

@@ -18,7 +18,7 @@
     "regionKhuvsgul": "Khuvsgul",
     "regionArkhangai": "Arkhangai",
     "tagline": "The all-in-one platform to find, compare, and plan trips to Mongolia's best resorts.",
-    "copyright": "© {year} Amralt.mn. All rights reserved.",
+    "copyright": "© {year} Vayora. All rights reserved.",
     "madeIn": "Made in Mongolia"
   },
   "MobileNav": {
@@ -67,7 +67,8 @@
   },
   "ResortCard": {
     "distanceFromUb": "{distance} from Ulaanbaatar",
-    "perNight": "/ night"
+    "perNight": "/ night",
+    "priceOnRequest": "Price on request"
   },
   "CategoryLabels": {
     "amraltiin-gazar": "Resort",
@@ -117,6 +118,7 @@
   },
   "ResortDetail": {
     "perNight": "/ night",
+    "priceOnRequest": "Price on request",
     "route": "Route",
     "about": "About",
     "amenities": "Amenities",
@@ -234,7 +236,7 @@
   },
   "RegisterPage": {
     "title": "Create an account",
-    "description": "Welcome to Amralt.mn",
+    "description": "Welcome to Vayora",
     "or": "or",
     "haveAccount": "Already have an account?",
     "login": "Log in"
@@ -279,6 +281,7 @@
   "CompareTable": {
     "feature": "Feature",
     "price": "Price",
+    "priceOnRequest": "On request",
     "rating": "Rating",
     "distanceFromUb": "Distance from UB",
     "location": "Location"
@@ -296,7 +299,7 @@
   "AiPlannerPage": {
     "title": "AI Trip Planner",
     "heading": "Plan your trip with AI",
-    "description": "Enter your region, number of days, and guest count to get a day-by-day itinerary built from real resorts listed on Amralt.mn."
+    "description": "Enter your region, number of days, and guest count to get a day-by-day itinerary built from real resorts listed on Vayora."
   },
   "TripPlannerForm": {
     "budgetBudget": "Budget",
@@ -402,6 +405,11 @@
     "accommodationsTitle": "Accommodations"
   },
   "ResortForm": {
+    "importFromUrl": "Import from official website",
+    "importFromUrlPlaceholder": "https://example.com",
+    "importFromUrlHint": "Paste the resort's website URL to auto-fill the name, description, phone, email, and images. Review the imported data and edit as needed.",
+    "import": "Import",
+    "importSuccess": "Imported data from the website. Review before saving.",
     "created": "Resort created",
     "saved": "Resort saved",
     "name": "Name",
@@ -490,7 +498,7 @@
     "changeRole": "Change user role"
   },
   "RootMetadata": {
-    "title": "Amralt.mn — Mongolia's resorts",
+    "title": "Vayora — Mongolia's resorts",
     "description": "Discover, compare, and book Mongolia's most beautiful resorts, all in one place."
   },
   "SearchPageMetadata": {
@@ -518,7 +526,8 @@
     "resortCount": "{count, plural, one {# resort} other {# resorts}}"
   },
   "MapResortPopup": {
-    "viewDetails": "View details"
+    "viewDetails": "View details",
+    "priceOnRequest": "On request"
   },
   "MapStatusGuard": {
     "loadFailedTitle": "Couldn't load the map",

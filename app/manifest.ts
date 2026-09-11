@@ -4,9 +4,9 @@ import { cookies } from "next/headers";
 import { LOCALES, DEFAULT_LOCALE, type Locale } from "@/i18n/request";
 
 const NAMES: Record<Locale, { name: string; short_name: string }> = {
-  mn: { name: "Amralt.mn — Монголын амралтын газрууд", short_name: "Amralt.mn" },
-  en: { name: "Amralt.mn — Mongolia's resorts", short_name: "Amralt.mn" },
-  zh: { name: "Amralt.mn — 蒙古国度假村", short_name: "Amralt.mn" },
+  mn: { name: "Vayora — Монголын амралтын газрууд", short_name: "Vayora" },
+  en: { name: "Vayora — Mongolia's resorts", short_name: "Vayora" },
+  zh: { name: "Vayora — 蒙古国度假村", short_name: "Vayora" },
 };
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {

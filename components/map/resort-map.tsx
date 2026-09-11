@@ -18,7 +18,7 @@ import { ArrowLeft } from "lucide-react";
 import { MapProvider } from "@/components/map/map-provider";
 import { MapResortPopup } from "@/components/map/map-resort-popup";
 import { AimagBoundaries } from "@/components/map/aimag-boundaries";
-import { createPricePinIcon, createProvinceIcon } from "@/lib/maps/marker-icon";
+import { createNamePinIcon, createProvinceIcon } from "@/lib/maps/marker-icon";
 import { MONGOLIA_CENTER, MONGOLIA_DEFAULT_ZOOM } from "@/lib/maps/config";
 import { cn } from "@/lib/utils";
 
@@ -210,9 +210,7 @@ function ResortMarkers({ resorts }: { resorts: MapResort[] }) {
         <Marker
           key={resort.id}
           position={{ lat: resort.latitude, lng: resort.longitude }}
-          icon={createPricePinIcon(resort.priceFrom, {
-            selected: resort.id === selectedId,
-          })}
+          icon={createNamePinIcon(resort.name, { selected: resort.id === selectedId })}
           title={resort.name}
           zIndex={resort.id === selectedId ? 999 : undefined}
           onClick={() => {

@@ -18,7 +18,7 @@
     "regionKhuvsgul": "库苏古尔",
     "regionArkhangai": "杭爱",
     "tagline": "一站式平台，助您发现、比较蒙古国最佳度假村并规划行程。",
-    "copyright": "© {year} Amralt.mn 版权所有。",
+    "copyright": "© {year} Vayora 版权所有。",
     "madeIn": "蒙古制造"
   },
   "MobileNav": {
@@ -67,7 +67,8 @@
   },
   "ResortCard": {
     "distanceFromUb": "距乌兰巴托 {distance}",
-    "perNight": "/ 晚"
+    "perNight": "/ 晚",
+    "priceOnRequest": "价格详询"
   },
   "CategoryLabels": {
     "amraltiin-gazar": "度假村",
@@ -117,6 +118,7 @@
   },
   "ResortDetail": {
     "perNight": "/ 晚",
+    "priceOnRequest": "价格详询",
     "route": "路线",
     "about": "简介",
     "amenities": "设施",
@@ -234,7 +236,7 @@
   },
   "RegisterPage": {
     "title": "创建账户",
-    "description": "欢迎来到 Amralt.mn",
+    "description": "欢迎来到 Vayora",
     "or": "或",
     "haveAccount": "已经有账户？",
     "login": "登录"
@@ -279,6 +281,7 @@
   "CompareTable": {
     "feature": "特色",
     "price": "价格",
+    "priceOnRequest": "详询",
     "rating": "评分",
     "distanceFromUb": "距乌兰巴托距离",
     "location": "位置"
@@ -296,7 +299,7 @@
   "AiPlannerPage": {
     "title": "AI 行程规划",
     "heading": "用 AI 规划您的旅程",
-    "description": "输入地区、天数和人数，即可获得基于 Amralt.mn 真实度假村数据生成的每日行程安排。"
+    "description": "输入地区、天数和人数，即可获得基于 Vayora 真实度假村数据生成的每日行程安排。"
   },
   "TripPlannerForm": {
     "budgetBudget": "经济",
@@ -402,6 +405,11 @@
     "accommodationsTitle": "住宿选择"
   },
   "ResortForm": {
+    "importFromUrl": "从官方网站导入",
+    "importFromUrlPlaceholder": "https://example.com",
+    "importFromUrlHint": "粘贴度假村官网链接，即可自动填充名称、简介、电话、邮箱和图片。请核实导入的信息并按需修改。",
+    "import": "导入",
+    "importSuccess": "已从网站导入数据，请核实后保存。",
     "created": "度假村已创建",
     "saved": "度假村已保存",
     "name": "名称",
@@ -490,7 +498,7 @@
     "changeRole": "更改用户权限"
   },
   "RootMetadata": {
-    "title": "Amralt.mn — 蒙古国度假村",
+    "title": "Vayora — 蒙古国度假村",
     "description": "一站式发现、比较并预订蒙古国最美的度假村。"
   },
   "SearchPageMetadata": {
@@ -518,7 +526,8 @@
     "resortCount": "{count} 家度假村"
   },
   "MapResortPopup": {
-    "viewDetails": "查看详情"
+    "viewDetails": "查看详情",
+    "priceOnRequest": "详询"
   },
   "MapStatusGuard": {
     "loadFailedTitle": "地图加载失败",
