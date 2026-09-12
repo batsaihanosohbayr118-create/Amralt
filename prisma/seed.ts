@@ -60,6 +60,17 @@ const AMENITIES = [
   { name: "Морь унах", slug: "horse-riding", icon: "PawPrint" },
   { name: "Загасчлал", slug: "fishing", icon: "Fish" },
   { name: "Гал түлээ", slug: "campfire", icon: "Flame" },
+  { name: "Сагсан бөмбөг", slug: "basketball", icon: "CircleDot" },
+  { name: "Ширээний теннис", slug: "table-tennis", icon: "Target" },
+  { name: "Волейбол", slug: "volleyball", icon: "Goal" },
+  { name: "Караоке", slug: "karaoke", icon: "MicVocal" },
+  { name: "Өглөөний цай", slug: "breakfast", icon: "Coffee" },
+  { name: "Бизнес төв", slug: "business-center", icon: "Briefcase" },
+  { name: "Тэжээвэр амьтан зөвшөөрсөн", slug: "pets-allowed", icon: "Dog" },
+  { name: "Өрөөний үйлчилгээ", slug: "room-service", icon: "ConciergeBell" },
+  { name: "Нисэх буудлын автобус", slug: "airport-shuttle", icon: "Bus" },
+  { name: "Уушийн газар", slug: "bar", icon: "Martini" },
+  { name: "Тамхигүй орчин", slug: "smoke-free", icon: "CigaretteOff" },
 ] as const;
 
 const CATEGORIES = [
@@ -179,6 +190,7 @@ type RealResortSeed = {
   phone: string | null;
   rating: number | null;
   price: number | null;
+  distanceFromUbKm?: number;
   description: string;
   amenitySlugs?: string[];
 };
@@ -405,12 +417,14 @@ const REAL_RESORTS: RealResortSeed[] = [
     categorySlug: "amraltiin-gazar",
     province: "Улаанбаатар",
     district: "Гачуурт",
-    address: "Гачуурт орчим",
+    address: "Гачуурт чиглэл, Хар усан тохой",
     ...jitter("khargia-amralt", AREA_CENTER.gachuurt),
-    phone: null,
+    phone: "+976 9932 2723", // verified via zugaalga.mn directory listing
     rating: null,
     price: 70000,
-    description: "Гачуурт дэх амралтын газар.",
+    distanceFromUbKm: 18,
+    description:
+      "Гачуурт чиглэлд, Хар усан тохойн ойролцоо, Туул голын эрэг дээр байрлах амралтын газар. 80 хүн хүлээн авах чадалтай, гэр болон байшин сууцтай, хоолтой. Тоглоомын талбай, спортын талбай (хөлбөмбөг, сагсан бөмбөг, гар бөмбөг), нээлттэй BBQ талбай, хамгаалалттай зогсоолтой.",
   },
   {
     name: "Bayan Mongolian Resort",
@@ -419,11 +433,24 @@ const REAL_RESORTS: RealResortSeed[] = [
     province: "Төв аймаг",
     district: "Цонжин болдог",
     address: "Цонжин болдог орчим",
-    ...jitter("bayan-mongolian-resort", AREA_CENTER["tsonjin-boldog"]),
+    lat: 47.8243256841405, // verified via Google Maps
+    lng: 107.61630184105603,
     phone: "+976 9590 9220",
     rating: 4.3,
     price: null,
     description: "Цонжин болдог орчимд байрлах амралтын газар.",
+    amenitySlugs: [
+      "wifi",
+      "parking",
+      "restaurant",
+      "breakfast",
+      "business-center",
+      "pets-allowed",
+      "room-service",
+      "airport-shuttle",
+      "bar",
+      "smoke-free",
+    ],
   },
   {
     name: "Jargalant Resort",
@@ -458,13 +485,17 @@ const REAL_RESORTS: RealResortSeed[] = [
     locationSlug: "gorkhi-terelj",
     categorySlug: "amraltiin-gazar",
     province: "Улаанбаатар",
-    district: "Горхи-Тэрэлж",
-    address: "Горхи-Тэрэлж орчим",
-    ...jitter("ar-gurvan-saikhan", AREA_CENTER["gorkhi-terelj"]),
+    district: "Налайх дүүрэг",
+    address: "XCJR+GM, НД - 6 хороо, Тэрэлж, Улаанбаатар 12712",
+    lat: 47.9813265, // verified via Google Maps place data
+    lng: 107.4417099,
     phone: null,
-    rating: null,
+    rating: 4.6,
     price: 40000,
-    description: "Горхи-Тэрэлж дэх амралтын газар.",
+    distanceFromUbKm: 65,
+    description:
+      "Горхи Тэрэлжийн Байгалийн Цогцолбор газарт уул ус, ой модныхоо хаяанд байрладаг, цэвэрхэн тохилог амралтын газар. Байгууллага, анги хамт олон, найз нөхөд, гэр бүлээрээ ирж, үзэсгэлэнт байгалийн сайхан, эрүүл цэвэр агаарт тав тухтай амрах боломжтой. Нэг ээлжиндээ 100-150 хүн хүлээн авах чадалтай, 10 гаруй жил тасралтгүй үйл ажиллагаа явуулж байгаа туршлагатай. Амт чанар сайтай хоол унд, хорхог боодог болон бусад үйлчилгээ үзүүлнэ.",
+    amenitySlugs: ["restaurant", "bbq", "horse-riding", "playground", "basketball", "table-tennis", "volleyball", "karaoke"],
   },
   {
     name: "Тэрэлж амралт",
@@ -504,7 +535,7 @@ const REAL_RESORTS: RealResortSeed[] = [
 ];
 
 async function main() {
-  console.log("Seeding admin, demo users...");
+  console.log("Seeding admin user...");
 
   const passwordHash = await bcrypt.hash("Password123!", 10);
 
@@ -516,17 +547,6 @@ async function main() {
       name: "Админ",
       password: passwordHash,
       role: UserRole.ADMIN,
-    },
-  });
-
-  const demoUser = await prisma.user.upsert({
-    where: { email: "demo@vayora.mn" },
-    update: {},
-    create: {
-      email: "demo@vayora.mn",
-      name: "Сарнай",
-      password: passwordHash,
-      role: UserRole.USER,
     },
   });
 
@@ -607,6 +627,7 @@ async function main() {
         phone: r.phone,
         priceFrom: r.price ?? 0,
         rating: r.rating ?? 0,
+        distanceFromUbKm: r.distanceFromUbKm,
         status: "APPROVED",
         featured: false,
         categoryId: category.id,
@@ -625,6 +646,7 @@ async function main() {
         phone: r.phone,
         priceFrom: r.price ?? 0,
         rating: r.rating ?? 0,
+        distanceFromUbKm: r.distanceFromUbKm,
         status: "APPROVED",
         featured: false,
         categoryId: category.id,
@@ -646,20 +668,9 @@ async function main() {
     console.log(`  - ${r.name}`);
   }
 
-  // A couple of favorites for the demo user
-  const someResorts = await prisma.resort.findMany({ take: 3 });
-  for (const resort of someResorts) {
-    await prisma.favorite.upsert({
-      where: { userId_resortId: { userId: demoUser.id, resortId: resort.id } },
-      update: {},
-      create: { userId: demoUser.id, resortId: resort.id },
-    });
-  }
-
   console.log("Seed complete.");
-  console.log("Login accounts (password: Password123!):");
+  console.log("Login account (password: Password123!):");
   console.log("  admin@vayora.mn (admin)");
-  console.log("  demo@vayora.mn (regular user)");
 }
 
 main()

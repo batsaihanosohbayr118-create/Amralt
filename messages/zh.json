@@ -127,6 +127,7 @@
     "contact": "联系方式",
     "phone": "电话",
     "email": "邮箱",
+    "website": "官方网站",
     "distanceFromUb": "距乌兰巴托距离",
     "km": "{km} 公里"
   },
@@ -150,7 +151,18 @@
     "playground": "儿童游乐场",
     "horse-riding": "骑马",
     "fishing": "钓鱼",
-    "campfire": "篝火"
+    "campfire": "篝火",
+    "basketball": "篮球场",
+    "table-tennis": "乒乓球",
+    "volleyball": "排球",
+    "karaoke": "卡拉OK",
+    "breakfast": "早餐",
+    "business-center": "商务中心",
+    "pets-allowed": "允许携带宠物",
+    "room-service": "客房服务",
+    "airport-shuttle": "机场班车",
+    "bar": "酒吧",
+    "smoke-free": "无烟环境"
   },
   "AccommodationType": {
     "GER": "蒙古包",

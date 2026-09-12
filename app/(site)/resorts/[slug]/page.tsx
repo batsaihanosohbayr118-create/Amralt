@@ -272,6 +272,21 @@ export default async function ResortDetailPage({
                   <dd className="font-medium text-foreground">{resort.email}</dd>
                 </div>
               )}
+              {resort.website && (
+                <div className="flex justify-between gap-3">
+                  <dt className="text-muted-foreground">{t("website")}</dt>
+                  <dd className="truncate font-medium text-foreground">
+                    <a
+                      href={resort.website}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="text-primary hover:underline"
+                    >
+                      {resort.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                    </a>
+                  </dd>
+                </div>
+              )}
               <div className="flex justify-between gap-3">
                 <dt className="text-muted-foreground">{t("location")}</dt>
                 <dd className="text-right font-medium text-foreground">

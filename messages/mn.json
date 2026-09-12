@@ -127,6 +127,7 @@
     "contact": "Холбоо барих",
     "phone": "Утас",
     "email": "И-мэйл",
+    "website": "Вэбсайт",
     "distanceFromUb": "УБ-аас зай",
     "km": "{km} км"
   },
@@ -150,7 +151,18 @@
     "playground": "Хүүхдийн талбай",
     "horse-riding": "Морь унах",
     "fishing": "Загасчлал",
-    "campfire": "Гал түлээ"
+    "campfire": "Гал түлээ",
+    "basketball": "Сагсан бөмбөг",
+    "table-tennis": "Ширээний теннис",
+    "volleyball": "Волейбол",
+    "karaoke": "Караоке",
+    "breakfast": "Өглөөний цай",
+    "business-center": "Бизнес төв",
+    "pets-allowed": "Тэжээвэр амьтан зөвшөөрсөн",
+    "room-service": "Өрөөний үйлчилгээ",
+    "airport-shuttle": "Нисэх буудлын автобус",
+    "bar": "Уушийн газар",
+    "smoke-free": "Тамхигүй орчин"
   },
   "AccommodationType": {
     "GER": "Монгол гэр",

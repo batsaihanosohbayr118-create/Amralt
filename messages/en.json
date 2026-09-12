@@ -127,6 +127,7 @@
     "contact": "Contact",
     "phone": "Phone",
     "email": "Email",
+    "website": "Website",
     "distanceFromUb": "Distance from UB",
     "km": "{km} km"
   },
@@ -150,7 +151,18 @@
     "playground": "Playground",
     "horse-riding": "Horse riding",
     "fishing": "Fishing",
-    "campfire": "Campfire"
+    "campfire": "Campfire",
+    "basketball": "Basketball",
+    "table-tennis": "Table tennis",
+    "volleyball": "Volleyball",
+    "karaoke": "Karaoke",
+    "breakfast": "Breakfast",
+    "business-center": "Business center",
+    "pets-allowed": "Pets allowed",
+    "room-service": "Room service",
+    "airport-shuttle": "Airport shuttle",
+    "bar": "Bar",
+    "smoke-free": "Smoke-free"
   },
   "AccommodationType": {
     "GER": "Mongolian ger",
