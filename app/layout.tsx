@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -16,6 +16,10 @@ const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "cyrillic-ext"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "#007145",
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("RootMetadata");
   return {
@@ -27,7 +31,6 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s | Vayora",
     },
     description: t("description"),
-    themeColor: "#007145",
     appleWebApp: {
       title: "Vayora",
       statusBarStyle: "black-translucent",
