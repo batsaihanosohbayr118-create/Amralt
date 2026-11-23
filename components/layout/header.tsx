@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { Heart, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { UserMenu } from "@/components/layout/user-menu";
@@ -117,18 +117,7 @@ export function Header() {
           </Link>
 
           {session?.user ? (
-            <>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hidden sm:inline-flex"
-                nativeButton={false}
-                render={<Link href="/favorites" aria-label={t("favorites")} />}
-              >
-                <Heart />
-              </Button>
-              <UserMenu user={session.user} />
-            </>
+            <UserMenu user={session.user} />
           ) : (
             <div className="flex items-center gap-1 sm:gap-2">
               <Button

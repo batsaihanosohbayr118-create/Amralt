@@ -18,7 +18,7 @@ export default async function AiPlannerPage() {
   const locale = (await getLocale()) as Locale;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="flex items-center gap-2 text-primary">
         <Sparkles className="size-5" />
         <span className="text-xs font-semibold uppercase tracking-wider sm:text-sm">
