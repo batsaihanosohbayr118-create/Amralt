@@ -26,11 +26,11 @@ import {
 export type DashboardNavItem = {
   href: string;
   label: string;
-  icon: keyof typeof ICONS;
+  icon: keyof typeof DASHBOARD_ICONS;
   exact?: boolean;
 };
 
-const ICONS: Record<string, LucideIcon> = {
+export const DASHBOARD_ICONS: Record<string, LucideIcon> = {
   "layout-dashboard": LayoutDashboard,
   "tree-pine": TreePine,
   calendar: Calendar,
@@ -46,34 +46,10 @@ export function DashboardNav({ items }: { items: DashboardNavItem[] }) {
   const activeItem = items.find((item) =>
     item.exact ? pathname === item.href : pathname.startsWith(item.href)
   );
-  const ActiveIcon = activeItem ? ICONS[activeItem.icon] : MenuIcon;
+  const ActiveIcon = activeItem ? DASHBOARD_ICONS[activeItem.icon] : MenuIcon;
 
   return (
     <>
-      <nav className="hidden w-56 shrink-0 flex-col gap-1 lg:flex">
-        {items.map((item) => {
-          const active = item.exact
-            ? pathname === item.href
-            : pathname.startsWith(item.href);
-          const Icon = ICONS[item.icon];
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
-                active
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-              )}
-            >
-              <Icon className="size-4.5" />
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
-
       <DropdownMenu>
         <DropdownMenuTrigger className="mb-6 flex w-full items-center justify-between rounded-xl border border-border bg-card px-3 py-2 text-sm font-medium text-foreground lg:hidden">
           <span className="flex items-center gap-2">
@@ -87,7 +63,7 @@ export function DashboardNav({ items }: { items: DashboardNavItem[] }) {
             const active = item.exact
               ? pathname === item.href
               : pathname.startsWith(item.href);
-            const Icon = ICONS[item.icon];
+            const Icon = DASHBOARD_ICONS[item.icon];
             return (
               <DropdownMenuItem
                 key={item.href}
