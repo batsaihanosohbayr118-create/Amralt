@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Star, TreePine, Users } from "lucide-react";
 
+import { GrowthChart } from "@/components/admin/growth-chart";
 import { prisma } from "@/lib/db/prisma";
 import type { ResortStatus } from "@/lib/generated/prisma/enums";
 import type { Locale } from "@/i18n/request";
@@ -21,58 +22,6 @@ const STATUS_COLOR: Record<ResortStatus, string> = {
 
 function dayKey(d: Date) {
   return d.toISOString().slice(0, 10);
-}
-
-const MONTHS_SHORT = {
-  mn: [
-    "1-р сар",
-    "2-р сар",
-    "3-р сар",
-    "4-р сар",
-    "5-р сар",
-    "6-р сар",
-    "7-р сар",
-    "8-р сар",
-    "9-р сар",
-    "10-р сар",
-    "11-р сар",
-    "12-р сар",
-  ],
-  en: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ],
-  zh: [
-    "1月",
-    "2月",
-    "3月",
-    "4月",
-    "5月",
-    "6月",
-    "7月",
-    "8月",
-    "9月",
-    "10月",
-    "11月",
-    "12月",
-  ],
-} as const;
-
-// Deterministic formatter (no Intl/toLocaleDateString) so SSR and client
-// output byte-identical text and avoid a hydration mismatch.
-function formatDayKey(key: string, locale: Locale) {
-  const [, month, day] = key.split("-").map(Number);
-  return `${MONTHS_SHORT[locale][month - 1]} ${day}`;
 }
 
 function buildCumulativeSeries(dates: Date[], days: string[]) {
@@ -141,41 +90,21 @@ export default async function AdminOverviewPage() {
   ];
 
   const allDates = [...userDates, ...resortDates, ...featuredDates];
-  const uniqueDays = Array.from(new Set(allDates.map(dayKey))).sort();
-  const days = uniqueDays.length > 0 ? uniqueDays : [dayKey(new Date())];
+  const today = dayKey(new Date());
+  // Always extend to today so the chart ends at the current totals.
+  const days = Array.from(new Set([...allDates.map(dayKey), today])).sort();
 
-  const seriesData = {
-    users: buildCumulativeSeries(userDates, days),
-    resorts: buildCumulativeSeries(resortDates, days),
-    featured: buildCumulativeSeries(featuredDates, days),
-  };
-
-  const maxValue = Math.max(
-    1,
-    ...seriesData.users,
-    ...seriesData.resorts,
-    ...seriesData.featured
-  );
-
-  const chartWidth = 640;
-  const chartHeight = 220;
-  const padLeft = 8;
-  const padRight = 28;
-  const padTop = 12;
-  const padBottom = 28;
-  const plotWidth = chartWidth - padLeft - padRight;
-  const plotHeight = chartHeight - padTop - padBottom;
-
-  function xFor(i: number) {
-    return days.length > 1
-      ? padLeft + (i / (days.length - 1)) * plotWidth
-      : padLeft + plotWidth / 2;
-  }
-  function yFor(v: number) {
-    return padTop + plotHeight - (v / maxValue) * plotHeight;
-  }
-
-  const gridLines = [0, 0.5, 1].map((f) => Math.round(maxValue * f));
+  const chartSeries = SERIES.map((s) => ({
+    ...s,
+    values: buildCumulativeSeries(
+      s.key === "users"
+        ? userDates
+        : s.key === "resorts"
+          ? resortDates
+          : featuredDates,
+      days
+    ),
+  }));
 
   return (
     <div className="space-y-6">
@@ -197,107 +126,13 @@ export default async function AdminOverviewPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-      <div className="rounded-2xl border border-border/60 p-5 lg:col-span-2">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-heading text-sm font-semibold text-foreground">
-            {t("combinedGrowth")}
-          </h2>
-          <div className="flex items-center gap-4">
-            {SERIES.map((s) => (
-              <span
-                key={s.key}
-                className="flex items-center gap-1.5 text-xs text-muted-foreground"
-              >
-                <span
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: s.color }}
-                />
-                {s.label}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <svg
-          viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-          className="mt-4 w-full"
-          role="img"
-          aria-label={t("chartAriaLabel")}
-        >
-          {gridLines.map((v) => (
-            <g key={v}>
-              <line
-                x1={padLeft}
-                x2={chartWidth - padRight}
-                y1={yFor(v)}
-                y2={yFor(v)}
-                stroke="var(--color-border)"
-                strokeWidth={1}
-              />
-              <text
-                x={padLeft}
-                y={yFor(v) - 4}
-                fontSize={10}
-                fill="var(--color-muted-foreground)"
-              >
-                {v}
-              </text>
-            </g>
-          ))}
-
-          {days.map((day, i) => (
-            <text
-              key={day}
-              x={xFor(i)}
-              y={chartHeight - 6}
-              fontSize={10}
-              textAnchor={
-                i === 0 ? "start" : i === days.length - 1 ? "end" : "middle"
-              }
-              fill="var(--color-muted-foreground)"
-            >
-              {formatDayKey(day, locale)}
-            </text>
-          ))}
-
-          {SERIES.map((s) => {
-            const values = seriesData[s.key];
-            const points = values.map((v, i) => `${xFor(i)},${yFor(v)}`);
-            return (
-              <g key={s.key}>
-                <polyline
-                  points={points.join(" ")}
-                  fill="none"
-                  stroke={s.color}
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {values.map((v, i) => (
-                  <circle
-                    key={i}
-                    cx={xFor(i)}
-                    cy={yFor(v)}
-                    r={4}
-                    fill={s.color}
-                    stroke="var(--color-card)"
-                    strokeWidth={2}
-                  />
-                ))}
-                <text
-                  x={xFor(values.length - 1) + 8}
-                  y={yFor(values[values.length - 1]) + 3}
-                  fontSize={11}
-                  fontWeight={600}
-                  fill="var(--color-foreground)"
-                >
-                  {values[values.length - 1]}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
+      <GrowthChart
+        title={t("combinedGrowth")}
+        ariaLabel={t("chartAriaLabel")}
+        locale={locale}
+        days={days}
+        series={chartSeries}
+      />
 
       <div className="rounded-2xl border border-border/60 p-5">
         <h2 className="font-heading text-sm font-semibold text-foreground">
