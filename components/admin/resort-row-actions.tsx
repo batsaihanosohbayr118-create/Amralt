@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -8,6 +8,7 @@ import { Pencil, Star, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { cn } from "@/lib/utils";
 import { deleteResort, setResortFeatured } from "@/lib/actions/resorts";
 
@@ -21,11 +22,12 @@ export function ResortRowActions({
   const t = useTranslations("ResortRowActions");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   function handleDelete() {
-    if (!confirm(t("confirmDelete"))) return;
     startTransition(async () => {
       const result = await deleteResort(resortId);
+      setConfirmOpen(false);
       if (result.ok) {
         toast.success(t("deleted"));
         router.refresh();
@@ -74,11 +76,18 @@ export function ResortRowActions({
       <Button
         variant="outline"
         size="icon-sm"
-        onClick={handleDelete}
+        onClick={() => setConfirmOpen(true)}
         disabled={isPending}
       >
         <Trash2 className="size-3.5 text-destructive" />
       </Button>
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        onConfirm={handleDelete}
+        description={t("confirmDelete")}
+        pending={isPending}
+      />
     </div>
   );
 }

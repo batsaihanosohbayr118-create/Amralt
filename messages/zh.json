@@ -565,5 +565,10 @@
   },
   "ReviewCard": {
     "defaultName": "用户"
+  },
+  "ConfirmDialog": {
+    "title": "确定吗？",
+    "cancel": "取消",
+    "confirm": "删除"
   }
 }

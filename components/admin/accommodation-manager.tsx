@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Loader2, Plus, Trash2, Upload } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -53,6 +54,7 @@ export function AccommodationManager({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [showForm, setShowForm] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
 
   const [type, setType] = useState<AccommodationType>("GER");
   const [name, setName] = useState("");
@@ -137,9 +139,9 @@ export function AccommodationManager({
   }
 
   function handleDelete(id: string) {
-    if (!confirm(t("confirmDelete"))) return;
     startTransition(async () => {
       const result = await deleteAccommodation(resortId, id);
+      setPendingDeleteId(null);
       if (result.ok) {
         toast.success(t("deleted"));
         router.refresh();
@@ -151,6 +153,13 @@ export function AccommodationManager({
 
   return (
     <div className="space-y-3">
+      <ConfirmDialog
+        open={pendingDeleteId !== null}
+        onOpenChange={(open) => !open && setPendingDeleteId(null)}
+        onConfirm={() => pendingDeleteId && handleDelete(pendingDeleteId)}
+        description={t("confirmDelete")}
+        pending={isPending}
+      />
       {accommodations.map((a) => (
         <div
           key={a.id}
@@ -170,7 +179,7 @@ export function AccommodationManager({
           <Button
             variant="outline"
             size="icon-sm"
-            onClick={() => handleDelete(a.id)}
+            onClick={() => setPendingDeleteId(a.id)}
             disabled={isPending}
             aria-label={t("deleteAccommodation")}
           >

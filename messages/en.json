@@ -565,5 +565,10 @@
   },
   "ReviewCard": {
     "defaultName": "User"
+  },
+  "ConfirmDialog": {
+    "title": "Are you sure?",
+    "cancel": "Cancel",
+    "confirm": "Delete"
   }
 }
