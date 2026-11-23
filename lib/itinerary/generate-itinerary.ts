@@ -23,7 +23,7 @@ const AMENITY_SLUGS = [
 
 const INTEREST_KEYWORDS: Record<string, string[]> = {
   playground: ["хүүхэд", "гэр бүл", "child", "family", "kids"],
-  "horse-riding": ["морь", "адуу", "horse"],
+  "horse-riding": ["морь", "морин", "адуу", "horse"],
   fishing: ["загас", "fish"],
   sauna: ["саун", "амарч", "тайван", "рашаан", "sauna", "relax", "spa"],
   pool: ["бассейн", "усанд", "pool", "swim"],
@@ -41,6 +41,7 @@ async function fetchResorts(locationId: string) {
     include: {
       amenities: { include: { amenity: true } },
       accommodations: { orderBy: { price: "asc" } },
+      images: { orderBy: [{ isCover: "desc" }, { order: "asc" }], take: 1 },
     },
   });
 }
@@ -90,6 +91,53 @@ function buildActivityList(resort: ResortWithDetails, interests: string) {
   return prioritized.length > 0 ? prioritized : (["parking"] as const);
 }
 
+export type TimeSlot = "travel" | "morning" | "afternoon" | "evening";
+
+export type PlanResort = {
+  slug: string;
+  name: string;
+  rating: number;
+  reviewCount: number;
+  /** null when the resort has no price yet (priceFrom = 0). */
+  priceLabel: string | null;
+  distanceLabel: string | null;
+  image: string | null;
+};
+
+export type PlanDay = {
+  day: number;
+  title: string;
+  items: { slot: TimeSlot; text: string }[];
+  note?: string;
+};
+
+export type ItineraryPlan = {
+  title: string;
+  locationName: string;
+  days: number;
+  guests: number;
+  budget: TripPlannerInput["budget"] | null;
+  primary: PlanResort;
+  dayPlans: PlanDay[];
+  cost: { line: string; total: string; note: string } | null;
+  alternatives: PlanResort[];
+  /** Plain-text version used for sharing / copying / printing. */
+  text: string;
+};
+
+function toPlanResort(resort: ResortWithDetails, locale: Locale): PlanResort {
+  return {
+    slug: resort.slug,
+    name: localizedName(locale, resort.name, resort.nameEn, resort.nameZh),
+    rating: Math.round(resort.rating * 10) / 10,
+    reviewCount: resort.reviewCount,
+    priceLabel: resort.priceFrom > 0 ? formatMNT(resort.priceFrom, locale) : null,
+    distanceLabel:
+      resort.distanceFromUbKm != null ? formatKm(resort.distanceFromUbKm, locale) : null,
+    image: resort.images[0]?.url ?? null,
+  };
+}
+
 export async function generateItinerary(input: TripPlannerInput, locale: Locale) {
   const t = await getTranslations({ locale, namespace: "Itinerary" });
 
@@ -121,111 +169,146 @@ export async function generateItinerary(input: TripPlannerInput, locale: Locale)
   const distanceKm = primary.distanceFromUbKm ?? undefined;
   const travelMinutes = distanceKm != null ? (distanceKm / AVG_SPEED_KMH) * 60 : undefined;
 
-  const lines: string[] = [];
+  const title = t("headerTitle", { location: locationName, days: input.days });
+  const accommodationName =
+    picked?.accommodation.name ?? t("day1DefaultAccommodation");
+  const travel =
+    distanceKm != null && travelMinutes != null
+      ? {
+          km: formatKm(distanceKm, locale),
+          duration: formatDuration(travelMinutes, locale),
+        }
+      : null;
 
-  lines.push(
-    t("headerTitle", { location: locationName, days: input.days }),
-    t("headerMeta", {
-      guests: input.guests,
-      budget: input.budget ? t(`budget.${input.budget}`) : t("budgetUnknown"),
-    })
-  );
+  const dayPlans: PlanDay[] = [];
 
   // Day 1 — travel + arrival
-  const day1: string[] = [t("day1Title")];
-  if (distanceKm != null && travelMinutes != null) {
-    day1.push(
-      t("day1Travel", {
-        resort: primaryName,
-        km: formatKm(distanceKm, locale),
-        duration: formatDuration(travelMinutes, locale),
-      })
-    );
+  const day1: PlanDay = { day: 1, title: t("day1Subtitle"), items: [] };
+  if (travel) {
+    day1.items.push({
+      slot: "travel",
+      text: t("day1Travel", { resort: primaryName, ...travel }),
+    });
   }
-  day1.push(
-    t("day1Arrival", {
-      resort: primaryName,
-      accommodation: picked?.accommodation.name ?? t("day1DefaultAccommodation"),
-    })
-  );
+  day1.items.push({
+    slot: "afternoon",
+    text: t("day1Arrival", { resort: primaryName, accommodation: accommodationName }),
+  });
   if (activities[0]) {
-    day1.push(t("eveningActivity", { activity: t(`activity.${activities[0]}`) }));
+    day1.items.push({ slot: "evening", text: t(`activity.${activities[0]}`) });
   }
-  lines.push(day1.join("\n"));
+  dayPlans.push(day1);
 
   // Middle days
+  const locationDescription = location.description
+    ? localizedDescription(locale, location.description, location.descriptionEn, location.descriptionZh)
+    : null;
   for (let d = 2; d < input.days; d++) {
     const acts = [
       activities[(d - 2) % activities.length],
       activities[(d - 1) % activities.length],
     ].filter((v, i, arr) => arr.indexOf(v) === i);
-
-    const dayLines = [t("middleDayTitle", { day: d, location: locationName })];
-    for (const act of acts) {
-      dayLines.push(`- ${t(`activity.${act}`)}.`);
-    }
-    const locationDescription = location.description
-      ? localizedDescription(locale, location.description, location.descriptionEn, location.descriptionZh)
-      : null;
-    if (locationDescription) {
-      dayLines.push(`- ${locationDescription}`);
-    }
-    lines.push(dayLines.join("\n"));
+    const slots: TimeSlot[] = ["morning", "afternoon"];
+    dayPlans.push({
+      day: d,
+      title: t("middleDaySubtitle", { location: locationName }),
+      items: acts.map((act, i) => ({ slot: slots[i], text: t(`activity.${act}`) })),
+      // The region blurb is the same every day — show it once.
+      note: d === 2 && locationDescription ? locationDescription : undefined,
+    });
   }
 
   // Last day (only if more than 1 day)
   if (input.days > 1) {
-    const lastDay = [
-      t("lastDayTitle", { days: input.days }),
-      t("lastDayMorning", { resort: primaryName }),
-    ];
-    if (distanceKm != null && travelMinutes != null) {
-      lastDay.push(
-        t("lastDayReturn", {
-          km: formatKm(distanceKm, locale),
-          duration: formatDuration(travelMinutes, locale),
-        })
-      );
+    const last: PlanDay = {
+      day: input.days,
+      title: t("lastDaySubtitle"),
+      items: [{ slot: "morning", text: t("lastDayMorning", { resort: primaryName }) }],
+    };
+    if (travel) {
+      last.items.push({ slot: "travel", text: t("lastDayReturn", travel) });
     }
-    lines.push(lastDay.join("\n"));
+    dayPlans.push(last);
   }
 
-  // Budget summary
-  if (picked) {
-    const total = picked.accommodation.price * picked.units * input.days;
-    lines.push(
-      [
-        t("budgetSummaryTitle"),
-        t("budgetSummaryLine", {
+  const cost = picked
+    ? {
+        line: t("budgetSummaryLine", {
           accommodation: picked.accommodation.name,
           units: picked.units,
           days: input.days,
-          total: formatMNT(total, locale),
+          total: formatMNT(picked.accommodation.price * picked.units * input.days, locale),
         }),
-        t("budgetSummaryNote"),
-      ].join("\n")
-    );
-  }
+        total: formatMNT(picked.accommodation.price * picked.units * input.days, locale),
+        note: t("budgetSummaryNote"),
+      }
+    : null;
 
-  // Alternatives
-  const alternatives = ranked.slice(1, 3);
+  const alternatives = ranked.slice(1, 3).map((r) => toPlanResort(r, locale));
+
+  // Plain-text version (share / copy / PDF).
+  const dayTitles: Record<number, string> = {};
+  for (const d of dayPlans) {
+    dayTitles[d.day] =
+      d.day === 1
+        ? t("day1Title")
+        : d.day === input.days
+          ? t("lastDayTitle", { days: input.days })
+          : t("middleDayTitle", { day: d.day, location: locationName });
+  }
+  const blocks: string[] = [
+    title,
+    t("headerMeta", {
+      guests: input.guests,
+      budget: input.budget ? t(`budget.${input.budget}`) : t("budgetUnknown"),
+    }),
+    ...dayPlans.map((d) =>
+      [
+        dayTitles[d.day],
+        ...d.items.map((item) =>
+          item.slot === "evening"
+            ? t("eveningActivity", { activity: item.text })
+            : item.text
+        ),
+        ...(d.note ? [d.note] : []),
+      ].join("\n")
+    ),
+  ];
+  if (cost) {
+    blocks.push([t("budgetSummaryTitle"), cost.line, cost.note].join("\n"));
+  }
   if (alternatives.length > 0) {
-    lines.push(
+    blocks.push(
       [
         t("alternativesTitle"),
         ...alternatives.map((r) =>
-          t("alternativeLine", {
-            name: localizedName(locale, r.name, r.nameEn, r.nameZh),
-            rating: r.rating.toFixed(1),
-            price: formatMNT(r.priceFrom, locale),
-          })
+          r.priceLabel
+            ? t("alternativeLine", {
+                name: r.name,
+                rating: r.rating.toFixed(1),
+                price: r.priceLabel,
+              })
+            : t("alternativeLineNoPrice", {
+                name: r.name,
+                rating: r.rating.toFixed(1),
+              })
         ),
       ].join("\n")
     );
   }
 
-  return {
-    text: lines.join("\n\n"),
+  const plan: ItineraryPlan = {
+    title,
     locationName,
+    days: input.days,
+    guests: input.guests,
+    budget: input.budget ?? null,
+    primary: toPlanResort(primary, locale),
+    dayPlans,
+    cost,
+    alternatives,
+    text: blocks.join("\n\n"),
   };
+
+  return { plan };
 }

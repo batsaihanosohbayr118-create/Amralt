@@ -223,20 +223,6 @@ export async function getResortBySlug(slug: string) {
   });
 }
 
-export async function getResortsByIds(ids: string[]) {
-  if (!ids.length) return [];
-  return prisma.resort.findMany({
-    where: { id: { in: ids } },
-    include: {
-      images: { orderBy: { order: "asc" }, take: 1 },
-      amenities: { include: { amenity: true } },
-      accommodations: true,
-      location: true,
-      category: true,
-    },
-  });
-}
-
 export async function getPopularLocations() {
   return prisma.location.findMany({
     where: { featured: true },

@@ -6,7 +6,6 @@ import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/db/prisma";
 import { slugify } from "@/lib/slugify";
 import { resortFormSchema, type ResortFormInput } from "@/lib/validations/resort";
-import type { ResortStatus } from "@/lib/generated/prisma/enums";
 
 async function requireAdmin() {
   const session = await auth();
@@ -163,20 +162,6 @@ export async function recalcResortPriceFrom(resortId: string) {
     where: { id: resortId },
     data: { priceFrom: min._min.price ?? 0 },
   });
-}
-
-export async function setResortStatus(resortId: string, status: ResortStatus) {
-  const session = await requireAdmin();
-  if (!session) return { ok: false as const, error: "Зөвшөөрөлгүй байна." };
-
-  const resort = await prisma.resort.update({
-    where: { id: resortId },
-    data: { status },
-  });
-
-  revalidatePath("/admin/resorts");
-  revalidatePath(`/resorts/${resort.slug}`);
-  return { ok: true as const };
 }
 
 export async function setResortFeatured(resortId: string, featured: boolean) {

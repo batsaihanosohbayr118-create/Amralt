@@ -6,10 +6,7 @@ import { generateItinerary } from "@/lib/itinerary/generate-itinerary";
 import { tripPlannerSchema } from "@/lib/validations/trip-planner";
 import { LOCALES, DEFAULT_LOCALE, type Locale } from "@/i18n/request";
 
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
+// Returns the structured itinerary as JSON (rendered by ItineraryView).
 export async function POST(request: Request) {
   const store = await cookies();
   const cookieLocale = store.get("locale")?.value;
@@ -30,23 +27,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: result.error }, { status: 404 });
   }
 
-  const encoder = new TextEncoder();
-  const words = result.text.split(/(\s+)/);
-
-  const stream = new ReadableStream<Uint8Array>({
-    async start(controller) {
-      for (const word of words) {
-        controller.enqueue(encoder.encode(word));
-        await sleep(12);
-      }
-      controller.close();
-    },
-  });
-
-  return new Response(stream, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Cache-Control": "no-store",
-    },
-  });
+  return NextResponse.json(
+    { plan: result.plan },
+    { headers: { "Cache-Control": "no-store" } }
+  );
 }

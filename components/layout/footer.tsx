@@ -19,7 +19,6 @@ function useColumns() {
       links: [
         { href: "/search", label: t("findResorts") },
         { href: "/map", label: t("map") },
-        { href: "/compare", label: t("compare") },
       ],
     },
     {

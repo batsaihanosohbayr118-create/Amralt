@@ -5,7 +5,6 @@ import { MapPin, Navigation } from "lucide-react";
 
 import { RatingStars } from "@/components/resort/rating-stars";
 import { FavoriteButton } from "@/components/resort/favorite-button";
-import { CompareToggle } from "@/components/resort/compare-toggle";
 import { formatKm, formatMNT } from "@/lib/format";
 import { localizedName, localizedProvince } from "@/lib/i18n-content";
 import type { ResortCardData } from "@/lib/data/resorts";
@@ -16,7 +15,6 @@ type Props = {
   isFavorited?: boolean;
   isAuthenticated?: boolean;
   priority?: boolean;
-  showCompare?: boolean;
 };
 
 export function ResortCard({
@@ -24,7 +22,6 @@ export function ResortCard({
   isFavorited = false,
   isAuthenticated = false,
   priority = false,
-  showCompare = true,
 }: Props) {
   const t = useTranslations("ResortCard");
   const tCategory = useTranslations("CategoryLabels");
@@ -72,12 +69,6 @@ export function ResortCard({
             isAuthenticated={isAuthenticated}
           />
         </div>
-
-        {showCompare && (
-          <div className="absolute inset-x-0 bottom-0 flex justify-start p-3">
-            <CompareToggle resortId={resort.id} />
-          </div>
-        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-2 px-1 py-3">

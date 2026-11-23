@@ -69,19 +69,3 @@ export function createProvinceIcon(name: string, count: number): google.maps.Ico
     anchor: new google.maps.Point(width / 2, height + 4),
   };
 }
-
-export function createClusterIcon(count: number): google.maps.Icon {
-  const size = count < 10 ? 40 : count < 50 ? 46 : 52;
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-      <circle cx="${size / 2}" cy="${size / 2}" r="${size / 2 - 2}" fill="#1f5d3f" fill-opacity="0.9" stroke="#ffffff" stroke-width="2.5" />
-      <text x="${size / 2}" y="${size / 2 + 5}" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff">${count}</text>
-    </svg>
-  `.trim();
-
-  return {
-    url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
-    scaledSize: new google.maps.Size(size, size),
-    anchor: new google.maps.Point(size / 2, size / 2),
-  };
-}

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { Heart, LogOut, Scale, Settings, User as UserIcon } from "lucide-react";
+import { Heart, LogOut, Settings, User as UserIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -52,9 +52,6 @@ export function UserMenu({ user }: Props) {
         </DropdownMenuItem>
         <DropdownMenuItem render={<Link href="/favorites" />}>
           <Heart /> {t("favorites")}
-        </DropdownMenuItem>
-        <DropdownMenuItem render={<Link href="/compare" />}>
-          <Scale /> {t("compare")}
         </DropdownMenuItem>
         {user.role === "ADMIN" && (
           <DropdownMenuItem render={<Link href="/admin" />}>

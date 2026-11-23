@@ -12,12 +12,11 @@
     "travel": "Explore",
     "findResorts": "Find resorts",
     "map": "Map",
-    "compare": "Compare",
     "regions": "Regions",
     "regionGorkhiTerelj": "Gorkhi-Terelj",
     "regionKhuvsgul": "Khuvsgul",
     "regionArkhangai": "Arkhangai",
-    "tagline": "The all-in-one platform to find, compare, and plan trips to Mongolia's best resorts.",
+    "tagline": "The all-in-one platform to find and plan trips to Mongolia's best resorts.",
     "copyright": "{year} Vayora. All rights reserved.",
     "madeIn": "Made in Mongolia"
   },
@@ -32,7 +31,6 @@
     "menuAria": "Profile menu",
     "profile": "Profile",
     "favorites": "Saved places",
-    "compare": "Compare",
     "adminPanel": "Admin panel",
     "logout": "Log out"
   },
@@ -74,11 +72,6 @@
     "amraltiin-gazar": "Resort",
     "juulchnii-baaz": "Tourist camp",
     "glemping": "Glamping site"
-  },
-  "CompareToggle": {
-    "compare": "Compare",
-    "selected": "Selected",
-    "maxItemsError": "You can compare up to {maxItems} places."
   },
   "DestinationCard": {
     "resortCount": "{count, plural, one {# resort} other {# resorts}}"
@@ -267,7 +260,14 @@
     "statSaved": "Saved",
     "statMemberSince": "Member since",
     "defaultName": "User",
-    "personalInfo": "Personal information"
+    "personalInfo": "Personal information",
+    "memberSinceBadge": "Member since {year}",
+    "completion": "Profile completion",
+    "completionHint": "Complete your profile so the AI planner can give you better-matched suggestions.",
+    "quickLinks": "Quick links",
+    "linkFavorites": "Saved places",
+    "linkAiPlanner": "AI trip planner",
+    "personalInfoHint": "Update your contact details and travel interests."
   },
   "ProfileForm": {
     "updated": "Profile updated",
@@ -290,23 +290,9 @@
     "noResortsTitle": "No resorts found",
     "noResortsDescription": "Try changing your search terms or filters and try again."
   },
-  "CompareTable": {
-    "feature": "Feature",
-    "price": "Price",
-    "priceOnRequest": "On request",
-    "rating": "Rating",
-    "distanceFromUb": "Distance from UB",
-    "location": "Location"
-  },
   "FavoritesPage": {
     "title": "My saved places",
     "subtitle": "{count, plural, one {You've saved # resort} other {You've saved # resorts}}"
-  },
-  "ComparePage": {
-    "title": "Compare resorts",
-    "subtitle": "Compare your selected resorts side by side",
-    "emptyTitle": "No resorts selected to compare",
-    "emptyDescription": "Select at least 2 places using the 'Compare' button from the search results."
   },
   "AiPlannerPage": {
     "title": "AI Trip Planner",
@@ -330,7 +316,18 @@
     "planning": "Planning...",
     "generatePlan": "Generate plan",
     "emptyStateHint": "Fill in your details on the left and let AI generate your trip plan.",
-    "processing": "AI is putting together your plan..."
+    "processing": "AI is putting together your plan...",
+    "increase": "Increase",
+    "decrease": "Decrease",
+    "tags": {
+      "adventure": "Adventure",
+      "family": "With family",
+      "horse": "Horse riding",
+      "nature": "Nature photography",
+      "fishing": "Fishing",
+      "relax": "Sauna & relax",
+      "campfire": "Campfire"
+    }
   },
   "AiPlannerApi": {
     "invalidData": "Invalid data"
@@ -371,7 +368,11 @@
       "fishing": "go fishing along the riverbank",
       "campfire": "build a campfire and talk under the stars",
       "parking": "park your vehicle and explore the surroundings"
-    }
+    },
+    "day1Subtitle": "Travel & arrival",
+    "middleDaySubtitle": "Relax around {location}",
+    "lastDaySubtitle": "Return trip",
+    "alternativeLineNoPrice": "- {name} ({rating}/5)"
   },
   "AdminLayout": {
     "brand": "Admin",
@@ -511,7 +512,7 @@
   },
   "RootMetadata": {
     "title": "Vayora — Mongolia's resorts",
-    "description": "Discover, compare, and book Mongolia's most beautiful resorts, all in one place."
+    "description": "Discover and book Mongolia's most beautiful resorts, all in one place."
   },
   "SearchPageMetadata": {
     "title": "Find resorts",
@@ -527,11 +528,6 @@
   "RegisterApi": {
     "invalidData": "Invalid data",
     "emailTaken": "An account with this email already exists"
-  },
-  "CompareBar": {
-    "remove": "Remove",
-    "clear": "Clear",
-    "compare": "Compare ({count})"
   },
   "ResortMap": {
     "allProvinces": "All provinces",
@@ -550,22 +546,6 @@
     "descriptionBefore": "To display the map, set the",
     "descriptionAfter": "environment variable."
   },
-  "ReviewForm": {
-    "loginPromptBefore": "To write a review,",
-    "loginPromptLink": "log in",
-    "thankYou": "Thanks for your review!",
-    "posted": "Review posted",
-    "starAriaLabel": "{star} stars",
-    "commentPlaceholder": "Write your review about this place...",
-    "submitting": "Submitting...",
-    "submit": "Post review"
-  },
-  "ReviewStats": {
-    "reviewCount": "{count, plural, one {# review} other {# reviews}}"
-  },
-  "ReviewCard": {
-    "defaultName": "User"
-  },
   "ConfirmDialog": {
     "title": "Are you sure?",
     "cancel": "Cancel",
@@ -578,5 +558,32 @@
       "90": "Last 90 days",
       "all": "All time"
     }
+  },
+  "ItineraryView": {
+    "guests": "{count, plural, one {# guest} other {# guests}}",
+    "days": "{count, plural, one {# day} other {# days}}",
+    "save": "Save",
+    "saved": "Plan saved",
+    "saveFailed": "Couldn't save the plan",
+    "share": "Share",
+    "copied": "Plan copied to clipboard",
+    "shareFailed": "Couldn't share the plan",
+    "pdf": "Download PDF",
+    "popupBlocked": "The print window was blocked. Please allow pop-ups.",
+    "savedPlanNotice": "Your saved plan",
+    "recommended": "Recommended stay",
+    "from": "from {price}",
+    "perNight": "/ night",
+    "priceUnknown": "Price not listed",
+    "distance": "{km} from UB",
+    "dayLabel": "Day {day}",
+    "slot": {
+      "travel": "Travel",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening"
+    },
+    "costTitle": "Estimated cost",
+    "alternatives": "Other options"
   }
 }

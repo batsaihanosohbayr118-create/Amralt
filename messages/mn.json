@@ -12,12 +12,11 @@
     "travel": "Аялах",
     "findResorts": "Амралтын газар хайх",
     "map": "Газрын зураг",
-    "compare": "Харьцуулах",
     "regions": "Бүсчлэл",
     "regionGorkhiTerelj": "Горхи-Тэрэлж",
     "regionKhuvsgul": "Хөвсгөл",
     "regionArkhangai": "Архангай",
-    "tagline": "Монгол орны амралтын газруудыг олох, харьцуулах, аялалаа төлөвлөх нэгдсэн платформ.",
+    "tagline": "Монгол орны амралтын газруудыг олох, аялалаа төлөвлөх нэгдсэн платформ.",
     "copyright": "{year} Vayora. Бүх эрх хуулиар хамгаалагдсан.",
     "madeIn": "Монголд хийгдсэн"
   },
@@ -32,7 +31,6 @@
     "menuAria": "Профайл цэс",
     "profile": "Профайл",
     "favorites": "Хадгалсан газрууд",
-    "compare": "Харьцуулах",
     "adminPanel": "Админ самбар",
     "logout": "Гарах"
   },
@@ -74,11 +72,6 @@
     "amraltiin-gazar": "Амралтын газар",
     "juulchnii-baaz": "Жуулчны бааз",
     "glemping": "Глэмпинг байр"
-  },
-  "CompareToggle": {
-    "compare": "Харьцуулах",
-    "selected": "Сонгосон",
-    "maxItemsError": "Дээд тал нь {maxItems} газрыг харьцуулах боломжтой."
   },
   "DestinationCard": {
     "resortCount": "{count} газар"
@@ -267,7 +260,14 @@
     "statSaved": "Хадгалсан",
     "statMemberSince": "Гишүүн болсон",
     "defaultName": "Хэрэглэгч",
-    "personalInfo": "Хувийн мэдээлэл"
+    "personalInfo": "Хувийн мэдээлэл",
+    "memberSinceBadge": "{year} оноос гишүүн",
+    "completion": "Профайл бөглөлт",
+    "completionHint": "Мэдээллээ бүрэн бөглөвөл AI төлөвлөгч танд илүү тохирсон санал өгнө.",
+    "quickLinks": "Шуурхай холбоос",
+    "linkFavorites": "Хадгалсан газрууд",
+    "linkAiPlanner": "AI аяллын төлөвлөгч",
+    "personalInfoHint": "Холбоо барих болон аяллын сонирхлоо шинэчилнэ үү."
   },
   "ProfileForm": {
     "updated": "Профайл шинэчлэгдлээ",
@@ -290,23 +290,9 @@
     "noResortsTitle": "Амралтын газар олдсонгүй",
     "noResortsDescription": "Хайлтын үгээ эсвэл шүүлтүүрээ өөрчилж дахин оролдоно уу."
   },
-  "CompareTable": {
-    "feature": "Онцлог",
-    "price": "Үнэ",
-    "priceOnRequest": "Лавлана уу",
-    "rating": "Үнэлгээ",
-    "distanceFromUb": "УБ-аас зай",
-    "location": "Байршил"
-  },
   "FavoritesPage": {
     "title": "Миний хадгалсан",
     "subtitle": "Таны хадгалсан {count} амралтын газар"
-  },
-  "ComparePage": {
-    "title": "Амралтын газар харьцуулах",
-    "subtitle": "Сонгосон амралтын газруудыг харьцуулж үзээрэй",
-    "emptyTitle": "Харьцуулах газар сонгоогүй байна",
-    "emptyDescription": "Хайлтын жагсаалтаас 'Харьцуулах' товчоор дор хаяж 2 газар сонгоно уу."
   },
   "AiPlannerPage": {
     "title": "AI Аяллын төлөвлөгч",
@@ -330,7 +316,18 @@
     "planning": "Төлөвлөж байна...",
     "generatePlan": "Төлөвлөгөө үүсгэх",
     "emptyStateHint": "Зүүн талд мэдээллээ бөглөөд AI-аар аяллын төлөвлөгөөгөө үүсгээрэй.",
-    "processing": "AI төлөвлөгөөг боловсруулж байна..."
+    "processing": "AI төлөвлөгөөг боловсруулж байна...",
+    "increase": "Нэмэх",
+    "decrease": "Хасах",
+    "tags": {
+      "adventure": "Адал явдалт",
+      "family": "Гэр бүлээрээ",
+      "horse": "Морин аялал",
+      "nature": "Байгалийн зураг",
+      "fishing": "Загасчлал",
+      "relax": "Саун, амралт",
+      "campfire": "Гал, зугаа"
+    }
   },
   "AiPlannerApi": {
     "invalidData": "Буруу өгөгдөл"
@@ -371,7 +368,11 @@
       "fishing": "загасчилж, голын эрэг дагуу зугаална",
       "campfire": "гал түлж, орой оддын дор ярилцана",
       "parking": "унаагаа зогсоож, орчинтой танилцана"
-    }
+    },
+    "day1Subtitle": "Замд гарах ба ирэх",
+    "middleDaySubtitle": "{location} орчмоор амрах",
+    "lastDaySubtitle": "Буцах зам",
+    "alternativeLineNoPrice": "- {name} ({rating}/5)"
   },
   "AdminLayout": {
     "brand": "Админ",
@@ -511,7 +512,7 @@
   },
   "RootMetadata": {
     "title": "Vayora — Монголын амралтын газрууд",
-    "description": "Монгол орны хамгийн гоё амралтын газруудыг нэг дороос олж, харьцуулж, захиалаарай."
+    "description": "Монгол орны хамгийн гоё амралтын газруудыг нэг дороос олж, захиалаарай."
   },
   "SearchPageMetadata": {
     "title": "Амралтын газар хайх",
@@ -527,11 +528,6 @@
   "RegisterApi": {
     "invalidData": "Буруу өгөгдөл",
     "emailTaken": "Энэ и-мэйл хаягаар бүртгэл үүссэн байна"
-  },
-  "CompareBar": {
-    "remove": "Хасах",
-    "clear": "Цэвэрлэх",
-    "compare": "Харьцуулах ({count})"
   },
   "ResortMap": {
     "allProvinces": "Бүх аймаг",
@@ -550,22 +546,6 @@
     "descriptionBefore": "Газрын зургийг харуулахын тулд",
     "descriptionAfter": "орчны хувьсагчийг тохируулна уу."
   },
-  "ReviewForm": {
-    "loginPromptBefore": "Сэтгэгдэл бичихийн тулд",
-    "loginPromptLink": "нэвтэрнэ үү",
-    "thankYou": "Таны сэтгэгдэлд баярлалаа!",
-    "posted": "Сэтгэгдэл нийтлэгдлээ",
-    "starAriaLabel": "{star} од",
-    "commentPlaceholder": "Энэ газрын талаар сэтгэгдлээ бичнэ үү...",
-    "submitting": "Илгээж байна...",
-    "submit": "Сэтгэгдэл нийтлэх"
-  },
-  "ReviewStats": {
-    "reviewCount": "{count} сэтгэгдэл"
-  },
-  "ReviewCard": {
-    "defaultName": "Хэрэглэгч"
-  },
   "ConfirmDialog": {
     "title": "Та итгэлтэй байна уу?",
     "cancel": "Цуцлах",
@@ -578,5 +558,32 @@
       "90": "Сүүлийн 90 хоног",
       "all": "Бүх хугацаа"
     }
+  },
+  "ItineraryView": {
+    "guests": "{count} хүн",
+    "days": "{count} хоног",
+    "save": "Хадгалах",
+    "saved": "Төлөвлөгөө хадгалагдлаа",
+    "saveFailed": "Хадгалж чадсангүй",
+    "share": "Хуваалцах",
+    "copied": "Төлөвлөгөөг хуулж авлаа",
+    "shareFailed": "Хуваалцаж чадсангүй",
+    "pdf": "PDF татах",
+    "popupBlocked": "Шинэ цонх нээгдсэнгүй. Popup зөвшөөрнө үү.",
+    "savedPlanNotice": "Таны хадгалсан төлөвлөгөө",
+    "recommended": "Санал болгох газар",
+    "from": "{price}-с",
+    "perNight": "/ шөнө",
+    "priceUnknown": "Үнэ тодорхойгүй",
+    "distance": "УБ-аас {km}",
+    "dayLabel": "Өдөр {day}",
+    "slot": {
+      "travel": "Зам",
+      "morning": "Өглөө",
+      "afternoon": "Үдээс хойш",
+      "evening": "Орой"
+    },
+    "costTitle": "Тойм зардал",
+    "alternatives": "Өөр сонголтууд"
   }
 }

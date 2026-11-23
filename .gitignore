@@ -32,8 +32,6 @@ yarn-error.log*
 devserver.out.log
 devserver.err.log
 
-# stray junk
-/{console.error(e.code
 
 # env files (can opt-in for committing if needed)
 .env*

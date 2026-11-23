@@ -12,12 +12,11 @@
     "travel": "探索",
     "findResorts": "查找度假村",
     "map": "地图",
-    "compare": "对比",
     "regions": "地区",
     "regionGorkhiTerelj": "戈尔希-特勒尔吉",
     "regionKhuvsgul": "库苏古尔",
     "regionArkhangai": "杭爱",
-    "tagline": "一站式平台，助您发现、比较蒙古国最佳度假村并规划行程。",
+    "tagline": "一站式平台，助您发现蒙古国最佳度假村并规划行程。",
     "copyright": "{year} Vayora 版权所有。",
     "madeIn": "蒙古制造"
   },
@@ -32,7 +31,6 @@
     "menuAria": "个人资料菜单",
     "profile": "个人资料",
     "favorites": "收藏地点",
-    "compare": "对比",
     "adminPanel": "管理面板",
     "logout": "退出登录"
   },
@@ -74,11 +72,6 @@
     "amraltiin-gazar": "度假村",
     "juulchnii-baaz": "旅游营地",
     "glemping": "豪华露营地"
-  },
-  "CompareToggle": {
-    "compare": "对比",
-    "selected": "已选择",
-    "maxItemsError": "最多可对比 {maxItems} 个地点。"
   },
   "DestinationCard": {
     "resortCount": "{count} 家度假村"
@@ -267,7 +260,14 @@
     "statSaved": "已收藏",
     "statMemberSince": "加入时间",
     "defaultName": "用户",
-    "personalInfo": "个人信息"
+    "personalInfo": "个人信息",
+    "memberSinceBadge": "{year} 年加入",
+    "completion": "资料完整度",
+    "completionHint": "完善个人资料，AI 规划师可为您提供更合适的建议。",
+    "quickLinks": "快捷链接",
+    "linkFavorites": "已收藏",
+    "linkAiPlanner": "AI 行程规划",
+    "personalInfoHint": "更新您的联系方式和旅行兴趣。"
   },
   "ProfileForm": {
     "updated": "个人资料已更新",
@@ -290,23 +290,9 @@
     "noResortsTitle": "未找到度假村",
     "noResortsDescription": "请尝试更改搜索词或筛选条件后重试。"
   },
-  "CompareTable": {
-    "feature": "特色",
-    "price": "价格",
-    "priceOnRequest": "详询",
-    "rating": "评分",
-    "distanceFromUb": "距乌兰巴托距离",
-    "location": "位置"
-  },
   "FavoritesPage": {
     "title": "我收藏的地点",
     "subtitle": "您已收藏 {count} 家度假村"
-  },
-  "ComparePage": {
-    "title": "度假村对比",
-    "subtitle": "并排比较您选择的度假村",
-    "emptyTitle": "尚未选择要对比的度假村",
-    "emptyDescription": "请在搜索结果中使用“对比”按钮至少选择 2 个地点。"
   },
   "AiPlannerPage": {
     "title": "AI 行程规划",
@@ -330,7 +316,18 @@
     "planning": "正在规划…",
     "generatePlan": "生成行程",
     "emptyStateHint": "在左侧填写信息，让 AI 为您生成旅行计划。",
-    "processing": "AI 正在为您整理行程…"
+    "processing": "AI 正在为您整理行程…",
+    "increase": "增加",
+    "decrease": "减少",
+    "tags": {
+      "adventure": "冒险",
+      "family": "家庭出游",
+      "horse": "骑马",
+      "nature": "自然摄影",
+      "fishing": "钓鱼",
+      "relax": "桑拿放松",
+      "campfire": "篝火"
+    }
   },
   "AiPlannerApi": {
     "invalidData": "数据无效"
@@ -371,7 +368,11 @@
       "fishing": "在河边钓鱼",
       "campfire": "生篝火，在星空下畅谈",
       "parking": "停好车，探索周边环境"
-    }
+    },
+    "day1Subtitle": "出发与抵达",
+    "middleDaySubtitle": "在 {location} 周边休闲",
+    "lastDaySubtitle": "返程",
+    "alternativeLineNoPrice": "- {name}（{rating}/5）"
   },
   "AdminLayout": {
     "brand": "管理",
@@ -511,7 +512,7 @@
   },
   "RootMetadata": {
     "title": "Vayora — 蒙古国度假村",
-    "description": "一站式发现、比较并预订蒙古国最美的度假村。"
+    "description": "一站式发现并预订蒙古国最美的度假村。"
   },
   "SearchPageMetadata": {
     "title": "查找度假村",
@@ -527,11 +528,6 @@
   "RegisterApi": {
     "invalidData": "数据无效",
     "emailTaken": "该邮箱已被注册"
-  },
-  "CompareBar": {
-    "remove": "移除",
-    "clear": "清除",
-    "compare": "对比（{count}）"
   },
   "ResortMap": {
     "allProvinces": "所有省份",
@@ -550,22 +546,6 @@
     "descriptionBefore": "要显示地图，请设置",
     "descriptionAfter": "环境变量。"
   },
-  "ReviewForm": {
-    "loginPromptBefore": "要发表评价，请",
-    "loginPromptLink": "登录",
-    "thankYou": "感谢您的评价！",
-    "posted": "评价已发布",
-    "starAriaLabel": "{star} 星",
-    "commentPlaceholder": "写下您对这个地方的评价…",
-    "submitting": "正在提交…",
-    "submit": "发布评价"
-  },
-  "ReviewStats": {
-    "reviewCount": "{count} 条评价"
-  },
-  "ReviewCard": {
-    "defaultName": "用户"
-  },
   "ConfirmDialog": {
     "title": "确定吗？",
     "cancel": "取消",
@@ -578,5 +558,32 @@
       "90": "最近 90 天",
       "all": "全部时间"
     }
+  },
+  "ItineraryView": {
+    "guests": "{count} 人",
+    "days": "{count} 天",
+    "save": "保存",
+    "saved": "行程已保存",
+    "saveFailed": "保存失败",
+    "share": "分享",
+    "copied": "行程已复制",
+    "shareFailed": "分享失败",
+    "pdf": "下载 PDF",
+    "popupBlocked": "打印窗口被拦截，请允许弹出窗口。",
+    "savedPlanNotice": "您保存的行程",
+    "recommended": "推荐住宿",
+    "from": "{price} 起",
+    "perNight": "/ 晚",
+    "priceUnknown": "价格待定",
+    "distance": "距乌兰巴托 {km}",
+    "dayLabel": "第 {day} 天",
+    "slot": {
+      "travel": "路程",
+      "morning": "上午",
+      "afternoon": "下午",
+      "evening": "晚上"
+    },
+    "costTitle": "费用估算",
+    "alternatives": "其他选择"
   }
 }

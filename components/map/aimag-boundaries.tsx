@@ -9,6 +9,18 @@ const ACTIVE_FILL = "#1f5d3f";
 const ACTIVE_FILL_HOVER = "#1f5d3f";
 const INACTIVE_FILL = "#94a3b8";
 
+function styleFor(count: number): google.maps.Data.StyleOptions {
+  return {
+    fillColor: count > 0 ? ACTIVE_FILL : INACTIVE_FILL,
+    fillOpacity: count > 0 ? 0.28 : 0.08,
+    strokeColor: count > 0 ? ACTIVE_FILL : "#cbd5e1",
+    strokeWeight: count > 0 ? 1.5 : 1,
+    clickable: count > 0,
+    cursor: count > 0 ? "pointer" : "default",
+    zIndex: count > 0 ? 2 : 1,
+  };
+}
+
 type Props = {
   countByProvince: Record<string, number>;
   onSelectProvince: (province: string) => void;
@@ -26,9 +38,13 @@ export function AimagBoundaries({
   const onSelectRef = useRef(onSelectProvince);
   const onHoverRef = useRef(onHoverProvince);
 
-  countsRef.current = countByProvince;
-  onSelectRef.current = onSelectProvince;
-  onHoverRef.current = onHoverProvince;
+  // Keep the latest props available to the map listeners (registered once
+  // per map) without re-binding them. Updated after render, not during it.
+  useEffect(() => {
+    countsRef.current = countByProvince;
+    onSelectRef.current = onSelectProvince;
+    onHoverRef.current = onHoverProvince;
+  });
 
   useEffect(() => {
     if (!map) return;
@@ -38,18 +54,6 @@ export function AimagBoundaries({
     data.loadGeoJson("/data/mongolia-aimags.geojson", {
       idPropertyName: "shapeISO",
     });
-
-    function styleFor(count: number): google.maps.Data.StyleOptions {
-      return {
-        fillColor: count > 0 ? ACTIVE_FILL : INACTIVE_FILL,
-        fillOpacity: count > 0 ? 0.28 : 0.08,
-        strokeColor: count > 0 ? ACTIVE_FILL : "#cbd5e1",
-        strokeWeight: count > 0 ? 1.5 : 1,
-        clickable: count > 0,
-        cursor: count > 0 ? "pointer" : "default",
-        zIndex: count > 0 ? 2 : 1,
-      };
-    }
 
     data.setStyle((feature) => {
       const iso = feature.getProperty("shapeISO") as string;
@@ -103,15 +107,7 @@ export function AimagBoundaries({
       const iso = feature.getProperty("shapeISO") as string;
       const name = AIMAG_NAME_BY_ISO[iso];
       const count = name ? (countByProvince[name] ?? 0) : 0;
-      return {
-        fillColor: count > 0 ? ACTIVE_FILL : INACTIVE_FILL,
-        fillOpacity: count > 0 ? 0.28 : 0.08,
-        strokeColor: count > 0 ? ACTIVE_FILL : "#cbd5e1",
-        strokeWeight: count > 0 ? 1.5 : 1,
-        clickable: count > 0,
-        cursor: count > 0 ? "pointer" : "default",
-        zIndex: count > 0 ? 2 : 1,
-      };
+      return styleFor(count);
     });
   }, [countByProvince]);
 

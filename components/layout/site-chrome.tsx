@@ -13,14 +13,12 @@ const AUTH_PATHS = new Set([
 
 type Props = {
   header: React.ReactNode;
-  compareBar: React.ReactNode;
   mobileNav: React.ReactNode;
   children: React.ReactNode;
 };
 
 export function SiteChrome({
   header,
-  compareBar,
   mobileNav,
   children,
 }: Props) {
@@ -36,7 +34,6 @@ export function SiteChrome({
       {header}
       <main className="flex-1">{children}</main>
       <Footer />
-      {compareBar}
       {mobileNav}
     </>
   );
