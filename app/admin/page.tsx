@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
-import { Star, TreePine, Users } from "lucide-react";
 
 import { GrowthChart } from "@/components/admin/growth-chart";
+import { StatCard } from "@/components/admin/stat-card";
 import { ResortStatusCard } from "@/components/admin/resort-status-card";
 import { prisma } from "@/lib/db/prisma";
 import type { ResortStatus } from "@/lib/generated/prisma/enums";
@@ -81,10 +81,10 @@ export default async function AdminOverviewPage() {
   );
 
   const stats = [
-    { icon: Users, label: t("seriesUsers"), value: activeUsers },
-    { icon: TreePine, label: t("seriesResorts"), value: resortCount },
-    { icon: Star, label: t("seriesFeatured"), value: featuredCount },
-  ];
+    { variant: "users", label: t("seriesUsers"), value: activeUsers },
+    { variant: "resorts", label: t("seriesResorts"), value: resortCount },
+    { variant: "featured", label: t("seriesFeatured"), value: featuredCount },
+  ] as const;
 
   const allDates = [...userDates, ...resortDates, ...featuredDates];
   const today = dayKey(new Date());
@@ -107,18 +107,13 @@ export default async function AdminOverviewPage() {
     <div className="space-y-6">
       <div className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden scroll-smooth pb-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:pb-0 lg:grid-cols-3">
         {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="group min-w-[85%] shrink-0 snap-center rounded-2xl border border-border/60 p-5 transition-all duration-300 ease-out first:ml-[7.5%] last:mr-[7.5%] hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 sm:min-w-0 sm:shrink sm:first:ml-0 sm:last:mr-0"
-          >
-            <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform duration-300 ease-out group-hover:scale-110 group-hover:bg-primary/15">
-              <stat.icon className="size-4.5" />
-            </span>
-            <p className="mt-3 font-heading text-2xl font-bold text-foreground">
-              {stat.value}
-            </p>
-            <p className="text-sm text-muted-foreground">{stat.label}</p>
-          </div>
+          <StatCard
+            key={stat.variant}
+            variant={stat.variant}
+            label={stat.label}
+            value={stat.value}
+            className="min-w-[85%] shrink-0 snap-center first:ml-[7.5%] last:mr-[7.5%] sm:min-w-0 sm:shrink sm:first:ml-0 sm:last:mr-0"
+          />
         ))}
       </div>
 
