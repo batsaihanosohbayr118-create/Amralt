@@ -39,7 +39,7 @@ function Landscape() {
     <svg
       viewBox="0 0 300 140"
       preserveAspectRatio="xMidYMax slice"
-      className="pointer-events-none absolute inset-x-0 bottom-0 h-32 w-full"
+      className="pointer-events-none absolute inset-x-0 bottom-0 aspect-[300/140] h-auto max-h-44 w-full sm:left-auto sm:w-[45%] sm:[mask-image:linear-gradient(to_right,transparent,black_35%)] lg:left-0 lg:w-full lg:[mask-image:none]"
       aria-hidden
     >
       <defs>
@@ -110,7 +110,7 @@ export function ResortStatusCard({ title, rows }: Props) {
   const max = Math.max(1, ...rows.map((r) => r.count));
 
   return (
-    <div className="relative flex min-h-[21rem] min-w-0 flex-col overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-emerald-50/40 p-4 shadow-sm sm:p-5 dark:to-emerald-950/20">
+    <div className="relative flex min-h-[21rem] min-w-0 sm:min-h-44 lg:min-h-[21rem] flex-col overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-card to-emerald-50/40 p-4 shadow-sm sm:p-5 dark:to-emerald-950/20">
       <div className="flex items-center gap-2.5">
         <span className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-muted/40 text-foreground">
           <Layers className="size-4" />
@@ -120,7 +120,7 @@ export function ResortStatusCard({ title, rows }: Props) {
         </h2>
       </div>
 
-      <div className="relative z-10 mt-5 space-y-5">
+      <div className="relative z-10 mt-5 space-y-5 sm:w-[55%] sm:pr-4 lg:w-auto lg:pr-0">
         {rows.map((row) => {
           const pct = (row.count / max) * 100;
           return (
@@ -158,7 +158,7 @@ export function ResortStatusCard({ title, rows }: Props) {
         })}
       </div>
 
-      <div className="h-32 flex-1" />
+      <div className="h-32 flex-1 sm:hidden lg:block" />
       <Landscape />
     </div>
   );

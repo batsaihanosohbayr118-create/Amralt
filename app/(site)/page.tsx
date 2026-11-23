@@ -68,7 +68,7 @@ export default async function HomePage() {
             {t("subtitle")}
           </p>
 
-          <div className="animate-in fade-in slide-in-from-bottom-6 mt-9 w-full max-w-4xl delay-500 duration-700 fill-mode-both">
+          <div className="animate-in fade-in slide-in-from-bottom-6 mx-auto mt-9 w-full max-w-4xl sm:max-w-md md:max-w-4xl delay-500 duration-700 fill-mode-both">
             <SearchBar locations={searchBarLocations} />
           </div>
 

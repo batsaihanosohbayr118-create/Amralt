@@ -55,9 +55,9 @@ export function Footer() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 pt-[max(7rem,19vw)] sm:px-6 xl:pt-[12vw] lg:px-8">
-        <div className="grid gap-12 md:grid-cols-[minmax(0,1.25fr)_1px_minmax(0,1fr)_minmax(0,1fr)] md:gap-10 xl:w-[62%]">
-          {/* Brand */}
-          <div>
+        <div className="grid gap-12 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-[minmax(0,1.25fr)_1px_minmax(0,1fr)_minmax(0,1fr)] lg:gap-10 xl:w-[62%]">
+          {/* Brand: full width on mobile/tablet, first column from lg */}
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="inline-flex items-center">
               <Image
                 src="/logo-icon.png"
@@ -76,7 +76,7 @@ export function Footer() {
           </div>
 
           {/* Divider */}
-          <div className="hidden bg-white/15 md:block" aria-hidden />
+          <div className="hidden bg-white/15 lg:block" aria-hidden />
 
           {/* Link columns */}
           {columns.map((col) => (
