@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Star, TreePine, Users } from "lucide-react";
 
 import { GrowthChart } from "@/components/admin/growth-chart";
+import { ResortStatusCard } from "@/components/admin/resort-status-card";
 import { prisma } from "@/lib/db/prisma";
 import type { ResortStatus } from "@/lib/generated/prisma/enums";
 import type { Locale } from "@/i18n/request";
@@ -78,10 +79,6 @@ export default async function AdminOverviewPage() {
   const countByStatus = new Map(
     statusGroups.map((g) => [g.status, g._count._all])
   );
-  const maxStatusCount = Math.max(
-    1,
-    ...STATUS_ORDER.map((s) => countByStatus.get(s) ?? 0)
-  );
 
   const stats = [
     { icon: Users, label: t("seriesUsers"), value: activeUsers },
@@ -134,41 +131,15 @@ export default async function AdminOverviewPage() {
         series={chartSeries}
       />
 
-      <div className="rounded-2xl border border-border/60 p-5">
-        <h2 className="font-heading text-sm font-semibold text-foreground">
-          {t("resortStatus")}
-        </h2>
-        <div className="mt-5 space-y-4">
-          {STATUS_ORDER.map((status) => {
-            const count = countByStatus.get(status) ?? 0;
-            const widthPct = (count / maxStatusCount) * 100;
-            const label = tStatus(status);
-
-            return (
-              <div key={status} className="flex items-center gap-3">
-                <span className="w-24 shrink-0 text-xs text-muted-foreground">
-                  {label}
-                </span>
-                <div
-                  className="relative h-3 flex-1 bg-muted"
-                  title={`${label}: ${count}`}
-                >
-                  <div
-                    className="absolute inset-y-0 left-0 rounded-r-[4px]"
-                    style={{
-                      width: `${widthPct}%`,
-                      backgroundColor: STATUS_COLOR[status],
-                    }}
-                  />
-                </div>
-                <span className="w-6 shrink-0 text-right text-sm font-semibold text-foreground">
-                  {count}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <ResortStatusCard
+        title={t("resortStatus")}
+        rows={STATUS_ORDER.map((status) => ({
+          key: status,
+          label: tStatus(status),
+          count: countByStatus.get(status) ?? 0,
+          color: STATUS_COLOR[status],
+        }))}
+      />
       </div>
     </div>
   );

@@ -431,7 +431,7 @@ export function GrowthChart({ title, ariaLabel, locale, days, series }: Props) {
         {/* Tooltip */}
         {act !== null && (
           <div
-            className="pointer-events-none absolute top-0 z-10 min-w-40 rounded-xl border border-border/60 bg-popover px-3.5 py-2.5 text-xs text-popover-foreground shadow-lg"
+            className="pointer-events-none absolute top-0 z-10 w-max min-w-40 rounded-xl border border-border/60 bg-popover px-3.5 py-2.5 text-xs text-popover-foreground shadow-lg"
             style={{
               left: `${tipLeft}%`,
               transform: flip ? "translateX(calc(-100% - 14px))" : "translateX(14px)",
@@ -442,10 +442,10 @@ export function GrowthChart({ title, ariaLabel, locale, days, series }: Props) {
               {series.map((s, si) => (
                 <li key={s.key} className="flex items-center gap-2">
                   <span
-                    className="size-2 rounded-full"
+                    className="size-2 shrink-0 rounded-full"
                     style={{ backgroundColor: s.color }}
                   />
-                  <span className="text-muted-foreground">{s.label}</span>
+                  <span className="whitespace-nowrap text-muted-foreground">{s.label}</span>
                   <span className="ml-auto pl-4 font-bold tabular-nums text-foreground">
                     {view.series[si][act]}
                   </span>
